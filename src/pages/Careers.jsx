@@ -1,0 +1,473 @@
+// import React, { useState, useEffect } from "react";
+// import { useNavigate } from "react-router-dom";
+// import "../styles/Careers.css";
+
+// const careersData = [
+//   { title: "Astrologer", desc: "Create astrology content & horoscopes." },
+//   { title: "Tarot Reader", desc: "Design engaging tarot readings." },
+//   { title: "Occult Researcher", desc: "Develop mystical content." },
+//   { title: "Social Media Intern", desc: "Manage social media channels." },
+//   { title: "Admin Intern", desc: "Assist in operations & content." },
+// ];
+
+// const Careers = () => {
+//   const navigate = useNavigate();
+//   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+//   const navLinks = [
+//     { name: "Home", link: "/" },
+//     { name: "About Us", link: "/about-us" },
+//     { name: "Energy", link: "/energy" },
+//     { name: "Movement", link: "/movement" },
+//     { name: "Space Vastu", link: "/space-vastu" },
+//     { name: "Manifestation", link: "/manifestation" },
+//     { name: "Material", link: "/material" },
+//     { name: "Blogs", link: "/blogs" },
+//     { name: "Careers", link: "/careers" },
+//     { name: "Contact", link: "/contact" },
+//     { name: "Login / Signup", link: "/auth" },
+//   ];
+
+//   const handleCardClick = () => navigate("/contact");
+
+//   useEffect(() => {
+//     const starfield = document.getElementById("starfield");
+//     if (starfield && !starfield.hasChildNodes()) {
+//       for (let i = 0; i < 120; i++) {
+//         const star = document.createElement("div");
+//         star.className = "star";
+//         star.style.top = `${Math.random() * 100}%`;
+//         star.style.left = `${Math.random() * 100}%`;
+//         star.style.width = `${Math.random() * 2 + 1}px`;
+//         star.style.height = star.style.width;
+//         star.style.animationDuration = `${Math.random() * 3 + 2}s`;
+//         starfield.appendChild(star);
+//       }
+//     }
+//   }, []);
+
+//   return (
+//     <div className="careers-page cosmic-bg">
+//       {/* 🌠 Starfield Background */}
+//       <div id="starfield" className="starfield"></div>
+
+//       {/* 🧭 Sidebar */}
+//       <div className={`sidebar-home ${sidebarOpen ? "open" : ""}`}>
+//         <h2 className="sidebar-logo">✨ AstroConnect</h2>
+//         <ul>
+//           {navLinks.map((item, idx) => (
+//             <li key={idx}>
+//               <a href={item.link} onClick={() => setSidebarOpen(false)}>
+//                 {item.name}
+//               </a>
+//             </li>
+//           ))}
+//         </ul>
+//       </div>
+
+//       {/* 🍔 Hamburger Button */}
+//       <button
+//         className={`sidebar-toggle-home ${sidebarOpen ? "active" : ""}`}
+//         onClick={() => setSidebarOpen(!sidebarOpen)}
+//       >
+//         ☰
+//       </button>
+
+//       {/* 🌌 Careers Content */}
+//       <div className="careers-container">
+//         <section className="careers-hero">
+//           <div className="hero-overlay">
+//             <h1>Join Our Team ✨</h1>
+//             <p>Explore opportunities in Astrology, Tarot, and Mystical Research.</p>
+//           </div>
+//         </section>
+
+//         <section className="careers-content">
+//           <h2>Available Positions</h2>
+//           <p>
+//             We are looking for passionate Astrologers, Tarot Readers, and Interns
+//             for content creation, social media, and administration.
+//           </p>
+//           <div className="careers-list">
+//             {careersData.map((career, idx) => (
+//               <div key={idx} className="career-card" onClick={handleCardClick}>
+//                 <h3>{career.title}</h3>
+//                 <p>{career.desc}</p>
+//               </div>
+//             ))}
+//           </div>
+//         </section>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Careers;
+
+// import React, { useEffect, useState } from "react";
+// import { useNavigate } from "react-router-dom";
+// import "../styles/Careers.css";
+
+// const careersData = [
+//   { title: "Astrologer", desc: "Create astrology content & horoscopes." },
+//   { title: "Tarot Reader", desc: "Design engaging tarot readings." },
+//   { title: "Occult Researcher", desc: "Develop mystical content." },
+//   { title: "Social Media Intern", desc: "Manage social media channels." },
+//   { title: "Admin Intern", desc: "Assist in operations & content." },
+// ];
+
+// const navLinks = [
+//   { name: "Home", link: "/", icon: "🏠" },
+//   { name: "About Us", link: "/about-us", icon: "✨" },
+//   { name: "Energy", link: "/energy", icon: "⚡" },
+//   { name: "Movement", link: "/movement", icon: "🌊" },
+//   { name: "Space Vastu", link: "/space-vastu", icon: "🏛️" },
+//   { name: "Manifestation", link: "/manifestation", icon: "💫" },
+//   { name: "Material", link: "/material", icon: "💎" },
+//   { name: "Blogs", link: "/blogs", icon: "📝" },
+//   { name: "Careers", link: "/careers", icon: "💼" },
+//   { name: "Contact", link: "/contact", icon: "📧" },
+//   { name: "Login / Signup", link: "/auth", icon: "🔐" },
+// ];
+
+// const Careers = () => {
+//   const navigate = useNavigate();
+//   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+//   useEffect(() => {
+//     const starfield = document.getElementById("starfield");
+//     if (starfield && !starfield.hasChildNodes()) {
+//       for (let i = 0; i < 120; i++) {
+//         const star = document.createElement("div");
+//         star.className = "star";
+//         star.style.top = `${Math.random() * 100}%`;
+//         star.style.left = `${Math.random() * 100}%`;
+//         star.style.width = `${Math.random() * 2 + 1}px`;
+//         star.style.height = star.style.width;
+//         star.style.animationDuration = `${Math.random() * 3 + 2}s`;
+//         starfield.appendChild(star);
+//       }
+//     }
+//   }, []);
+
+//   const handleCardClick = () => navigate("/contact");
+
+//   return (
+//     <div className="careers-page cosmic-bg">
+//       {/* Starfield Background */}
+//       <div id="starfield" className="starfield"></div>
+
+//       {/* Sidebar */}
+//       <div className={`sidebar-home ${sidebarOpen ? "open" : ""}`}>
+//         <h2 className="sidebar-logo">✨ AstroConnect</h2>
+//         <ul>
+//           {navLinks.map((item, idx) => (
+//             <li key={idx}>
+//               <a
+//                 href={item.link}
+//                 onClick={() => setSidebarOpen(false)}
+//                 style={{
+//                   display: "flex",
+//                   alignItems: "center",
+//                   gap: "10px",
+//                   padding: "10px 15px",
+//                   color: "#ccc",
+//                   textDecoration: "none",
+//                   borderRadius: "8px",
+//                   transition: "all 0.3s",
+//                 }}
+//                 onMouseEnter={(e) => {
+//                   e.target.style.background = "rgba(255,255,255,0.1)";
+//                   e.target.style.color = "#fff";
+//                 }}
+//                 onMouseLeave={(e) => {
+//                   e.target.style.background = "transparent";
+//                   e.target.style.color = "#ccc";
+//                 }}
+//               >
+//                 <span style={{ fontSize: "1.3rem" }}>{item.icon}</span>
+//                 {item.name}
+//               </a>
+//             </li>
+//           ))}
+//         </ul>
+//       </div>
+
+//       {/* Hamburger Button */}
+//       <button
+//         className={`sidebar-toggle-home ${sidebarOpen ? "active" : ""}`}
+//         onClick={() => setSidebarOpen(!sidebarOpen)}
+//       >
+//         ☰
+//       </button>
+
+//       {/* Careers Content */}
+//       <div className="careers-container">
+//         <section className="careers-hero">
+//           <div className="hero-overlay">
+//             <h1>Join Our Team ✨</h1>
+//             <p>Explore opportunities in Astrology, Tarot, and Mystical Research.</p>
+//           </div>
+//         </section>
+
+//         <section className="careers-content">
+//           <h2>Available Positions</h2>
+//           <p>
+//             We are looking for passionate Astrologers, Tarot Readers, and Interns
+//             for content creation, social media, and administration.
+//           </p>
+//           <div className="careers-list">
+//             {careersData.map((career, idx) => (
+//               <div key={idx} className="career-card" onClick={handleCardClick}>
+//                 <h3>{career.title}</h3>
+//                 <p>{career.desc}</p>
+//               </div>
+//             ))}
+//           </div>
+//         </section>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Careers;
+
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "../styles/Careers.css";
+
+const careersData = [
+  { title: "Astrologer", desc: "Create astrology content & horoscopes." },
+  { title: "Tarot Reader", desc: "Design engaging tarot readings." },
+  { title: "Occult Researcher", desc: "Develop mystical content." },
+  { title: "Social Media Intern", desc: "Manage social media channels." },
+  { title: "Admin Intern", desc: "Assist in operations & content." },
+];
+
+const navLinks = [
+  { name: "Home", link: "/", icon: "🏠" },
+  { name: "About Us", link: "/about-us", icon: "✨" },
+  { name: "Energy", link: "/energy", icon: "⚡" },
+  { name: "Movement", link: "/movement", icon: "🌊" },
+  { name: "Space Vastu", link: "/space-vastu", icon: "🏛️" },
+  { name: "Manifestation", link: "/manifestation", icon: "💫" },
+  { name: "Material", link: "/material", icon: "💎" },
+  { name: "Blogs", link: "/blogs", icon: "📝" },
+  { name: "Careers", link: "/careers", icon: "💼" },
+  { name: "Contact", link: "/contact", icon: "📧" },
+  { name: "Login / Signup", link: "/auth", icon: "🔐" },
+];
+
+const Careers = () => {
+  const navigate = useNavigate();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  useEffect(() => {
+    const starfield = document.getElementById("starfield");
+    if (starfield && !starfield.hasChildNodes()) {
+      for (let i = 0; i < 120; i++) {
+        const star = document.createElement("div");
+        star.className = "star";
+        star.style.top = `${Math.random() * 100}%`;
+        star.style.left = `${Math.random() * 100}%`;
+        star.style.width = `${Math.random() * 2 + 1}px`;
+        star.style.height = star.style.width;
+        star.style.animationDuration = `${Math.random() * 3 + 2}s`;
+        starfield.appendChild(star);
+      }
+    }
+  }, []);
+
+  const handleCardClick = () => navigate("/contact");
+
+  return (
+    <div
+      className="careers-page cosmic-bg"
+      style={{
+        fontFamily: "Poppins, sans-serif",
+        color: "#fff",
+        background: "linear-gradient(180deg, #1a0033 0%, #0d001a 100%)",
+        minHeight: "100vh",
+        overflowX: "hidden",
+      }}
+    >
+      {/* 🌌 Starfield */}
+      <div id="starfield" className="starfield"></div>
+
+      {/* 🧭 Sidebar */}
+      <div
+        className={`sidebar ${sidebarOpen ? "open" : ""}`}
+        style={{
+          position: "fixed",
+          top: 0,
+          left: sidebarOpen ? 0 : "-270px",
+          width: "270px",
+          height: "100vh",
+          background: "linear-gradient(180deg, rgba(20,0,40,0.95), rgba(5,0,20,0.9))",
+          backdropFilter: "blur(14px)",
+          boxShadow: "6px 0 25px rgba(255, 0, 255, 0.25)",
+          transition: "left 0.5s ease-in-out",
+          zIndex: 1000,
+          padding: "30px 20px",
+        }}
+      >
+        {/* ✕ Close Button */}
+        {sidebarOpen && (
+          <button
+            onClick={() => setSidebarOpen(false)}
+            style={{
+              position: "absolute",
+              top: "18px",
+              right: "18px",
+              background: "linear-gradient(135deg, #ff00ff, #8a2be2)",
+              border: "none",
+              color: "#fff",
+              fontSize: "20px",
+              width: "40px",
+              height: "40px",
+              borderRadius: "50%",
+              cursor: "pointer",
+              boxShadow: "0 0 15px rgba(255, 0, 255, 0.4)",
+              transition: "all 0.3s ease",
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.1) rotate(90deg)")}
+            onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1) rotate(0deg)")}
+          >
+            ✕
+          </button>
+        )}
+
+        <h2
+          style={{
+            fontSize: "28px",
+            fontWeight: 700,
+            textAlign: "center",
+            background: "linear-gradient(90deg, #ff00ff, #00ffff)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            marginBottom: "35px",
+          }}
+        >
+          ✨ AstroConnect
+        </h2>
+
+        <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+          {navLinks.map((item, idx) => (
+            <li key={idx} style={{ margin: "14px 0" }}>
+              <a
+                href={item.link}
+                onClick={() => setSidebarOpen(false)}
+                style={{
+                  color: "#ccc",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "10px",
+                  padding: "12px 18px",
+                  borderRadius: "10px",
+                  textDecoration: "none",
+                  fontSize: "1rem",
+                  fontWeight: 500,
+                  transition: "all 0.3s ease",
+                }}
+                onMouseEnter={(e) => {
+                  e.target.style.color = "#fff";
+                  e.target.style.background = "rgba(255,255,255,0.1)";
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.color = "#ccc";
+                  e.target.style.background = "transparent";
+                }}
+              >
+                <span style={{ fontSize: "1.4rem" }}>{item.icon}</span>
+                {item.name}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* ☰ Hamburger */}
+      {!sidebarOpen && (
+        <button
+          onClick={() => setSidebarOpen(true)}
+          style={{
+            position: "fixed",
+            top: "22px",
+            left: "25px",
+            background: "linear-gradient(135deg, #ff00ff, #7b2cbf)",
+            color: "#fff",
+            border: "none",
+            fontSize: "26px",
+            borderRadius: "50%",
+            width: "55px",
+            height: "55px",
+            cursor: "pointer",
+            zIndex: 1100,
+            boxShadow: "0 0 25px rgba(255, 0, 255, 0.4)",
+            transition: "all 0.3s ease-in-out",
+          }}
+        >
+          ☰
+        </button>
+      )}
+
+      {/* 💼 Main Careers Content */}
+      <div
+        className="careers-container"
+        style={{
+          marginLeft: sidebarOpen ? "270px" : "0",
+          transition: "margin-left 0.6s ease",
+        }}
+      >
+        {/* Hero Section */}
+        <section className="careers-hero">
+          <div className="hero-overlay">
+            <h1>Join Our Team ✨</h1>
+            <p>Explore opportunities in Astrology, Tarot, and Mystical Research.</p>
+          </div>
+        </section>
+
+        {/* Careers Section */}
+        <section className="careers-content">
+          <h2>Available Positions</h2>
+          <p>
+            We are looking for passionate Astrologers, Tarot Readers, and Interns
+            for content creation, social media, and administration.
+          </p>
+
+          <div className="careers-list">
+            {careersData.map((career, idx) => (
+              <div
+                key={idx}
+                className="career-card"
+                onClick={handleCardClick}
+                style={{
+                  background: "rgba(255,255,255,0.1)",
+                  borderRadius: "14px",
+                  padding: "1.5rem",
+                  margin: "1rem",
+                  cursor: "pointer",
+                  transition: "all 0.3s ease",
+                  backdropFilter: "blur(8px)",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = "scale(1.05)";
+                  e.currentTarget.style.boxShadow = "0 0 20px rgba(255,0,255,0.3)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = "scale(1)";
+                  e.currentTarget.style.boxShadow = "none";
+                }}
+              >
+                <h3>{career.title}</h3>
+                <p>{career.desc}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      </div>
+    </div>
+  );
+};
+
+export default Careers;

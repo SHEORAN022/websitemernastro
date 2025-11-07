@@ -1,25 +1,127 @@
-import logo from './logo.svg';
-import './App.css';
+// import React from "react";
+// import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+// import Navbar from "./components/layout/Navbar";
+// import Footer from "./components/layout/Footer";
 
-function App() {
+// // Main pages
+// import Home from "./pages/Home";
+// import Blogs from "./pages/Blogs";
+// import BlogDetail from "./pages/BlogDetail";
+// import Book from "./pages/Book";
+// import AboutUs from "./pages/AboutUs";
+// import Contact from "./pages/Contact";
+// import Careers from "./pages/Careers";
+// import Auth from "./pages/Auth";
+
+// // Services
+// import Energy from "./pages/services/Energy";
+// import Movement from "./pages/services/Movement";
+// import SpaceVastu from "./pages/services/SpaceVastu";
+// import Manifestation from "./pages/services/Manifestation";
+// import Material from "./pages/services/Material";
+// import ServiceDetails from "./pages/services/ServiceDetails";
+
+// export default function App() {
+//   return (
+//     <Router>
+//       <Navbar />
+//       <div style={{ minHeight: "80vh" }}>
+//         <Routes>
+//           {/* Main pages */}
+//           <Route path="/" element={<Home />} />
+//           <Route path="/blogs" element={<Blogs />} />
+//           <Route path="/blog/:id" element={<BlogDetail />} />
+//           <Route path="/book" element={<Book />} />
+//           <Route path="/about-us" element={<AboutUs />} />
+//           <Route path="/contact" element={<Contact />} />
+//           <Route path="/careers" element={<Careers />} /> 
+//           <Route path="/auth" element={<Auth />} />
+
+//           {/* Services */}
+//           <Route path="/energy" element={<Energy />} />
+//           <Route path="/movement" element={<Movement />} />
+//           <Route path="/space-vastu" element={<SpaceVastu />} />
+//           <Route path="/manifestation" element={<Manifestation />} />
+//           <Route path="/material" element={<Material />} />
+//           <Route path="/service/:id" element={<ServiceDetails />} />
+
+//           {/* Fallback for 404 */}
+//           <Route
+//             path="*"
+//             element={
+//               <div className="text-center py-20 text-gray-600 text-lg">
+//                 404 - Page Not Found
+//               </div>
+//             }
+//           />
+//         </Routes>
+//       </div>
+//       <Footer />
+//     </Router>
+//   );
+// }
+ 
+
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
+// Main pages
+import Home from "./pages/Home";
+import Blogs from "./pages/Blogs";
+import BlogDetail from "./pages/BlogDetail";
+import Book from "./pages/Book";
+import AboutUs from "./pages/AboutUs";
+import Contact from "./pages/Contact";
+import Careers from "./pages/Careers";
+import Auth from "./pages/Auth";
+
+
+// Services
+import Energy from "./pages/services/Energy";
+import Movement from "./pages/services/Movement";
+import SpaceVastu from "./pages/services/SpaceVastu";
+import Manifestation from "./pages/services/Manifestation";
+import Material from "./pages/services/Material";
+import ServiceDetails from "./pages/services/ServiceDetails";
+import TarotReading from "./pages/services/TarotReading";
+
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      {/* 🚫 Removed Navbar and Footer */}
+      <div style={{ minHeight: "100vh" }}>
+        <Routes>
+          {/* Main pages */}
+          <Route path="/" element={<Home />} />
+          <Route path="/blogs" element={<Blogs />} />
+          <Route path="/blog/:id" element={<BlogDetail />} />
+          <Route path="/book" element={<Book />} />
+          <Route path="/about-us" element={<AboutUs />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/careers" element={<Careers />} /> 
+          <Route path="/auth" element={<Auth />} />
+          
+
+          {/* Services */}
+          <Route path="/energy" element={<Energy />} />
+          <Route path="/movement" element={<Movement />} />
+          <Route path="/space-vastu" element={<SpaceVastu />} />
+          <Route path="/manifestation" element={<Manifestation />} />
+          <Route path="/material" element={<Material />} />
+          <Route path="/service/:id" element={<ServiceDetails />} />
+          <Route path="/tarotreading" element={<TarotReading />} />
+
+          {/* 404 Page */}
+          <Route
+            path="*"
+            element={
+              <div className="text-center py-20 text-gray-600 text-lg">
+                404 - Page Not Found
+              </div>
+            }
+          />
+        </Routes>
+      </div>
+    </Router>
   );
 }
-
-export default App;

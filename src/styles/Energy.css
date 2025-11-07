@@ -1,0 +1,487 @@
+/* 
+.energy-page {
+  display: flex;
+  background: #f9fafb;
+  min-height: 100vh;
+}
+
+.energy-main {
+  flex: 1;
+  padding: 2.5rem 3rem;
+  animation: fadeIn 0.6s ease;
+}
+
+.energy-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #4c1d95;
+}
+
+.energy-subtitle {
+  color: #6b7280;
+  margin-bottom: 2rem;
+}
+
+
+.progress-container {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3rem;
+}
+.progress-track {
+  position: absolute;
+  top: 50%;
+  left: 8%;
+  width: 84%;
+  height: 4px;
+  background: #e5e7eb;
+  border-radius: 2px;
+  transform: translateY(-50%);
+  z-index: 0;
+}
+.progress-fill {
+  position: absolute;
+  top: 50%;
+  left: 8%;
+  height: 4px;
+  background: linear-gradient(90deg, #9333ea, #7c3aed);
+  border-radius: 2px;
+  transform: translateY(-50%);
+  z-index: 1;
+  transition: width 0.8s ease-in-out;
+}
+.progress-step {
+  text-align: center;
+  position: relative;
+  z-index: 2;
+  width: 33%;
+}
+.progress-step .circle {
+  background: #e5e7eb;
+  color: #6b7280;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 8px;
+  transition: all 0.4s ease;
+}
+.progress-step.active .circle {
+  background: linear-gradient(90deg, #9333ea, #7c3aed);
+  color: white;
+  transform: scale(1.1);
+}
+.progress-step span {
+  font-weight: 600;
+  color: #374151;
+  font-size: 0.9rem;
+}
+
+
+.energy-form,
+.payment-section,
+.confirmation-section {
+  background: #fff;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  animation: fadeIn 0.5s ease;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.2rem;
+}
+
+.form-row {
+  display: flex;
+  gap: 1.5rem;
+}
+
+label {
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 6px;
+}
+
+input,
+select,
+textarea {
+  padding: 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.submit-btn {
+  background: linear-gradient(90deg, #9333ea, #7c3aed);
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.3s ease;
+  width: 100%;
+}
+.submit-btn:hover {
+  transform: scale(1.03);
+  background: linear-gradient(90deg, #7e22ce, #6d28d9);
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+}
+
+
+.confirmation-section {
+  text-align: center;
+}
+.confirmation-section h2 {
+  color: #15803d;
+  margin: 1rem 0;
+}
+.pdf-status {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #374151;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+} */
+
+.cosmic-bg {
+  position: relative;
+  background: linear-gradient(180deg, #1a0033 0%, #0d001a 100%);
+  color: #fff;
+  overflow: hidden;
+  min-height: 100vh;
+  font-family: "Poppins", sans-serif;
+}
+
+.stars-container {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.star {
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.8;
+  animation: twinkle 3s infinite ease-in-out;
+}
+@keyframes twinkle {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 1; }
+}
+
+.energy-main {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.energy-title {
+  font-size: 2.4rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, #ff00ff, #00ffff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.energy-subtitle {
+  color: #c5c6c7;
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+}
+
+/* Glass Cards */
+.glass-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(15px);
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 0 30px rgba(255, 0, 255, 0.2);
+  animation: fadeIn 0.8s ease;
+}
+
+/* Progress Bar */
+.progress-container {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 3rem 0;
+}
+.progress-track {
+  position: absolute;
+  top: 50%;
+  left: 10%;
+  width: 80%;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+  transform: translateY(-50%);
+}
+.progress-fill {
+  position: absolute;
+  top: 50%;
+  left: 10%;
+  height: 3px;
+  background: linear-gradient(90deg, #ff00ff, #00ffff);
+  border-radius: 5px;
+  transform: translateY(-50%);
+  transition: width 0.8s ease-in-out;
+}
+.progress-step {
+  text-align: center;
+  width: 33%;
+  color: #ccc;
+}
+.progress-step .circle {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  margin: 0 auto 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.4s ease;
+}
+.progress-step.active .circle {
+  background: linear-gradient(90deg, #ff00ff, #00ffff);
+  transform: scale(1.1);
+  color: #fff;
+}
+.progress-step span {
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+/* Form & Buttons */
+.form-group, .form-row {
+  margin-bottom: 1.5rem;
+}
+label {
+  display: block;
+  text-align: left;
+  margin-bottom: 6px;
+  color: #e5e5e5;
+  font-weight: 600;
+}
+input, select, textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  font-size: 1rem;
+  outline: none;
+}
+textarea {
+  min-height: 90px;
+  resize: vertical;
+}
+.glow-btn {
+  width: 100%;
+  background: linear-gradient(90deg, #ff00ff, #8a2be2);
+  border: none;
+  color: #fff;
+  font-weight: 600;
+  padding: 14px;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.glow-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 25px rgba(255, 0, 255, 0.4);
+}
+
+.confirmation-section h2 {
+  background: linear-gradient(90deg, #00ffff, #ff00ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.pdf-status {
+  margin-top: 1rem;
+  color: #ccc;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+
+/* 🎨 Service Dropdown Enhancement */
+.select-wrapper {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  background: linear-gradient(90deg, rgba(255, 0, 255, 0.25), rgba(0, 255, 255, 0.25));
+  transition: all 0.4s ease;
+}
+.select-wrapper:hover {
+  background: linear-gradient(90deg, rgba(255, 0, 255, 0.4), rgba(0, 255, 255, 0.4));
+  box-shadow: 0 0 20px rgba(255, 0, 255, 0.3);
+}
+select {
+  width: 100%;
+  padding: 12px 16px;
+  border: none;
+  background: transparent;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 500;
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+}
+select option {
+  background: #1b0030;
+  color: #fff;
+  padding: 10px;
+}
+
+/* Add a custom dropdown arrow */
+.select-wrapper::after {
+  content: "▼";
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #00ffff;
+  pointer-events: none;
+  font-size: 0.9rem;
+}
+
+/* 💳 Payment Card Styling */
+.payment-section h2 {
+  font-size: 1.6rem;
+  margin-bottom: 1rem;
+  background: linear-gradient(90deg, #ff00ff, #00ffff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.payment-card {
+  border-radius: 18px;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(12px);
+  text-align: center;
+  transition: all 0.4s ease;
+  box-shadow: 0 0 25px rgba(255, 0, 255, 0.25);
+  margin-top: 1rem;
+}
+.payment-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 0 40px rgba(0, 255, 255, 0.4);
+}
+.payment-card p {
+  color: #ddd;
+  margin-bottom: 10px;
+}
+.payment-card .note {
+  font-size: 0.9rem;
+  color: #aaa;
+  margin-bottom: 1.5rem;
+  font-style: italic;
+}
+.payment-btn {
+  background: linear-gradient(90deg, #ff00ff, #00ffff);
+  border: none;
+  border-radius: 50px;
+  color: #fff;
+  font-weight: 700;
+  padding: 14px 30px;
+  width: 100%;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  box-shadow: 0 0 15px rgba(255, 0, 255, 0.3);
+}
+.payment-btn:hover {
+  transform: scale(1.06);
+  box-shadow: 0 0 30px rgba(255, 0, 255, 0.5);
+}
+.spinner {
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ✨ Confirmation Glow */
+.confirmation-section {
+  text-align: center;
+  animation: fadeIn 1s ease;
+}
+.confirmation-section p {
+  color: #ccc;
+  margin-top: 1rem;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+.confirmation-section svg {
+  filter: drop-shadow(0 0 10px #00ffea);
+}
+
+/* 📱 Responsive Tweaks */
+@media (max-width: 768px) {
+  .energy-main {
+    padding: 2rem 1.5rem;
+  }
+  .energy-title {
+    font-size: 1.8rem;
+  }
+  .glass-card {
+    padding: 1.5rem;
+  }
+  .payment-card {
+    padding: 1.5rem;
+  }
+}
