@@ -707,18 +707,13 @@
 // };
 
 // export default Movement;
-
 import React, { useState } from "react";
 import { Loader2, Sparkles } from "lucide-react";
-import KundliReport from "./reports/KundliReport";
-import NumerologyReport from "./reports/NumerologyReport";
-import CompatibilityReport from "./reports/CompatibilityReport";
 import {
   KundliAPI,
   NumerologyAPI,
   CompatibilityAPI,
   GemstoneAPI,
-  PanchangAPI,
   PlanetaryAPI,
   TransitAPI,
   ZodiacAPI,
@@ -748,37 +743,9 @@ const Movement = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [step, setStep] = useState(1);
   const [selectedCalculator, setSelectedCalculator] = useState(null);
-  const [formData, setFormData] = useState({
-    fullName: "",
-    dob: "",
-    timeSlot: "",
-    birthPlace: "",
-    fullNameA: "",
-    dobA: "",
-    timeSlotA: "",
-    birthPlaceA: "",
-    fullNameB: "",
-    dobB: "",
-    timeSlotB: "",
-    birthPlaceB: "",
-    date: "",
-  });
+  const [formData, setFormData] = useState({});
   const [backendData, setBackendData] = useState(null);
   const [loading, setLoading] = useState(false);
-
-  const navLinks = [
-    { name: "Home", link: "/", icon: "🏠" },
-    { name: "About Us", link: "/about-us", icon: "✨" },
-    { name: "Energy", link: "/energy", icon: "⚡" },
-    { name: "Movement", link: "/movement", icon: "🌊" },
-    { name: "Space Vastu", link: "/space-vastu", icon: "🏛️" },
-    { name: "Manifestation", link: "/manifestation", icon: "💫" },
-    { name: "Material", link: "/material", icon: "💎" },
-    { name: "Blogs", link: "/blogs", icon: "📝" },
-    { name: "Careers", link: "/careers", icon: "💼" },
-    { name: "Contact", link: "/contact", icon: "📧" },
-    { name: "Login / Signup", link: "/auth", icon: "🔐" },
-  ];
 
   const handleCalculatorSelect = (calc) => {
     setSelectedCalculator(calc);
@@ -790,42 +757,10 @@ const Movement = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const validateForm = () => {
-    if (!selectedCalculator) return false;
-    const type = selectedCalculator.label;
-
-    if (type === "Compatibility") {
-      const requiredA = ["fullNameA", "dobA", "birthPlaceA", "timeSlotA"];
-      const requiredB = ["fullNameB", "dobB", "birthPlaceB", "timeSlotB"];
-      for (let f of [...requiredA, ...requiredB]) {
-        if (!formData[f]) {
-          alert("Please fill all fields for Person A and B");
-          return false;
-        }
-      }
-    } else if (type === "Numerology" && (!formData.fullName || !formData.dob)) {
-      alert("Please fill Name and Date of Birth");
-      return false;
-    } else if (type === "Daily Predictions" && !formData.date) {
-      alert("Please select a date");
-      return false;
-    } else if (
-      !["Numerology", "Daily Predictions"].includes(type) &&
-      (!formData.dob || !formData.timeSlot || !formData.birthPlace)
-    ) {
-      alert("Please fill Date, Time, and Place of Birth");
-      return false;
-    }
-    return true;
-  };
-
   const handleFormSubmit = async () => {
-    if (!validateForm()) return;
     setLoading(true);
-    setBackendData(null);
-
-    let response;
     try {
+      let response;
       switch (selectedCalculator.label) {
         case "Kundli":
           response = await KundliAPI.calculate(formData);
@@ -868,8 +803,8 @@ const Movement = () => {
       }
       setBackendData(response.data);
       setStep(3);
-    } catch (error) {
-      setBackendData({ error: error.message || "API Error" });
+    } catch (err) {
+      setBackendData({ error: err.message });
       setStep(3);
     } finally {
       setLoading(false);
@@ -880,226 +815,197 @@ const Movement = () => {
     setStep(1);
     setSelectedCalculator(null);
     setBackendData(null);
-    setFormData({
-      fullName: "",
-      dob: "",
-      timeSlot: "",
-      birthPlace: "",
-      fullNameA: "",
-      dobA: "",
-      timeSlotA: "",
-      birthPlaceA: "",
-      fullNameB: "",
-      dobB: "",
-      timeSlotB: "",
-      birthPlaceB: "",
-      date: "",
-    });
+    setFormData({});
   };
 
   return (
     <div
       style={{
-        display: "flex",
-        flexDirection: "row",
         minHeight: "100vh",
         background: "radial-gradient(circle at top, #0a0018, #1e003f)",
         color: "#fff",
         fontFamily: "'Poppins', sans-serif",
-        position: "relative",
-        overflow: "hidden",
+        overflowX: "hidden",
       }}
     >
-      <style>{`
-        @media (max-width: 992px) {
-          .calculator-grid {
-            grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
-            padding: 1rem;
-          }
-        }
-        @media (max-width: 768px) {
-          .calculator-grid {
-            grid-template-columns: 1fr;
-            gap: 1rem;
-          }
-          .form-container {
-            padding: 1.5rem;
-            width: 100%;
-          }
-          .sidebar {
-            width: 220px !important;
-          }
-        }
-        @media (max-width: 576px) {
-          .form-group input {
-            font-size: 0.9rem;
-            padding: 12px 14px 12px 42px;
-          }
-          .glow-btn {
-            width: 100%;
-            font-size: 1rem;
-          }
-        }
-      `}</style>
-
-      {/* Sidebar */}
+      {/* Header */}
       <div
-        className="sidebar"
         style={{
-          position: "fixed",
-          top: 0,
-          left: sidebarOpen ? 0 : "-270px",
-          width: "270px",
-          height: "100%",
-          background: "linear-gradient(180deg, rgba(20, 0, 40, 0.95), rgba(5, 0, 20, 0.9))",
-          transition: "all 0.5s ease-in-out",
-          padding: sidebarOpen ? "30px 20px" : 0,
-          zIndex: 1000,
+          textAlign: "center",
+          padding: "4rem 1.5rem 2rem",
         }}
       >
-        {sidebarOpen && (
-          <button
-            onClick={() => setSidebarOpen(false)}
-            style={{
-              position: "absolute",
-              top: 15,
-              right: 15,
-              border: "none",
-              background: "linear-gradient(135deg, #ff00ff, #8a2be2)",
-              color: "#fff",
-              borderRadius: "50%",
-              width: 40,
-              height: 40,
-              fontSize: 18,
-              cursor: "pointer",
-            }}
-          >
-            ✕
-          </button>
-        )}
-
-        <h2
+        <h1
           style={{
-            fontSize: "1.6rem",
-            background: "linear-gradient(90deg, #ff00ff, #00ffff)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            textAlign: "center",
-            marginBottom: 25,
+            fontSize: "2.5rem",
+            fontWeight: 700,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "10px",
           }}
         >
-          🔮 AstroConnect
-        </h2>
-
-        {navLinks.map((item, idx) => (
-          <a
-            key={idx}
-            href={item.link}
-            onClick={() => setSidebarOpen(false)}
-            style={{
-              display: "block",
-              padding: "10px 15px",
-              color: "#ccc",
-              textDecoration: "none",
-              borderRadius: 8,
-              marginBottom: 10,
-            }}
-          >
-            {item.icon} {item.name}
-          </a>
-        ))}
+          <Sparkles size={26} /> Astro Calculators
+        </h1>
+        <p style={{ fontSize: "1.1rem", color: "#ccc", marginTop: "0.5rem" }}>
+          Unlock astrological insights anytime, anywhere 🌙
+        </p>
       </div>
 
-      {!sidebarOpen && (
-        <button
-          onClick={() => setSidebarOpen(true)}
+      {/* Step 1: Calculator Grid */}
+      {step === 1 && (
+        <div
           style={{
-            position: "fixed",
-            top: 20,
-            left: 20,
-            background: "linear-gradient(135deg, #ff00ff, #7b2cbf)",
-            color: "#fff",
-            border: "none",
-            fontSize: 22,
-            borderRadius: "50%",
-            width: 50,
-            height: 50,
-            cursor: "pointer",
-            zIndex: 1100,
-          }}
-        >
-          ☰
-        </button>
-      )}
-
-      {/* Main Content */}
-      <div
-        style={{
-          flex: 1,
-          padding: "6rem 2rem 3rem",
-          marginLeft: sidebarOpen ? "270px" : 0,
-          transition: "margin-left 0.5s ease",
-          width: "100%",
-        }}
-      >
-        <h1 style={{ textAlign: "center", fontSize: "2.2rem", marginBottom: "1rem" }}>
-          <Sparkles size={24} /> Astro Calculators
-        </h1>
-        <p style={{ textAlign: "center", marginBottom: "2rem" }}>
-          Unlock cosmic insights anytime, anywhere 🌌
-        </p>
-
-        {step === 1 && (
-          <div className="calculator-grid" style={{
             display: "grid",
             gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
             gap: "2rem",
+            padding: "1rem 2rem 4rem",
             maxWidth: "1200px",
             margin: "0 auto",
-          }}>
-            {calculators.map((calc, idx) => (
-              <div
-                key={idx}
-                onClick={() => handleCalculatorSelect(calc)}
-                style={{
-                  background: "rgba(255,255,255,0.15)",
-                  backdropFilter: "blur(10px)",
-                  padding: "1.8rem",
-                  borderRadius: 18,
-                  textAlign: "center",
-                  transition: "all 0.3s ease",
-                  cursor: "pointer",
-                }}
-              >
-                <div style={{ fontSize: "2.5rem", marginBottom: 10 }}>{calc.icon}</div>
-                <h3>{calc.label}</h3>
-                <p style={{ fontSize: "0.95rem", color: "#ccc" }}>{calc.desc}</p>
-                <p>💾 {calc.deliverable}</p>
-                <p>💰 {calc.price}</p>
-              </div>
-            ))}
-          </div>
-        )}
+          }}
+        >
+          {calculators.map((calc, i) => (
+            <div
+              key={i}
+              onClick={() => handleCalculatorSelect(calc)}
+              style={{
+                background: "rgba(255,255,255,0.15)",
+                borderRadius: "20px",
+                padding: "2rem 1.5rem",
+                textAlign: "center",
+                cursor: "pointer",
+                transition: "0.4s",
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
+              onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
+            >
+              <div style={{ fontSize: "3rem" }}>{calc.icon}</div>
+              <h3 style={{ margin: "10px 0", fontSize: "1.3rem", fontWeight: 600 }}>{calc.label}</h3>
+              <p style={{ fontSize: "0.95rem", color: "#ddd" }}>{calc.desc}</p>
+              <p>🧾 {calc.deliverable}</p>
+              <p>💰 {calc.price}</p>
+            </div>
+          ))}
+        </div>
+      )}
 
-        {step === 3 && (
-          <div style={{ maxWidth: 700, margin: "3rem auto", background: "rgba(255,255,255,0.1)", padding: "2rem", borderRadius: 16 }}>
-            <h2>{selectedCalculator.icon} {selectedCalculator.label} Report</h2>
-            <pre style={{ textAlign: "left", whiteSpace: "pre-wrap", overflowX: "auto" }}>
-              {backendData ? JSON.stringify(backendData, null, 2) : "No Data"}
-            </pre>
-            <button onClick={resetForm} style={{
-              marginTop: 20,
-              padding: "12px 30px",
-              background: "linear-gradient(90deg,#ff00ff,#00ffff)",
-              border: "none",
-              borderRadius: 25,
-              color: "#fff",
-              cursor: "pointer"
-            }}>🔁 Back</button>
+      {/* Step 2: Form */}
+      {step === 2 && (
+        <div
+          style={{
+            background: "rgba(255,255,255,0.1)",
+            borderRadius: "20px",
+            padding: "2.5rem 2rem",
+            maxWidth: "700px",
+            margin: "2rem auto",
+            textAlign: "center",
+          }}
+        >
+          <h2
+            style={{
+              background: "linear-gradient(90deg, #ff00ff, #00ffff)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              marginBottom: "1.5rem",
+            }}
+          >
+            {selectedCalculator.icon} {selectedCalculator.label}
+          </h2>
+
+          <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+            {/* Compatibility */}
+            {selectedCalculator.label === "Compatibility" ? (
+              <>
+                <h4 style={{ color: "#aef5ff", textAlign: "left" }}>💫 Person A</h4>
+                <input name="fullNameA" placeholder="Full Name" onChange={handleChange} />
+                <input type="date" name="dobA" onChange={handleChange} />
+                <input type="time" name="timeSlotA" onChange={handleChange} />
+                <input name="birthPlaceA" placeholder="Place of Birth" onChange={handleChange} />
+
+                <h4 style={{ color: "#aef5ff", textAlign: "left" }}>💞 Person B</h4>
+                <input name="fullNameB" placeholder="Full Name" onChange={handleChange} />
+                <input type="date" name="dobB" onChange={handleChange} />
+                <input type="time" name="timeSlotB" onChange={handleChange} />
+                <input name="birthPlaceB" placeholder="Place of Birth" onChange={handleChange} />
+              </>
+            ) : selectedCalculator.label === "Numerology" ? (
+              <>
+                <input name="fullName" placeholder="Full Name" onChange={handleChange} />
+                <input type="date" name="dob" onChange={handleChange} />
+              </>
+            ) : selectedCalculator.label === "Daily Predictions" ? (
+              <input type="date" name="date" onChange={handleChange} />
+            ) : (
+              <>
+                <input name="fullName" placeholder="Full Name" onChange={handleChange} />
+                <input type="date" name="dob" onChange={handleChange} />
+                <input type="time" name="timeSlot" onChange={handleChange} />
+                <input name="birthPlace" placeholder="Place of Birth" onChange={handleChange} />
+              </>
+            )}
           </div>
-        )}
-      </div>
+
+          <button
+            onClick={handleFormSubmit}
+            style={{
+              marginTop: "2rem",
+              padding: "12px 36px",
+              background: "linear-gradient(90deg, #ff00ff, #00ffff)",
+              border: "none",
+              borderRadius: "30px",
+              color: "#fff",
+              fontWeight: 600,
+              cursor: "pointer",
+            }}
+          >
+            {loading ? <Loader2 size={20} style={{ animation: "spin 1s linear infinite" }} /> : "✨ Get Report"}
+          </button>
+        </div>
+      )}
+
+      {/* Step 3: Report */}
+      {step === 3 && (
+        <div
+          style={{
+            background: "rgba(255,255,255,0.1)",
+            borderRadius: "20px",
+            padding: "2.5rem",
+            maxWidth: "700px",
+            margin: "2rem auto",
+            textAlign: "center",
+          }}
+        >
+          <h2>
+            {selectedCalculator.icon} {selectedCalculator.label} Report
+          </h2>
+          <pre
+            style={{
+              textAlign: "left",
+              whiteSpace: "pre-wrap",
+              background: "rgba(255,255,255,0.1)",
+              padding: "1rem",
+              borderRadius: "10px",
+              margin: "1.5rem 0",
+            }}
+          >
+            {backendData ? JSON.stringify(backendData, null, 2) : "No data available"}
+          </pre>
+          <button
+            onClick={resetForm}
+            style={{
+              background: "linear-gradient(90deg, #ff00ff, #00ffff)",
+              border: "none",
+              color: "#fff",
+              padding: "10px 30px",
+              borderRadius: "25px",
+              fontWeight: 600,
+              cursor: "pointer",
+            }}
+          >
+            🔁 Back to Calculators
+          </button>
+        </div>
+      )}
     </div>
   );
 };
