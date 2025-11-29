@@ -2,8 +2,8 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Energy from "./pages/services/Energy";
-import Movement from "./pages/services/Movement";
-import SpaceVastu from "./pages/services/SpaceVastu";
+import Astrology from "./pages/services/Astrology";
+import Vastu from "./pages/services/Vastu";
 import Manifestation from "./pages/services/Manifestation";
 import Material from "./pages/services/Material";
 import ServiceDetails from "./pages/services/ServiceDetails";
@@ -14,7 +14,7 @@ export default function AppRoutes() {
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/energy" element={<Energy />} />
-      <Route path="/movement" element={<Movement />} />
+      <Route path="/Astrology" element={<Astrology />} />
       <Route path="/space-vastu" element={<SpaceVastu />} />
       <Route path="/manifestation" element={<Manifestation />} />
       <Route path="/material" element={<Material />} />

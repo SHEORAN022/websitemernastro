@@ -80,10 +80,10 @@ const Footer = () => {
           <h3>Quick Links</h3>
           <ul>
             <li><Link to="/">Home</Link></li>
-            <li><Link to="/about">About Us</Link></li>
+            <li><Link to="/about-us">About Us</Link></li>
             <li><Link to="/blogs">Blogs</Link></li>
             <li><Link to="/contact">Contact</Link></li>
-            <li><Link to="/book">Book Reading</Link></li>
+            <li><Link to="/careers">Careers</Link></li>
           </ul>
         </div>
 
@@ -93,10 +93,10 @@ const Footer = () => {
           <p>Email: <a href="mailto:support@astroconnect.com">support@astroconnect.com</a></p>
           <p>Phone: <a href="tel:+919876543210">+91 98765 43210</a></p>
           <div className="social-icons">
-            <a href="https://instagram.com/astroconnect" target="_blank" rel="noreferrer"><FaInstagram /></a>
-            <a href="https://facebook.com/astroconnect" target="_blank" rel="noreferrer"><FaFacebookF /></a>
-            <a href="https://youtube.com/astroconnect" target="_blank" rel="noreferrer"><FaYoutube /></a>
-            <a href="https://twitter.com/astroconnect" target="_blank" rel="noreferrer"><FaTwitter /></a>
+            <a href="https://instagram.com/" target="_blank" rel="noreferrer"><FaInstagram /></a>
+            <a href="https://facebook.com/" target="_blank" rel="noreferrer"><FaFacebookF /></a>
+            <a href="https://youtube.com/" target="_blank" rel="noreferrer"><FaYoutube /></a>
+            <a href="https://twitter.com/" target="_blank" rel="noreferrer"><FaTwitter /></a>
           </div>
         </div>
       </div>

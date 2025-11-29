@@ -110,7 +110,8 @@
 /* 🔗 Links */
 .footer-section h3 {
   font-size: 1.3rem;
-  color: #ffea00;
+  /* color: #ffea00; */
+  color: white;
   margin-bottom: 1rem;
 }
 
@@ -124,7 +125,8 @@
 }
 
 .footer-section ul li a {
-  color: #ddd;
+  /* color: #ddd; */
+  color: white;
   text-decoration: none;
   transition: color 0.3s ease, transform 0.3s ease;
 }
@@ -186,7 +188,8 @@
 }
 
 .footer-bottom span {
-  color: #ffea00;
+  /* color: #ffea00; */
+   color: white;
 }
 
 /* 📱 Responsive */

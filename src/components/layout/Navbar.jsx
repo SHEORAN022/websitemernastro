@@ -1,69 +1,85 @@
-import React, { useState, useEffect } from "react";
-import { Link, NavLink } from "react-router-dom";
+// import React from "react";
+// import "../../styles/Navbar.css";
+// import { Bell } from "lucide-react";
+// import { User } from "lucide-react";
+
+// const Navbar = () => {
+//   return (
+//     <nav className="navbar">
+//       <div className="navbar-right">
+
+//         {/* Notification */}
+//         <div className="notif-box">
+//           <Bell className="notif-icon" />
+//           <span className="notif-dot"></span>
+//         </div>
+// <div className="profile-box">
+//   <User className="profile-icon" />
+// </div>
+
+
+//       </div>
+//     </nav>
+//   );
+// };
+
+// export default Navbar;
+
+import React, { useState, useRef, useEffect } from "react";
 import "../../styles/Navbar.css";
+import { Bell, User } from "lucide-react";
 
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef(null);
 
-  const navItems = [
-    { name: "Home", path: "/" },
-    { name: "About Us", path: "/about-us" }, 
-    { name: "Energy", path: "/energy" },
-    { name: "Movement", path: "/movement" },
-    { name: "Space Vastu", path: "/space-vastu" },
-    { name: "Manifestation", path: "/manifestation" },
-    { name: "Material", path: "/material" },
-    { name: "Blogs", path: "/blogs" },
-    { name: "Login / Signup", path: "/auth" },
-  ];
-
+  // Close menu when clicked outside
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 10);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const handleClickOutside = (e) => {
+      if (menuRef.current && !menuRef.current.contains(e.target)) {
+        setMenuOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   return (
-    <nav className={`navbar ${scrolled ? "scrolled" : ""}`}>
-      <div className="navbar-container">
-        {/* Logo */}
-        <Link to="/" className="navbar-logo">
-          <img
-            src="https://res.cloudinary.com/doerrm32l/image/upload/v1761893673/astrologo_fjndbn.png"
-            alt="Astro Logo"
-            loading="lazy"
-          />
-          <span>AstroConnect</span>
-        </Link>
+    <nav className="navbar">
+      <div className="navbar-right">
 
-        {/* Navigation Links */}
-        <div className={`navbar-links ${isOpen ? "open" : ""}`}>
-          {navItems.map((item) => (
-            <NavLink
-              key={item.name}
-              to={item.path}
-              onClick={() => setIsOpen(false)}
-              className={({ isActive }) =>
-                `nav-item ${isActive ? "active" : ""}`
-              }
-            >
-              {item.name}
-            </NavLink>
-          ))}
+        {/* Notification */}
+        <div className="notif-box">
+          <Bell className="notif-icon" />
+          <span className="notif-dot"></span>
         </div>
 
-        {/* Hamburger */}
+        {/* Profile Icon */}
         <div
-          className={`hamburger ${isOpen ? "active" : ""}`}
-          onClick={() => setIsOpen(!isOpen)}
-          aria-label="Toggle navigation menu"
-          aria-expanded={isOpen}
+          className="profile-box"
+          onClick={() => setMenuOpen(!menuOpen)}
+          ref={menuRef}
         >
-          <span></span>
-          <span></span>
-          <span></span>
+          <User className="profile-icon" />
+
+          {/* Dropdown Menu */}
+          {menuOpen && (
+            <div className="profile-menu">
+              <a href="user/profile">My Profile</a>
+              <a href="user/kundli">My Kundli</a>
+              {/* <a href="/orders">My Orders</a> */}
+              <a href="user/bookings">My Bookings</a>
+              <a href="/saved-reports">Saved Reports</a>
+
+              {/* <a href="/matchmaking">Matchmaking</a> */}
+            <a href="/user/wallet">My Wallet</a>
+              <a href="/user/settings">Settings</a>
+
+              <a href="/auth">Login / Logout</a>
+            </div>
+          )}
         </div>
+
       </div>
     </nav>
   );

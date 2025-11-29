@@ -150,7 +150,7 @@
   font-weight: 700;
   background: linear-gradient(90deg, #ff00ff, #00ffff);
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  -webkit-text-fill-color: white;
   text-shadow: 0 0 20px rgba(255, 255, 255, 0.25);
   margin-bottom: 60px;
   animation: glowPulse 3s infinite ease-in-out;
@@ -209,7 +209,7 @@
   font-weight: 700;
   background: linear-gradient(90deg, #ff00ff, #00ffff);
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  -webkit-text-fill-color: white;
 }
 .blog-card-description {
   margin-top: 12px;
@@ -220,7 +220,8 @@
 .blog-card-meta {
   margin-top: 10px;
   font-size: 0.9rem;
-  color: #aaa;
+  /* color: #aaa; */
+  color: white;
   display: flex;
   justify-content: space-between;
 }
@@ -352,13 +353,14 @@
   margin-bottom: 0.5rem;
   background: linear-gradient(90deg, #ff00ff, #00ffff);
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  -webkit-text-fill-color: white;
   text-align: center;
   font-weight: 700;
 }
 .blog-author {
   font-size: 1rem;
-  color: #ccc;
+  /* color: #ccc; */
+   color: white;
   margin-bottom: 1.5rem;
   text-align: center;
 }

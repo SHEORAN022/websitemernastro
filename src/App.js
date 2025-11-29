@@ -60,7 +60,6 @@
 //     </Router>
 //   );
 // }
- 
 
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -75,37 +74,53 @@ import Contact from "./pages/Contact";
 import Careers from "./pages/Careers";
 import Auth from "./pages/Auth";
 
-
 // Services
 import Energy from "./pages/services/Energy";
-import Movement from "./pages/services/Movement";
-import SpaceVastu from "./pages/services/SpaceVastu";
+import Astrology from "./pages/services/Astrology";
+import Vastu from "./pages/services/Vastu";
 import Manifestation from "./pages/services/Manifestation";
 import Material from "./pages/services/Material";
 import ServiceDetails from "./pages/services/ServiceDetails";
 import TarotReading from "./pages/services/TarotReading";
+import MyProfile from "./pages/user/MyProfile";
+import MyKundli from "./pages/user/MyKundli";
+import MyWallet from "./pages/user/MyWallet";
+import MyBookings from "./pages/user/MyBookings";  
+import SavedReports from "./pages/user/SavedReports";
+import Settings from "./pages/user/Settings";
+
+// Layout components
+// import Navbar from "./components/layout/Navbar";
+import Footer from "./components/layout/Footer";
 
 export default function App() {
   return (
     <Router>
-      {/* 🚫 Removed Navbar and Footer */}
+      {/* <Navbar /> */}
+
       <div style={{ minHeight: "100vh" }}>
         <Routes>
-          {/* Main pages */}
           <Route path="/" element={<Home />} />
           <Route path="/blogs" element={<Blogs />} />
           <Route path="/blog/:id" element={<BlogDetail />} />
           <Route path="/book" element={<Book />} />
           <Route path="/about-us" element={<AboutUs />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/careers" element={<Careers />} /> 
+          <Route path="/careers" element={<Careers />} />
           <Route path="/auth" element={<Auth />} />
-          
+          <Route path="/user/profile" element={<MyProfile />} />
+          <Route path="/user/kundli" element={<MyKundli />} />
+          <Route path="/user/wallet" element={<MyWallet />} />
+          <Route path="/user/bookings" element={<MyBookings  />} />
+          <Route path="/saved-reports" element={<SavedReports />} />
+          <Route path="/user/settings" element={<Settings />} />
+
+
 
           {/* Services */}
           <Route path="/energy" element={<Energy />} />
-          <Route path="/movement" element={<Movement />} />
-          <Route path="/space-vastu" element={<SpaceVastu />} />
+          <Route path="/astrology" element={<Astrology />} />
+          <Route path="/vastu" element={<Vastu />} />
           <Route path="/manifestation" element={<Manifestation />} />
           <Route path="/material" element={<Material />} />
           <Route path="/service/:id" element={<ServiceDetails />} />
@@ -122,6 +137,8 @@ export default function App() {
           />
         </Routes>
       </div>
+
+      <Footer />
     </Router>
   );
 }

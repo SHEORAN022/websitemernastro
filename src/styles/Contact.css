@@ -28,7 +28,8 @@
 .contact-hero h1 {
   font-size: 3rem;
   font-weight: 700;
-  color: #ffd700;
+  /* color: #ffd700; */
+  color: white;
   position: relative;
   z-index: 1;
   text-shadow: 0 0 20px #ffd70080;
@@ -38,7 +39,8 @@
 .contact-hero p {
   font-size: 1.2rem;
   margin-top: 1rem;
-  color: #e4e4e4;
+  /* color: #e4e4e4; */
+  color: white;
   position: relative;
   z-index: 1;
   max-width: 700px;
@@ -105,7 +107,8 @@
 }
 
 .info-card p {
-  color: #d0cfff;
+  /* color: #d0cfff; */
+  color: white;
   font-size: 0.95rem;
   line-height: 1.5;
 }
