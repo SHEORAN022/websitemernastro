@@ -969,7 +969,7 @@ const AboutUs = () => {
         onClick={() => setSidebarOpen(false)}   // 🔥 SIDE BAR PAR CLICK → CLOSE
       >
         <div className="sidebar-header">
-          <h2 className="sidebar-logo"> AstroConnect</h2>
+          <h2 className="sidebar-logo">THE FIFTH CUSP</h2>
         </div>
 
         <nav className="sidebar-nav">
@@ -990,7 +990,7 @@ const AboutUs = () => {
         </nav>
 
         <div className="sidebar-footer">
-          <p>© 2025 AstroConnect</p>
+          <p>THE FIFTH CUSP</p>
           <div className="social-links">
             <a href="#">Facebook</a>
             <a href="#">Instagram</a>
@@ -1001,9 +1001,10 @@ const AboutUs = () => {
 
       {/* HAMBURGER MENU */}
       <button
-        className={`hamburger-menu ${sidebarOpen ? "active" : ""}`}
-        onClick={() => setSidebarOpen(true)}
-      >
+  className={`hamburger-menu ${sidebarOpen ? "hide" : ""}`}
+  onClick={() => setSidebarOpen(true)}
+>
+
         <span></span>
         <span></span>
         <span></span>

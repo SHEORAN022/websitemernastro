@@ -18,7 +18,7 @@
 //         if (!token) return;
 
 //         const res = await axios.get(
-//           "http://localhost:7000/api/userweb/kundli/me",
+//           "https://adminastrotalk-1.onrender.com/api/userweb/kundli/me",
 //           { headers: { Authorization: `Bearer ${token}` } }
 //         );
 
@@ -47,7 +47,7 @@
 //       const token = localStorage.getItem("token");
 
 //       const res = await axios.put(
-//         `http://localhost:7000/api/userweb/kundli/update/${user._id}`,
+//         `https://adminastrotalk-1.onrender.com/api/userweb/kundli/update/${user._id}`,
 //         form,
 //         { headers: { Authorization: `Bearer ${token}` } }
 //       );

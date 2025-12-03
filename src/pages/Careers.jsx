@@ -551,7 +551,7 @@ const Careers = () => {
   className={`sidebar ${sidebarOpen ? "open" : ""}`}
   onClick={() => setSidebarOpen(false)}   // ⭐ sidebar ke andar click → close
 >
-  <h2 className="sidebar-logo">AstroConnect</h2>
+  <h2 className="sidebar-logo">THE FIFTH CUSP</h2>
 
   <ul onClick={(e) => e.stopPropagation()} > 
     {/* ⭐ STOP bubbling: links par click par close hogaa, 
@@ -605,7 +605,7 @@ const Careers = () => {
           <h2>Available Positions</h2>
           <p>
             We're looking for passionate individuals to join our growing team at
-            <span className="highlight"> AstroConnect</span>.
+            <span className="highlight"> THE FIFTH CUSP</span>.
           </p>
 
           <div className="careers-list">

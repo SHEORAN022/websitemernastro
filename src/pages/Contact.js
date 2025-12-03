@@ -646,7 +646,7 @@ const Contact = () => {
       marginBottom: "35px",
     }}
   >
-    AstroConnect
+    THE FIFTH CUSP
   </h2>
 
   <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
@@ -816,9 +816,9 @@ const Contact = () => {
           </motion.form>
         </section>
 
-        <footer className="contact-footer">
+        {/* <footer className="contact-footer">
           <MessageSquare size={20} />
-        </footer>
+        </footer> */}
       </div>
     </div>
   );

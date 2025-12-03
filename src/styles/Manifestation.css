@@ -436,9 +436,7 @@ section p {
   .card-details-row input { flex: 1 1 100%; }
   .manifestation-page.sidebar-open .manifestation-content { margin-left: 0; }
 } */
-/* ===== MANIFESTATION PAGE STYLES ===== */
 
-/* Base Page Styles */
 .manifestation-page {
   font-family: "Poppins", sans-serif;
   color: #fff;
@@ -450,9 +448,9 @@ section p {
   transition: all 0.4s ease-in-out;
 }
 
-/* ===== ANIMATIONS ===== */
 
-/* Floating star animation */
+
+
 @keyframes starfloat {
   from { transform: translateY(0); }
   to { transform: translateY(-300px); }

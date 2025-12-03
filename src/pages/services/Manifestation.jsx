@@ -516,7 +516,7 @@
 // import "../../styles/Manifestation.css";
 // import axios from "axios";
 
-// const API_URL = "http://localhost:7000/api/manifestation";
+// const API_URL = "https://adminastrotalk-1.onrender.com/api/manifestation";
 
 // const faqs = [
 //   {
@@ -1061,7 +1061,7 @@
 // import "../../styles/Manifestation.css";
 // import axios from "axios";
 
-// const API_URL = "http://localhost:7000/api/manifestation";
+// const API_URL = "https://adminastrotalk-1.onrender.com/api/manifestation";
 
 // const faqs = [
 //   {
@@ -1745,7 +1745,7 @@
 // import "../../styles/Manifestation.css";
 // import axios from "axios";
 
-// const API_URL = "http://localhost:7000/api/manifestation";
+// const API_URL = "https://adminastrotalk-1.onrender.com/api/manifestation";
 
 // const faqs = [
 //   {
@@ -2511,12 +2511,13 @@
 // };
 
 // export default Manifestation;
-// src/components/manifestation/Manifestation.jsx
+
+
 import React, { useState, useEffect } from "react";
 import "../../styles/Manifestation.css";
 import axios from "axios";
 
-const API_URL = "http://localhost:7000/api/manifestation"; // change if needed
+const API_URL = "https://adminastrotalk-1.onrender.com/api/manifestation"; // change if needed
 
 const faqs = [
   {
@@ -2896,7 +2897,7 @@ const Manifestation = () => {
             WebkitTextFillColor: "white",
           }}
         >
-          AstroConnect
+         THE FIFTH CUSP
         </h2>
 
         <ul style={{ listStyle: "none", padding: 0, marginTop: "30px" }}>
@@ -3255,7 +3256,8 @@ const Manifestation = () => {
             </div>
 
             {/* MANIFESTATION OFFERINGS */}
-            <div style={{ margin: "4rem 0", textAlign: "center" }}>
+
+            {/* <div style={{ margin: "4rem 0", textAlign: "center" }}>
               <h2
                 style={{
                   fontSize: "2.4rem",
@@ -3331,9 +3333,137 @@ const Manifestation = () => {
                   </div>
                 ))}
               </div>
-            </div>
+            </div> */}
+
+            <div style={{ margin: "5rem 0", textAlign: "center" }}>
+  <h2
+    style={{
+      fontSize: "2.6rem",
+      fontWeight: 800,
+      background: "linear-gradient(90deg,#ff00ff,#00ffff)",
+      WebkitBackgroundClip: "text",
+      WebkitTextFillColor: "white",
+      marginBottom: "2rem",
+    }}
+  >
+    Manifestation Offerings
+  </h2>
+
+  <div
+    style={{
+      display: "flex",
+      flexWrap: "wrap",
+      justifyContent: "center",
+      gap: "2.5rem",
+    }}
+  >
+    {manifestationList.map((item) => (
+      <div
+        key={item._id}
+        style={{
+          width: "330px",
+          padding: "2.2rem",
+          borderRadius: "22px",
+          background: "rgba(255,255,255,0.08)",
+          backdropFilter: "blur(18px)",
+          border: "1px solid rgba(255,255,255,0.18)",
+
+          boxShadow: "0 0 35px rgba(255,0,255,0.20)",
+          position: "relative",
+          overflow: "hidden",
+          transition: "all 0.35s ease",
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.transform = "translateY(-12px) scale(1.03)";
+          e.currentTarget.style.boxShadow = "0 0 45px rgba(255,0,255,0.35)";
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.transform = "translateY(0) scale(1)";
+          e.currentTarget.style.boxShadow = "0 0 35px rgba(255,0,255,0.20)";
+        }}
+      >
+        {/* Glow Border */}
+        <div
+          style={{
+            position: "absolute",
+            inset: "-2px",
+            borderRadius: "24px",
+            background: "linear-gradient(135deg,#ff00ff,#8a2be2,#00ffff)",
+            filter: "blur(15px)",
+            zIndex: -1,
+            opacity: 0.22,
+          }}
+        />
+
+        <h3
+          style={{
+            fontSize: "1.4rem",
+            fontWeight: 700,
+            background: "linear-gradient(90deg,#ff00ff,#00ffff)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "white",
+            marginBottom: "0.7rem",
+          }}
+        >
+          {item.label}
+        </h3>
+
+        <p style={{ color: "white", fontSize: "1rem", lineHeight: "1.55" }}>
+          {item.description}
+        </p>
+
+        <p style={{ color: "#ccc", marginTop: "0.8rem" }}>
+          <strong>Deliverable:</strong> {item.deliverable}
+        </p>
+
+        <div
+          style={{
+            marginTop: "1.5rem",
+            display: "flex",
+            gap: "12px",
+          }}
+        >
+          <button
+            onClick={() => alert(item.fullDesc)}
+            style={{
+              flex: 1,
+              padding: "0.8rem 1rem",
+              borderRadius: "14px",
+              background: "linear-gradient(90deg,#8a2be2,#ff00ff)",
+              border: "none",
+              color: "white",
+              fontWeight: 600,
+              cursor: "pointer",
+              transition: "0.3s",
+            }}
+          >
+            Know More
+          </button>
+
+          <button
+            onClick={() => handleBookNow(item)}
+            style={{
+              flex: 1,
+              padding: "0.8rem 1rem",
+              borderRadius: "14px",
+              background: "linear-gradient(90deg,#ff00ff,#00ffff)",
+              border: "none",
+              color: "white",
+              fontWeight: 600,
+              cursor: "pointer",
+              transition: "0.3s",
+            }}
+          >
+            Book Now
+          </button>
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
 
             {/* WELLBEING OFFERINGS */}
+{/*             
             <div style={{ margin: "4rem 0", textAlign: "center" }}>
               <h2
                 style={{
@@ -3409,14 +3539,142 @@ const Manifestation = () => {
                   </div>
                 ))}
               </div>
-            </div>
+            </div> */}
+
+            {/* WELLBEING OFFERINGS */}
+<div style={{ margin: "5rem 0", textAlign: "center" }}>
+  <h2
+    style={{
+      fontSize: "2.6rem",
+      fontWeight: 800,
+      background: "linear-gradient(90deg,#00ffff,#ff00ff)",
+      WebkitBackgroundClip: "text",
+      WebkitTextFillColor: "white",
+      marginBottom: "2rem",
+    }}
+  >
+    Well-being Offerings
+  </h2>
+
+  <div
+    style={{
+      display: "flex",
+      flexWrap: "wrap",
+      justifyContent: "center",
+      gap: "2.5rem",
+    }}
+  >
+    {wellbeingList.map((item) => (
+      <div
+        key={item._id}
+        style={{
+          width: "330px",
+          padding: "2.2rem",
+          borderRadius: "22px",
+          background: "rgba(255,255,255,0.08)",
+          backdropFilter: "blur(18px)",
+          border: "1px solid rgba(255,255,255,0.18)",
+
+          boxShadow: "0 0 35px rgba(0,255,255,0.20)",
+          position: "relative",
+          overflow: "hidden",
+          transition: "all 0.35s ease",
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.transform = "translateY(-12px) scale(1.03)";
+          e.currentTarget.style.boxShadow = "0 0 45px rgba(0,255,255,0.35)";
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.transform = "translateY(0) scale(1)";
+          e.currentTarget.style.boxShadow = "0 0 35px rgba(0,255,255,0.20)";
+        }}
+      >
+        {/* Glow Border */}
+        <div
+          style={{
+            position: "absolute",
+            inset: "-2px",
+            borderRadius: "24px",
+            background: "linear-gradient(135deg,#00ffff,#8a2be2,#ff00ff)",
+            filter: "blur(15px)",
+            zIndex: -1,
+            opacity: 0.22,
+          }}
+        />
+
+        <h3
+          style={{
+            fontSize: "1.4rem",
+            fontWeight: 700,
+            background: "linear-gradient(90deg,#00ffff,#ff00ff)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "white",
+            marginBottom: "0.7rem",
+          }}
+        >
+          {item.label}
+        </h3>
+
+        <p style={{ color: "white", fontSize: "1rem", lineHeight: "1.55" }}>
+          {item.description}
+        </p>
+
+        <p style={{ color: "#ccc", marginTop: "0.8rem" }}>
+          <strong>Deliverable:</strong> {item.deliverable}
+        </p>
+
+        <div
+          style={{
+            marginTop: "1.5rem",
+            display: "flex",
+            gap: "12px",
+          }}
+        >
+          <button
+            onClick={() => alert(item.fullDesc)}
+            style={{
+              flex: 1,
+              padding: "0.8rem 1rem",
+              borderRadius: "14px",
+              background: "linear-gradient(90deg,#8a2be2,#ff00ff)",
+              border: "none",
+              color: "white",
+              fontWeight: 600,
+              cursor: "pointer",
+            }}
+          >
+            Know More
+          </button>
+
+          <button
+            onClick={() => handleBookNow(item)}
+            style={{
+              flex: 1,
+              padding: "0.8rem 1rem",
+              borderRadius: "14px",
+              background: "linear-gradient(90deg,#ff00ff,#00ffff)",
+              border: "none",
+              color: "white",
+              fontWeight: 600,
+              cursor: "pointer",
+            }}
+          >
+            Book Now
+          </button>
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
+
 
             {/* FAQS */}
+            
             <div style={{ margin: "4rem 0", textAlign: "center" }}>
               <h2
                 style={{
                   fontSize: "2.4rem",
-                  background: "linear-gradient(90deg,#ff00ff,#00ffff)",
+                  // background: "linear-gradient(90deg,#ff00ff,#00ffff)",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "white",
                 }}

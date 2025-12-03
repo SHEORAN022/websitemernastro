@@ -3,8 +3,8 @@ import axios from "axios";
 
 // 🌐 BASE API URL
 const API_BASE =
-  // process.env.REACT_APP_API_URL || "https://adminastrotalk-1.onrender.com/api";
-    process.env.REACT_APP_API_URL || "http://localhost:7000/api";
+  process.env.REACT_APP_API_URL || "https://adminastrotalk-1.onrender.com/api";
+    // process.env.REACT_APP_API_URL || "https://adminastrotalk-1.onrender.com/api";
 
 // ⚙️ Common axios instance
 const api = axios.create({
@@ -566,6 +566,7 @@ export const HoroscopeAPI = {
 // ===============================
 // 💳 14. PAYMENT API (Razorpay Integration)
 // ===============================
+
 export const PaymentAPI = {
   // 🧾 Create Razorpay Order
   createOrder: async ({ amount, userId, planId }) => {

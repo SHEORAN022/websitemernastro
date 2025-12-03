@@ -363,7 +363,7 @@ const Blog = () => {
       marginBottom: "35px",
     }}
   >
-    AstroConnect
+   THE FIFTH CUSP
   </h2>
 
   <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>

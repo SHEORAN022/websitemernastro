@@ -2276,7 +2276,7 @@ const Home = () => {
             marginBottom: "30px",
           }}
         >
-          ✨ AstroConnect
+          THE FIFTH CUSP
         </h2>
 
         <ul style={{ listStyle: "none", padding: 0 }}>
@@ -2373,7 +2373,7 @@ const Home = () => {
         }}
       >
         {/* HERO */}
-        <section className="hero">
+        {/* <section className="hero">
           <div className="stars-container">{renderStars(50)}</div>
 
           <div className="hero-overlay">
@@ -2383,7 +2383,20 @@ const Home = () => {
               Book Your Reading
             </a>
           </div>
-        </section>
+        </section> */}
+
+        <section className="hero">
+  <div className="stars-container">{renderStars(50)}</div>
+
+  <div className="hero-glow">
+    <div className="hero-overlay">
+      <h1>Your Destiny Is Written In The Stars ✨</h1>
+      <p>Explore the mysteries of life through astrology, tarot & energy.</p>
+      <a href="/book" className="hero-btn">Book Your Reading</a>
+    </div>
+  </div>
+</section>
+
 
         {/* SERVICES */}
         <section className="home-section services">
@@ -2413,12 +2426,12 @@ const Home = () => {
         <section className="home-section about-us">
           <div className="about-inner">
             <div className="about-left">
-              <img src={aboutImage} alt="AstroConnect" className="about-logo" />
+              <img src={aboutImage} alt="THE FIFTH CUSP" className="about-logo" />
             </div>
 
             <div className="about-right">
               <h2>
-                {aboutData.title} <span>AstroConnect</span>
+                {aboutData.title} <span>THE FIFTH CUSP</span>
               </h2>
 
               <p
@@ -2441,7 +2454,7 @@ const Home = () => {
           <div className="careers-content">
             <h2>Join Our Cosmic Team ✨</h2>
             <p>
-              Become a part of <span className="highlight">AstroConnect</span> — where astrology meets intuition.
+              Become a part of <span className="highlight">THE FIFTH CUSP</span> — where astrology meets intuition.
             </p>
 
             <div className="career-roles">

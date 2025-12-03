@@ -1,0 +1,71 @@
+/* ===========================
+   COSMIC BACKGROUND
+=========================== */
+
+.vc-cosmic-stars {
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(2px 2px at 20% 30%, #ffffff55 50%, transparent),
+                    radial-gradient(2px 2px at 70% 10%, #ffffff44 50%, transparent),
+                    radial-gradient(2px 2px at 40% 80%, #ffffff33 50%, transparent),
+                    radial-gradient(2px 2px at 10% 60%, #ffffff55 50%, transparent);
+  opacity: 0.4;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.vc-stars-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.vc-star {
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.8;
+  animation: twinkle 3s infinite ease-in-out;
+}
+
+@keyframes twinkle {
+  0% { opacity: 0.2; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.4); }
+  100% { opacity: 0.2; transform: scale(1); }
+}
+
+/* Floating glowing orbs */
+
+.vc-floating-orbs .vc-orb {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(75px);
+  opacity: 0.55;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.vc-orb-1 {
+  width: 280px;
+  height: 280px;
+  background: #9333ea;
+  top: 12%;
+  left: 10%;
+}
+
+.vc-orb-2 {
+  width: 340px;
+  height: 340px;
+  background: #3b82f6;
+  bottom: 15%;
+  right: 12%;
+}
+
+.vc-orb-3 {
+  width: 240px;
+  height: 240px;
+  background: #ec4899;
+  top: 50%;
+  right: 30%;
+}

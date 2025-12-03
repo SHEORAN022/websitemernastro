@@ -66,7 +66,7 @@ const Footer = () => {
       <div className="footer-container">
         {/* 🌙 Brand Section */}
         <div className="footer-section about">
-          <h2 className="footer-logo">AstroConnect</h2>
+          <h2 className="footer-logo">THE FIFTH CUSP</h2>
           <p className="footer-desc">
             Guiding you through the cosmic pathways of{" "}
             <span>Astrology</span>, <span>Numerology</span>,{" "}
@@ -103,7 +103,7 @@ const Footer = () => {
 
       {/* 🪐 Bottom */}
       <div className="footer-bottom">
-        © {new Date().getFullYear()} <span>AstroConnect</span>. All Rights Reserved.
+        © {new Date().getFullYear()} <span>THE FIFTH CUSP</span>. All Rights Reserved.
       </div>
     </footer>
   );

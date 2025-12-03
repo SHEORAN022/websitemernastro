@@ -104,7 +104,7 @@
 // //         if (!token) return;
 
 // //         const res = await axios.get(
-// //           "http://localhost:7000/api/userweb/auth/me",
+// //           "https://adminastrotalk-1.onrender.com/api/userweb/auth/me",
 // //           { headers: { Authorization: `Bearer ${token}` } }
 // //         );
 
@@ -128,7 +128,7 @@
 // //     try {
 // //       const token = localStorage.getItem("token");
 // //       const res = await axios.put(
-// //         `http://localhost:7000/api/userweb/change-password/${user._id}`,
+// //         `https://adminastrotalk-1.onrender.com/api/userweb/change-password/${user._id}`,
 // //         password,
 // //         { headers: { Authorization: `Bearer ${token}` } }
 // //       );
@@ -152,7 +152,7 @@
 // //       const token = localStorage.getItem("token");
 
 // //       await axios.delete(
-// //         `http://localhost:7000/api/userweb/delete/${user._id}`,
+// //         `https://adminastrotalk-1.onrender.com/api/userweb/delete/${user._id}`,
 // //         { headers: { Authorization: `Bearer ${token}` } }
 // //       );
 
@@ -289,7 +289,7 @@
 //         if (!token) return;
 
 //         const res = await axios.get(
-//           "http://localhost:7000/api/userweb/auth/me",
+//           "https://adminastrotalk-1.onrender.com/api/userweb/auth/me",
 //           { headers: { Authorization: `Bearer ${token}` } }
 //         );
 
@@ -314,7 +314,7 @@
 //       const token = localStorage.getItem("token");
 
 //       const res = await axios.put(
-//         `http://localhost:7000/api/userweb/change-password/${user._id}`,
+//         `https://adminastrotalk-1.onrender.com/api/userweb/change-password/${user._id}`,
 //         password,
 //         { headers: { Authorization: `Bearer ${token}` } }
 //       );
@@ -338,7 +338,7 @@
 //       const token = localStorage.getItem("token");
 
 //       await axios.delete(
-//         `http://localhost:7000/api/userweb/delete/${user._id}`,
+//         `https://adminastrotalk-1.onrender.com/api/userweb/delete/${user._id}`,
 //         { headers: { Authorization: `Bearer ${token}` } }
 //       );
 
@@ -495,7 +495,7 @@ export default function Settings() {
     try {
       const token = localStorage.getItem("token");
       const res = await axios.get(
-        "http://localhost:7000/api/userweb/auth/me",
+        "https://adminastrotalk-1.onrender.com/api/userweb/auth/me",
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
@@ -513,7 +513,7 @@ export default function Settings() {
     try {
       const token = localStorage.getItem("token");
       const res = await axios.get(
-        "http://localhost:7000/api/userweb/devices",
+        "https://adminastrotalk-1.onrender.com/api/userweb/devices",
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
@@ -528,7 +528,7 @@ export default function Settings() {
     try {
       const token = localStorage.getItem("token");
       const res = await axios.get(
-        "http://localhost:7000/api/userweb/activity",
+        "https://adminastrotalk-1.onrender.com/api/userweb/activity",
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
@@ -543,7 +543,7 @@ export default function Settings() {
     try {
       const token = localStorage.getItem("token");
       await axios.put(
-        `http://localhost:7000/api/userweb/change-password/${user._id}`,
+        `https://adminastrotalk-1.onrender.com/api/userweb/change-password/${user._id}`,
         password,
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -561,7 +561,7 @@ export default function Settings() {
     try {
       const token = localStorage.getItem("token");
       await axios.put(
-        `http://localhost:7000/api/userweb/two-step/${user._id}`,
+        `https://adminastrotalk-1.onrender.com/api/userweb/two-step/${user._id}`,
         { enabled: !twoStepEnabled },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -583,7 +583,7 @@ export default function Settings() {
     try {
       const token = localStorage.getItem("token");
       await axios.delete(
-        `http://localhost:7000/api/userweb/delete/${user._id}`,
+        `https://adminastrotalk-1.onrender.com/api/userweb/delete/${user._id}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       alert("Account Deleted");

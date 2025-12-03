@@ -107,9 +107,14 @@
   background: white;
   transition: 0.4s;
 }
-.hamburger-menu.active span:nth-child(1) { transform: translateY(10px) rotate(45deg); }
-.hamburger-menu.active span:nth-child(2) { opacity: 0; }
-.hamburger-menu.active span:nth-child(3) { transform: translateY(-10px) rotate(-45deg); }
+/* ✅ FINAL FIX — Hamburger open hone par bhi same rahe */
+.hamburger-menu.active span:nth-child(1),
+.hamburger-menu.active span:nth-child(2),
+.hamburger-menu.active span:nth-child(3) {
+  transform: none !important;
+  opacity: 1 !important;
+}
+
 .hero-section {
   display: flex;
   justify-content: space-between;
@@ -431,4 +436,9 @@
 }
 .sidebar-modern.open ~ .about-content {
   margin-left: 300px;
+}
+
+.hamburger-menu.hide {
+  opacity: 0;
+  pointer-events: none;
 }

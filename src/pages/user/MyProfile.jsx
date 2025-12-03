@@ -19,7 +19,7 @@ const MyProfile = () => {
         if (!token) return;
 
         const res = await axios.get(
-          "http://localhost:7000/api/userweb/auth/me",
+          "https://adminastrotalk-1.onrender.com/api/userweb/auth/me",
           { headers: { Authorization: `Bearer ${token}` } }
         );
 
@@ -55,7 +55,7 @@ const MyProfile = () => {
       const token = localStorage.getItem("token");
 
       const res = await axios.put(
-        `http://localhost:7000/api/userweb/profile/${user._id}`,
+        `https://adminastrotalk-1.onrender.com/api/userweb/profile/${user._id}`,
         form,
         { headers: { Authorization: `Bearer ${token}` } }
       );
