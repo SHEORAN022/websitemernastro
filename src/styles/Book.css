@@ -1,4 +1,4 @@
-.book-container {
+/* .book-container {
   max-width: 500px;
   margin: 3rem auto;
   padding: 2rem;
@@ -46,4 +46,187 @@
 .book-container button:hover {
   transform: scale(1.05);
   background: linear-gradient(135deg,#6236ff,#b784f7);
+} */
+/* ---------------------------------------------------
+   🌌 FULL COSMIC BACKGROUND (Same as Careers Page)
+--------------------------------------------------- */
+.book-page {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #1a0033 0%, #0d001a 100%);
+  position: relative;
+  overflow-x: hidden;
+  padding-top: 2rem;
+  font-family: "Poppins", sans-serif;
+  color: #fff;
 }
+
+/* ⭐ STARFIELD */
+.stars-bg {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+
+  background-image:
+    radial-gradient(2px 2px at 20% 30%, #ffffff80 50%, transparent),
+    radial-gradient(2px 2px at 80% 15%, #ffffff70 50%, transparent),
+    radial-gradient(2px 2px at 60% 75%, #ffffff60 50%, transparent),
+    radial-gradient(2px 2px at 10% 60%, #ffffff70 50%, transparent);
+
+  opacity: 0.35;
+  animation: twinkle 3.5s infinite ease-in-out;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.9; }
+}
+
+/* 🌈 FLOATING GLOW ORBS */
+.orb {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(70px);
+  opacity: 0.55;
+  z-index: 0;
+}
+
+.orb1 {
+  width: 260px;
+  height: 260px;
+  background: #9333ea;
+  top: 12%;
+  left: 8%;
+}
+
+.orb2 {
+  width: 320px;
+  height: 320px;
+  background: #3b82f6;
+  bottom: 15%;
+  right: 10%;
+}
+
+.orb3 {
+  width: 220px;
+  height: 220px;
+  background: #ec4899;
+  top: 48%;
+  right: 24%;
+}
+
+/* ---------------------------------------------------
+   📝 BOOK FORM — SAME STYLE YOU HAD BEFORE
+--------------------------------------------------- */
+
+.book-container {
+  max-width: 500px;
+  margin: 3rem auto;
+  padding: 2rem;
+
+  background: #faf7ff;              /* SAME WHITE CARD */
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+  text-align: center;
+
+  position: relative;
+  z-index: 5;    /* keeps card on top of stars & orbs */
+}
+
+.book-container h1 {
+  color: #2d1b69;
+  font-size: 1.9rem;
+  margin-bottom: 1.5rem;
+}
+
+.book-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* INPUTS & DROPDOWN */
+.book-container input,
+.book-container select,
+.book-container button {
+  padding: 0.8rem;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+.book-container input:focus,
+.book-container select:focus {
+  outline: none;
+  border-color: #6236ff;
+}
+
+/* BUTTON */
+.book-container button {
+  background: linear-gradient(135deg, #b784f7, #6236ff);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s ease;
+}
+
+.book-container button:hover {
+  transform: scale(1.05);
+  background: linear-gradient(135deg, #6236ff, #b784f7);
+}
+
+/* ---------------------------------------------------
+   📱 RESPONSIVE
+--------------------------------------------------- */
+@media (max-width: 600px) {
+  .book-container {
+    width: 90%;
+    padding: 1.6rem;
+    margin-top: 2rem;
+  }
+}
+/* PAGE BACKGROUND SAME AS HOME PAGE */
+.book-page {
+  min-height: 100vh;
+  background: #0e001f;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ⭐ STAR CONTAINER */
+.book-stars {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* ⭐ SINGLE STAR STYLE */
+.star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: #ffffffcc;
+  border-radius: 50%;
+  animation: twinkle 3s infinite ease-in-out;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.2; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.4); }
+}
+
+/* ⭐ BOOK FORM (YOUR SAME DESIGN) */
+.book-container {
+  max-width: 500px;
+  margin: 5rem auto;
+  padding: 2rem;
+  background: #faf7ff;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+  text-align: center;
+  z-index: 5;
+  position: relative;
+}
+

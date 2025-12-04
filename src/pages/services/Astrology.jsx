@@ -4416,7 +4416,7 @@ const Astrology = () => {
         }}
       >
         <h2 style={{ fontSize: "26px", fontWeight: 700, textAlign: "center", background: "linear-gradient(90deg, #ff00ff, #00ffff)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", marginBottom: "25px" }}>
-          🔮 AstroConnect
+          THE FIFTH CUSP
         </h2>
 
         <ul style={{ listStyle: "none", padding: 0 }}>

@@ -9,33 +9,17 @@
   overflow-x: hidden;
   padding: 2.5rem 1.5rem;
   position: relative;
-  transition: padding-left 0.4s ease-in-out;
   z-index: 1;
 }
 
-/* FIX: prevent background blocking clicks */
 .material-page * {
-  position: relative;
-  z-index: 5;
+  /* position: relative;*/
+  z-index: 5; 
 }
 
 /* ---------------------------------------------------
    SIDEBAR
 ---------------------------------------------------- */
-.sidebar-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(10, 0, 25, 0.65);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-  z-index: 900;
-}
-
-.sidebar-overlay.visible {
-  opacity: 1;
-  pointer-events: all;
-}
 
 .sidebar-home {
   position: fixed;
@@ -43,10 +27,10 @@
   left: -290px;
   width: 290px;
   height: 100vh;
-  background: rgba(22, 0, 55, 0.93);
+  background: linear-gradient(180deg, #120021, #1b0033);
   backdrop-filter: blur(20px);
   box-shadow: 6px 0 40px rgba(255, 0, 255, 0.25);
-  transition: left 0.4s ease-in-out;
+  transition: left 0.35s ease-in-out;
   z-index: 9999;
   padding: 2.6rem 1.9rem;
   border-right: 1px solid rgba(255, 255, 255, 0.15);
@@ -54,6 +38,21 @@
 
 .sidebar-home.open {
   left: 0;
+}
+
+.sidebar-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 0, 25, 0.65);
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.25s ease;
+  z-index: 900;
+}
+
+.sidebar-overlay.visible {
+  opacity: 1;
+  pointer-events: all;
 }
 
 .sidebar-logo {
@@ -67,9 +66,10 @@
 }
 
 .sidebar-home ul {
-  list-style: none;
   padding: 0;
+  list-style: none;
 }
+
 .sidebar-home li {
   margin-bottom: 1rem;
 }
@@ -82,8 +82,8 @@
   color: #d8d8d8;
   border-radius: 12px;
   background: rgba(255, 255, 255, 0.05);
-  text-decoration: none;
   transition: 0.25s;
+  text-decoration: none;
 }
 
 .sidebar-home a:hover {
@@ -92,32 +92,45 @@
   box-shadow: 0 0 25px rgba(255, 0, 255, 0.55);
 }
 
-.sidebar-toggle-home {
+/* ---------------------------------------------------
+   HAMBURGER BUTTON
+---------------------------------------------------- */
+
+.hamburger-btn {
   position: fixed;
   top: 20px;
   left: 20px;
   width: 56px;
   height: 56px;
   background: linear-gradient(135deg, #ff00ff, #7b2cbf);
-  color: white;
-  border-radius: 50%;
   border: none;
-  font-size: 28px;
+  border-radius: 14px;
+  color: #fff;
+  font-size: 26px;
   cursor: pointer;
-  z-index: 10000;
-  box-shadow: 0 0 32px rgba(255, 0, 255, 0.5);
-  transition: 0.25s;
+  z-index: 11000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.25s ease;
 }
-.sidebar-toggle-home:hover {
-  transform: scale(1.1);
+
+.hamburger-btn:hover {
+  transform: scale(1.08);
+}
+
+/* hide hamburger when sidebar open */
+.sidebar-open .hamburger-btn {
+  display: none !important;
 }
 
 /* ---------------------------------------------------
-   MAIN CONTENT
+   MAIN CONTENT (NO SHIFT EVER)
 ---------------------------------------------------- */
+
 .material-content {
-  margin-left: 0;
-  transition: margin-left 0.45s ease;
+  margin-left: 0 !important;
+  transition: none !important;
 }
 
 /* ---------------------------------------------------
@@ -164,33 +177,27 @@
   -webkit-text-fill-color: transparent;
 }
 
-/* ⭐⭐⭐ CENTERED + EQUAL HEIGHT SERVICES ⭐⭐⭐ */
 .offerings-grid {
   display: flex;
   justify-content: center;
-  align-items: stretch;
   flex-wrap: wrap;
   gap: 2rem;
   max-width: 1200px;
-  margin: 0 auto;
+  margin: auto;
 }
 
-/* ⭐⭐⭐ FIXED SAME HEIGHT CARD ⭐⭐⭐ */
 .service-card {
-  background: rgba(255, 255, 255, 0.1);
+  width: 300px;
+  height: 360px;
   padding: 2rem;
   border-radius: 22px;
+  background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(20px);
   text-align: center;
-
-  width: 300px;
-  height: 360px;            /* SAME HEIGHT */
-
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-
-  transition: 0.3s ease;
+  transition: 0.3s;
 }
 
 .service-card:hover {
@@ -204,7 +211,6 @@
   border-radius: 28px;
   border: none;
   color: #fff;
-  font-size: 1rem;
   cursor: pointer;
 }
 
@@ -218,66 +224,45 @@
 }
 
 .form-center-wrapper {
-  width: 100%;
   max-width: 650px;
   padding: 2rem;
-  border-radius: 22px;
   background: rgba(255, 255, 255, 0.06);
-  box-shadow: 0 0 25px rgba(255, 0, 255, 0.2);
+  border-radius: 22px;
   backdrop-filter: blur(14px);
+  box-shadow: 0 0 25px rgba(255, 0, 255, 0.2);
 }
 
-.form-top-text h2 {
-  font-size: 2rem;
-  text-align: center;
-}
-.form-top-text p {
-  text-align: center;
-  opacity: 0.8;
-  margin-bottom: 1.8rem;
-}
-
-/* ⭐⭐⭐ PREMIUM FORM ⭐⭐⭐ */
 .material-form {
   display: flex;
   flex-direction: column;
   gap: 1.3rem;
-  width: 100%;
-  max-width: 620px;
-  margin: 0 auto;
 }
 
 .material-form input,
 .material-form textarea {
-  width: 100%;
   padding: 1rem 1.2rem;
   border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, 0.25);
   background: rgba(255, 255, 255, 0.12);
   color: #fff;
-  font-size: 1rem;
-  backdrop-filter: blur(8px);
-  transition: 0.3s ease;
 }
 
 .material-form input:focus,
 .material-form textarea:focus {
   border-color: #ff00ff;
   box-shadow: 0 0 18px rgba(255, 0, 255, 0.4);
-  outline: none;
 }
 
-.material-form textarea {
+textarea {
   min-height: 130px;
 }
 
-/* BUTTON */
 .glow-btn {
   background: linear-gradient(90deg, #ff00ff, #00eaff);
   padding: 1rem 2rem;
   border-radius: 30px;
-  border: none;
   color: #fff;
+  border: none;
   cursor: pointer;
 }
 
@@ -288,9 +273,8 @@
   background: linear-gradient(90deg, #ff00ff, #00ffff);
   padding: 1rem 2rem;
   border-radius: 30px;
-  border: none;
   color: #fff;
-  cursor: pointer;
+  border: none;
 }
 
 /* ---------------------------------------------------
@@ -310,8 +294,8 @@
 
 .client-card {
   width: 180px;
-  background: rgba(255, 255, 255, 0.1);
   padding: 1rem;
+  background: rgba(255, 255, 255, 0.1);
   border-radius: 16px;
   text-align: center;
 }
@@ -321,4 +305,21 @@
   height: 120px;
   border-radius: 12px;
   object-fit: cover;
+}
+.material-page {
+  position: relative;
+  z-index: 1;
+}
+
+.material-content {
+  position: relative;
+  z-index: 1;   /* <-- ये सबसे ज़रूरी है */
+}
+
+.sidebar-home {
+  z-index: 9999;   /* sidebar सबसे ऊपर रहेगा */
+}
+
+.sidebar-overlay {
+  z-index: 9000;   /* overlay भी ऊपर रहेगा */
 }

@@ -1,11 +1,77 @@
+/* ---------------------------------------------------
+   🌌 FULL COSMIC BACKGROUND (Home Page Style)
+--------------------------------------------------- */
+.auth-page {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #1a0033 0%, #0d001a 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+/* ⭐ STARFIELD */
+.auth-stars {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+
+  background-image:
+    radial-gradient(2px 2px at 20% 30%, #ffffff80 50%, transparent),
+    radial-gradient(2px 2px at 80% 15%, #ffffff70 50%, transparent),
+    radial-gradient(2px 2px at 60% 75%, #ffffff60 50%, transparent),
+    radial-gradient(2px 2px at 10% 60%, #ffffff70 50%, transparent);
+
+  animation: twinkle 3s infinite ease-in-out;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.25; }
+  50% { opacity: 0.9; }
+}
+
+/* ---------------------------------------------------
+   🌈 FLOATING ORBS (OPTIONAL – SAME AS CAREERS)
+--------------------------------------------------- */
+.auth-orb {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(70px);
+  opacity: 0.55;
+  z-index: 0;
+}
+
+.auth-orb1 {
+  width: 260px;
+  height: 260px;
+  background: #9333ea;
+  top: 12%;
+  left: 8%;
+}
+
+.auth-orb2 {
+  width: 320px;
+  height: 320px;
+  background: #3b82f6;
+  bottom: 15%;
+  right: 10%;
+}
+
+/* ---------------------------------------------------
+   💠 ORIGINAL FORM STYLING (UNCHANGED)
+--------------------------------------------------- */
+
 /* Full Page Centering */
 .auth-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: #f4f6ff;
   padding: 20px;
+
+  /* 🔥 Transparent so background shows */
+  background: transparent;
+  position: relative;
+  z-index: 5;
 }
 
 /* Main Card */
@@ -15,7 +81,7 @@
   padding: 32px;
   background: #fff;
   border-radius: 14px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
   animation: fadeIn 0.35s ease-in-out;
 }
 
@@ -55,7 +121,7 @@
   outline: none;
 }
 
-/* Blue Button (Send OTP, Login, Signup) */
+/* Blue Button */
 .auth-btn {
   width: 100%;
   padding: 14px;
@@ -78,7 +144,7 @@
   cursor: not-allowed;
 }
 
-/* Green Button (Verify OTP) */
+/* Green Button */
 .auth-btn-green {
   background: #28a745;
 }
@@ -87,7 +153,7 @@
   background: #1e8b39;
 }
 
-/* Switch Login/Signup Text */
+/* Switch Login/Signup */
 .auth-switch {
   margin-top: 12px;
   text-align: center;
@@ -116,12 +182,6 @@
 
 /* Fade in */
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
 }

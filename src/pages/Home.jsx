@@ -2077,68 +2077,458 @@
 
 // export default Home;
 
+// import React, { useState, useEffect } from "react";
+// import axios from "axios";
+// import "../styles/Home.css";
+
+// import Navbar from "../components/layout/Navbar";  // ✅ Navbar added here
+
+// const API_BASE =
+//   process.env.REACT_APP_API_URL || "https://adminastrotalk-1.onrender.com/api";
+
+// const Home = () => {
+//   const [sidebarOpen, setSidebarOpen] = useState(false);
+//   const [openDropdown, setOpenDropdown] = useState(null);
+//   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+//   const [aboutData, setAboutData] = useState({
+//     title: "About Us",
+//     content: "",
+//     image: "",
+//   });
+
+//   const [careers, setCareers] = useState([]);
+
+//   /* ---------------- Check Login ---------------- */
+//   useEffect(() => {
+//     const token = localStorage.getItem("token");
+//     setIsLoggedIn(!!token);
+//   }, []);
+
+//   /* ---------------- Logout ---------------- */
+//   const handleLogout = () => {
+//     localStorage.removeItem("token");
+//     setIsLoggedIn(false);
+//     window.location.href = "/auth";
+//   };
+
+//   /* ---------------- Fetch About ---------------- */
+//   useEffect(() => {
+//     const fetchAboutData = async () => {
+//       try {
+//         const res = await axios.get(`${API_BASE}/about`);
+//         if (res.data) setAboutData(res.data);
+//       } catch (err) {
+//         console.error("❌ Error fetching About:", err.message);
+//       }
+//     };
+//     fetchAboutData();
+//   }, []);
+
+//   /* ---------------- Fetch Careers ---------------- */
+//   useEffect(() => {
+//     const fetchCareers = async () => {
+//       try {
+//         const res = await axios.get(`${API_BASE}/careers`);
+//         setCareers(res.data || []);
+//       } catch (err) {
+//         console.error("❌ Error fetching careers:", err.message);
+//       }
+//     };
+//     fetchCareers();
+//   }, []);
+
+//   /* ---------------- Navbar Links ---------------- */
+//   const navLinks = [
+//     {
+//       name: "Home",
+//       link: "/",
+//       dropdown: [
+//         { name: "About Us", link: "/about-us" },
+//         { name: "Careers", link: "/careers" },
+//       ],
+//     },
+//     { name: "Energy", link: "/energy" },
+//     { name: "Astrology", link: "/astrology" },
+//     { name: "Vastu", link: "/vastu" },
+//     { name: "Manifestation", link: "/manifestation" },
+//     { name: "Material", link: "/material" },
+//     { name: "Blogs", link: "/blogs" },
+//     isLoggedIn
+//       ? { name: "Logout", action: handleLogout }
+//       : { name: "Your Account", link: "/auth" },
+//   ];
+
+//   /* ---------------- Hero Stars ---------------- */
+//   const renderStars = (count) =>
+//     Array.from({ length: count }).map((_, i) => (
+//       <div
+//         key={i}
+//         className="star"
+//         style={{
+//           position: "absolute",
+//           top: `${Math.random() * 100}%`,
+//           left: `${Math.random() * 100}%`,
+//           width: `${1 + Math.random() * 2}px`,
+//           height: `${1 + Math.random() * 2}px`,
+//           background: "white",
+//           borderRadius: "50%",
+//           animation: `twinkle ${2 + Math.random() * 3}s infinite`,
+//         }}
+//       ></div>
+//     ));
+
+//   const aboutImage =
+//     aboutData.image && aboutData.image.startsWith("/uploads")
+//       ? `${API_BASE.replace("/api", "")}${aboutData.image}`
+//       : "https://res.cloudinary.com/doerrm32l/image/upload/v1761893673/astrologo_fjndbn.png";
+
+//   /* ---------------- Services ---------------- */
+//   const services = [
+//     {
+//       name: "Astrology",
+//       link: "/astrology",
+//       desc: "Decode your life's blueprint with planetary wisdom.",
+//       gradient: "linear-gradient(135deg, #667eea, #764ba2)",
+//     },
+//     {
+//       name: "Vastu Shastra",
+//       link: "/vastu",
+//       desc: "Bring balance and flow into your surroundings.",
+//       gradient: "linear-gradient(135deg, #f093fb, #f5576c)",
+//     },
+//     {
+//       name: "Numerology",
+//       link: "/astrology?type=numerology",
+//       desc: "Discover destiny numbers & personality insights.",
+//       gradient: "linear-gradient(135deg, #4facfe, #00f2fe)",
+//     },
+//     {
+//       name: "Energy Reading",
+//       link: "/energy",
+//       desc: "Understand your aura and emotional energy.",
+//       gradient: "linear-gradient(135deg, #43e97b, #38f9d7)",
+//     },
+//     {
+//       name: "Tarot Reading",
+//       link: "/tarotreading",
+//       desc: "Guidance for love, career, and personal life.",
+//       gradient: "linear-gradient(135deg, #fa709a, #fee140)",
+//     },
+//     {
+//       name: "Manifestation",
+//       link: "/manifestation",
+//       desc: "Turn desire into reality through aligned energy.",
+//       gradient: "linear-gradient(135deg, #30cfd0, #330867)",
+//     },
+//   ];
+
+//   return (
+//     <div
+//       style={{
+//         fontFamily: "Poppins, sans-serif",
+//         color: "#fff",
+//         background: "linear-gradient(180deg, #1a0033, #0d001a)",
+//         minHeight: "100vh",
+//         overflowX: "hidden",
+//       }}
+//     >
+//       {/* ==================== NAVBAR ==================== */}
+//       <Navbar />
+
+//       {/* ============ Sidebar Overlay ============ */}
+//       {sidebarOpen && (
+//         <div
+//           onClick={() => setSidebarOpen(false)}
+//           style={{
+//             position: "fixed",
+//             inset: 0,
+//             background: "transparent",
+//             zIndex: 900,
+//           }}
+//         ></div>
+//       )}
+
+//       {/* ============ SIDEBAR ============ */}
+//       <div
+//         style={{
+//           position: "fixed",
+//           top: 0,
+//           left: sidebarOpen ? 0 : "-270px",
+//           width: "270px",
+//           height: "100vh",
+//           background: "linear-gradient(180deg, rgba(20,0,40,0.95), rgba(5,0,20,0.9))",
+//           backdropFilter: "blur(14px)",
+//           boxShadow: "6px 0 25px rgba(255, 0, 255, 0.25)",
+//           transition: "left 0.45s ease",
+//           zIndex: 1000,
+//           padding: "30px 18px",
+//         }}
+//       >
+//         <h2
+//           style={{
+//             fontSize: "28px",
+//             fontWeight: 700,
+//             textAlign: "center",
+//             background: "linear-gradient(to right, #ff00ff, #00ffff)",
+//             WebkitBackgroundClip: "text",
+//             WebkitTextFillColor: "transparent",
+//             marginBottom: "30px",
+//           }}
+//         >
+//           THE FIFTH CUSP
+//         </h2>
+
+//         <ul style={{ listStyle: "none", padding: 0 }}>
+//           {navLinks.map((item, idx) => (
+//             <li key={idx} style={{ marginBottom: "12px" }}>
+//               <div
+//                 onClick={() =>
+//                   item.dropdown
+//                     ? setOpenDropdown(openDropdown === idx ? null : idx)
+//                     : item.action
+//                     ? item.action()
+//                     : (window.location.href = item.link)
+//                 }
+//                 style={{
+//                   display: "flex",
+//                   alignItems: "center",
+//                   justifyContent: "space-between",
+//                   padding: "12px 16px",
+//                   borderRadius: "10px",
+//                   color: "#ccc",
+//                   cursor: "pointer",
+//                 }}
+//               >
+//                 <span>{item.name}</span>
+
+//                 {item.dropdown && (
+//                   <span
+//                     style={{
+//                       transition: "0.3s",
+//                       transform:
+//                         openDropdown === idx ? "rotate(90deg)" : "rotate(0deg)",
+//                     }}
+//                   >
+//                     ▶
+//                   </span>
+//                 )}
+//               </div>
+
+//               {item.dropdown && openDropdown === idx && (
+//                 <ul style={{ listStyle: "none", paddingLeft: "20px", marginTop: "5px" }}>
+//                   {item.dropdown.map((sub, sidx) => (
+//                     <li key={sidx} style={{ marginBottom: "8px" }}>
+//                       <a
+//                         href={sub.link}
+//                         style={{
+//                           display: "block",
+//                           padding: "8px 12px",
+//                           borderRadius: "8px",
+//                           color: "#aaa",
+//                           fontSize: "0.9rem",
+//                           textDecoration: "none",
+//                         }}
+//                       >
+//                         {sub.name}
+//                       </a>
+//                     </li>
+//                   ))}
+//                 </ul>
+//               )}
+//             </li>
+//           ))}
+//         </ul>
+//       </div>
+
+//       {/* HAMBURGER */}
+//       {!sidebarOpen && (
+//         <button
+//           onClick={() => setSidebarOpen(true)}
+//           style={{
+//             position: "fixed",
+//             top: "20px",
+//             left: "20px",
+//             width: "55px",
+//             height: "55px",
+//             borderRadius: "50%",
+//             background: "linear-gradient(135deg, #ff00ff, #7b2cbf)",
+//             border: "none",
+//             fontSize: "26px",
+//             color: "#fff",
+//             cursor: "pointer",
+//             boxShadow: "0 0 20px rgba(255, 0, 255, 0.4)",
+//             zIndex: 1200,
+//           }}
+//         >
+//           ☰
+//         </button>
+//       )}
+
+//       {/* MAIN CONTENT WITH SLIDE EFFECT */}
+//       <div
+//         style={{
+//           marginLeft: sidebarOpen ? "270px" : "0",
+//           transition: "margin-left 0.5s ease",
+//         }}
+//       >
+//         {/* HERO */}
+//         {/* <section className="hero">
+//           <div className="stars-container">{renderStars(50)}</div>
+
+//           <div className="hero-overlay">
+//             <h1>Your Destiny Is Written In The Stars ✨</h1>
+//             <p>Explore the mysteries of life through astrology, tarot & energy.</p>
+//             <a href="/book" className="hero-btn">
+//               Book Your Reading
+//             </a>
+//           </div>
+//         </section> */}
+
+//         <section className="hero">
+//   <div className="stars-container">{renderStars(50)}</div>
+
+//   <div className="hero-glow">
+//     <div className="hero-overlay">
+//       <h1>Your Destiny Is Written In The Stars ✨</h1>
+//       <p>Explore the mysteries of life through astrology, tarot & energy.</p>
+//       <a href="/book" className="hero-btn">Book Your Reading</a>
+//     </div>
+//   </div>
+// </section>
+
+
+//         {/* SERVICES */}
+//         <section className="home-section services">
+//           <h2>Languages</h2>
+//           <p className="services-subtitle">
+//             Explore cosmic wisdom through our transformative offerings
+//           </p>
+
+//           <div className="modern-services-grid">
+//             {services.map((service, idx) => (
+//               <a href={service.link} key={idx} className="modern-service-card">
+//                 <div
+//                   className="card-icon-wrapper"
+//                   style={{ background: service.gradient }}
+//                 ></div>
+
+//                 <h3>{service.name}</h3>
+//                 <p>{service.desc}</p>
+
+//                 <div className="card-arrow">→</div>
+//               </a>
+//             ))}
+//           </div>
+//         </section>
+
+//         {/* ABOUT */}
+//         <section className="home-section about-us">
+//           <div className="about-inner">
+//             <div className="about-left">
+//               <img src={aboutImage} alt="THE FIFTH CUSP" className="about-logo" />
+//             </div>
+
+//             <div className="about-right">
+//               <h2>
+//                 {aboutData.title} <span>THE FIFTH CUSP</span>
+//               </h2>
+
+//               <p
+//                 dangerouslySetInnerHTML={{
+//                   __html:
+//                     aboutData.content ||
+//                     "At AstroConnect, we bring cosmic clarity to your life.",
+//                 }}
+//               ></p>
+
+//               <a href="/about-us" className="about-btn">
+//                 Discover More →
+//               </a>
+//             </div>
+//           </div>
+//         </section>
+
+//         {/* CAREERS */}
+//         <section className="home-section careers">
+//           <div className="careers-content">
+//             <h2>Join Our Cosmic Team ✨</h2>
+//             <p>
+//               Become a part of <span className="highlight">THE FIFTH CUSP</span> — where astrology meets intuition.
+//             </p>
+
+//             <div className="career-roles">
+//               {careers.length > 0 ? (
+//                 careers.slice(0, 3).map((career) => (
+//                   <div key={career._id} className="career-card">
+//                     {career.image && (
+//                       <img
+//                         src={`https://adminastrotalk-1.onrender.com${career.image}`}
+//                         alt={career.title}
+//                         className="career-img"
+//                       />
+//                     )}
+
+//                     <h3>{career.title}</h3>
+//                     <p>{career.description}</p>
+
+//                     <p style={{ fontSize: "0.85rem", opacity: 0.8 }}>
+//                       Status: {career.status}
+//                     </p>
+//                   </div>
+//                 ))
+//               ) : (
+//                 <p>No open positions available.</p>
+//               )}
+//             </div>
+
+//             <a href="/careers" className="career-btn">
+//               Explore Opportunities →
+//             </a>
+//           </div>
+//         </section>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Home;
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../styles/Home.css";
 
-import Navbar from "../components/layout/Navbar";  // ✅ Navbar added here
+import Navbar from "../components/layout/Navbar";
+import Sidebar from "../components/Sidebar";
 
 const API_BASE =
   process.env.REACT_APP_API_URL || "https://adminastrotalk-1.onrender.com/api";
 
 const Home = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [openDropdown, setOpenDropdown] = useState(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  /* ---------------- SIDEBAR STATE (IMPORTANT) ---------------- */
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [aboutData, setAboutData] = useState({
     title: "About Us",
     content: "",
     image: "",
   });
-
   const [careers, setCareers] = useState([]);
 
-  /* ---------------- Check Login ---------------- */
+  /* ---------------- LOGIN CHECK ---------------- */
   useEffect(() => {
     const token = localStorage.getItem("token");
     setIsLoggedIn(!!token);
   }, []);
 
-  /* ---------------- Logout ---------------- */
   const handleLogout = () => {
     localStorage.removeItem("token");
     setIsLoggedIn(false);
     window.location.href = "/auth";
   };
 
-  /* ---------------- Fetch About ---------------- */
-  useEffect(() => {
-    const fetchAboutData = async () => {
-      try {
-        const res = await axios.get(`${API_BASE}/about`);
-        if (res.data) setAboutData(res.data);
-      } catch (err) {
-        console.error("❌ Error fetching About:", err.message);
-      }
-    };
-    fetchAboutData();
-  }, []);
-
-  /* ---------------- Fetch Careers ---------------- */
-  useEffect(() => {
-    const fetchCareers = async () => {
-      try {
-        const res = await axios.get(`${API_BASE}/careers`);
-        setCareers(res.data || []);
-      } catch (err) {
-        console.error("❌ Error fetching careers:", err.message);
-      }
-    };
-    fetchCareers();
-  }, []);
-
-  /* ---------------- Navbar Links ---------------- */
+  /* ---------------- NAV LINKS ---------------- */
   const navLinks = [
     {
       name: "Home",
@@ -2159,7 +2549,13 @@ const Home = () => {
       : { name: "Your Account", link: "/auth" },
   ];
 
-  /* ---------------- Hero Stars ---------------- */
+  /* ---------------- FETCH API ---------------- */
+  useEffect(() => {
+    axios.get(`${API_BASE}/about`).then((res) => setAboutData(res.data));
+    axios.get(`${API_BASE}/careers`).then((res) => setCareers(res.data));
+  }, []);
+
+  /* ---------------- RENDER STARS ---------------- */
   const renderStars = (count) =>
     Array.from({ length: count }).map((_, i) => (
       <div
@@ -2179,11 +2575,11 @@ const Home = () => {
     ));
 
   const aboutImage =
-    aboutData.image && aboutData.image.startsWith("/uploads")
+    aboutData.image?.startsWith("/uploads")
       ? `${API_BASE.replace("/api", "")}${aboutData.image}`
       : "https://res.cloudinary.com/doerrm32l/image/upload/v1761893673/astrologo_fjndbn.png";
 
-  /* ---------------- Services ---------------- */
+  /* ---------------- SERVICES ---------------- */
   const services = [
     {
       name: "Astrology",
@@ -2224,179 +2620,41 @@ const Home = () => {
   ];
 
   return (
-    <div
-      style={{
-        fontFamily: "Poppins, sans-serif",
-        color: "#fff",
-        background: "linear-gradient(180deg, #1a0033, #0d001a)",
-        minHeight: "100vh",
-        overflowX: "hidden",
-      }}
-    >
-      {/* ==================== NAVBAR ==================== */}
-      <Navbar />
+    <div className="home-root">
 
-      {/* ============ Sidebar Overlay ============ */}
-      {sidebarOpen && (
-        <div
-          onClick={() => setSidebarOpen(false)}
-          style={{
-            position: "fixed",
-            inset: 0,
-            background: "transparent",
-            zIndex: 900,
-          }}
-        ></div>
-      )}
+      {/* ---------------- SIDEBAR WITH PROPS ---------------- */}
+      <Sidebar
+        navLinks={navLinks}
+        sidebarOpen={sidebarOpen}
+        setSidebarOpen={setSidebarOpen}
+      />
 
-      {/* ============ SIDEBAR ============ */}
-      <div
-        style={{
-          position: "fixed",
-          top: 0,
-          left: sidebarOpen ? 0 : "-270px",
-          width: "270px",
-          height: "100vh",
-          background: "linear-gradient(180deg, rgba(20,0,40,0.95), rgba(5,0,20,0.9))",
-          backdropFilter: "blur(14px)",
-          boxShadow: "6px 0 25px rgba(255, 0, 255, 0.25)",
-          transition: "left 0.45s ease",
-          zIndex: 1000,
-          padding: "30px 18px",
-        }}
-      >
-        <h2
-          style={{
-            fontSize: "28px",
-            fontWeight: 700,
-            textAlign: "center",
-            background: "linear-gradient(to right, #ff00ff, #00ffff)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            marginBottom: "30px",
-          }}
-        >
-          THE FIFTH CUSP
-        </h2>
-
-        <ul style={{ listStyle: "none", padding: 0 }}>
-          {navLinks.map((item, idx) => (
-            <li key={idx} style={{ marginBottom: "12px" }}>
-              <div
-                onClick={() =>
-                  item.dropdown
-                    ? setOpenDropdown(openDropdown === idx ? null : idx)
-                    : item.action
-                    ? item.action()
-                    : (window.location.href = item.link)
-                }
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  padding: "12px 16px",
-                  borderRadius: "10px",
-                  color: "#ccc",
-                  cursor: "pointer",
-                }}
-              >
-                <span>{item.name}</span>
-
-                {item.dropdown && (
-                  <span
-                    style={{
-                      transition: "0.3s",
-                      transform:
-                        openDropdown === idx ? "rotate(90deg)" : "rotate(0deg)",
-                    }}
-                  >
-                    ▶
-                  </span>
-                )}
-              </div>
-
-              {item.dropdown && openDropdown === idx && (
-                <ul style={{ listStyle: "none", paddingLeft: "20px", marginTop: "5px" }}>
-                  {item.dropdown.map((sub, sidx) => (
-                    <li key={sidx} style={{ marginBottom: "8px" }}>
-                      <a
-                        href={sub.link}
-                        style={{
-                          display: "block",
-                          padding: "8px 12px",
-                          borderRadius: "8px",
-                          color: "#aaa",
-                          fontSize: "0.9rem",
-                          textDecoration: "none",
-                        }}
-                      >
-                        {sub.name}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      {/* HAMBURGER */}
+      {/* ---------------- HAMBURGER BUTTON ---------------- */}
       {!sidebarOpen && (
-        <button
-          onClick={() => setSidebarOpen(true)}
-          style={{
-            position: "fixed",
-            top: "20px",
-            left: "20px",
-            width: "55px",
-            height: "55px",
-            borderRadius: "50%",
-            background: "linear-gradient(135deg, #ff00ff, #7b2cbf)",
-            border: "none",
-            fontSize: "26px",
-            color: "#fff",
-            cursor: "pointer",
-            boxShadow: "0 0 20px rgba(255, 0, 255, 0.4)",
-            zIndex: 1200,
-          }}
-        >
+        <button className="hamburger-btn" onClick={() => setSidebarOpen(true)}>
           ☰
         </button>
       )}
 
-      {/* MAIN CONTENT WITH SLIDE EFFECT */}
-      <div
-        style={{
-          marginLeft: sidebarOpen ? "270px" : "0",
-          transition: "margin-left 0.5s ease",
-        }}
-      >
+      {/* ---------------- NAVBAR ---------------- */}
+      <Navbar />
+
+      {/* ---------------- MAIN CONTENT ---------------- */}
+      <main className={`home-main ${sidebarOpen ? "shifted" : ""}`}>
+
         {/* HERO */}
-        {/* <section className="hero">
-          <div className="stars-container">{renderStars(50)}</div>
-
-          <div className="hero-overlay">
-            <h1>Your Destiny Is Written In The Stars ✨</h1>
-            <p>Explore the mysteries of life through astrology, tarot & energy.</p>
-            <a href="/book" className="hero-btn">
-              Book Your Reading
-            </a>
-          </div>
-        </section> */}
-
         <section className="hero">
-  <div className="stars-container">{renderStars(50)}</div>
-
-  <div className="hero-glow">
-    <div className="hero-overlay">
-      <h1>Your Destiny Is Written In The Stars ✨</h1>
-      <p>Explore the mysteries of life through astrology, tarot & energy.</p>
-      <a href="/book" className="hero-btn">Book Your Reading</a>
-    </div>
-  </div>
-</section>
-
+          <div className="stars-container">{renderStars(50)}</div>
+          <div className="hero-glow">
+            <div className="hero-overlay">
+              <h1>Your Destiny Is Written In The Stars ✨</h1>
+              <p>Explore the mysteries of life through astrology, tarot & energy.</p>
+              <a href="/book" className="hero-btn">
+                Book Your Reading
+              </a>
+            </div>
+          </div>
+        </section>
 
         {/* SERVICES */}
         <section className="home-section services">
@@ -2408,14 +2666,9 @@ const Home = () => {
           <div className="modern-services-grid">
             {services.map((service, idx) => (
               <a href={service.link} key={idx} className="modern-service-card">
-                <div
-                  className="card-icon-wrapper"
-                  style={{ background: service.gradient }}
-                ></div>
-
+                <div className="card-icon-wrapper" style={{ background: service.gradient }}></div>
                 <h3>{service.name}</h3>
                 <p>{service.desc}</p>
-
                 <div className="card-arrow">→</div>
               </a>
             ))}
@@ -2430,21 +2683,9 @@ const Home = () => {
             </div>
 
             <div className="about-right">
-              <h2>
-                {aboutData.title} <span>THE FIFTH CUSP</span>
-              </h2>
-
-              <p
-                dangerouslySetInnerHTML={{
-                  __html:
-                    aboutData.content ||
-                    "At AstroConnect, we bring cosmic clarity to your life.",
-                }}
-              ></p>
-
-              <a href="/about-us" className="about-btn">
-                Discover More →
-              </a>
+              <h2>{aboutData.title} <span>THE FIFTH CUSP</span></h2>
+              <p dangerouslySetInnerHTML={{ __html: aboutData.content }}></p>
+              <a href="/about-us" className="about-btn">Discover More →</a>
             </div>
           </div>
         </section>
@@ -2453,9 +2694,7 @@ const Home = () => {
         <section className="home-section careers">
           <div className="careers-content">
             <h2>Join Our Cosmic Team ✨</h2>
-            <p>
-              Become a part of <span className="highlight">THE FIFTH CUSP</span> — where astrology meets intuition.
-            </p>
+            <p>Become a part of <span className="highlight">THE FIFTH CUSP</span> — where astrology meets intuition.</p>
 
             <div className="career-roles">
               {careers.length > 0 ? (
@@ -2468,10 +2707,8 @@ const Home = () => {
                         className="career-img"
                       />
                     )}
-
                     <h3>{career.title}</h3>
                     <p>{career.description}</p>
-
                     <p style={{ fontSize: "0.85rem", opacity: 0.8 }}>
                       Status: {career.status}
                     </p>
@@ -2487,7 +2724,7 @@ const Home = () => {
             </a>
           </div>
         </section>
-      </div>
+      </main>
     </div>
   );
 };

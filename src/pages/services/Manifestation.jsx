@@ -2515,6 +2515,8 @@
 
 import React, { useState, useEffect } from "react";
 import "../../styles/Manifestation.css";
+
+
 import axios from "axios";
 
 const API_URL = "https://adminastrotalk-1.onrender.com/api/manifestation"; // change if needed
@@ -2945,7 +2947,9 @@ const Manifestation = () => {
       )}
 
       {/* MAIN CONTENT */}
-      <div style={{ marginLeft: sidebarOpen ? "270px" : "0", transition: "margin-left 0.4s" }}>
+      {/* <div style={{ marginLeft: sidebarOpen ? "270px" : "0", transition: "margin-left 0.4s" }}> */}
+      <div className="manifestation-content">
+
         {/* BOOKING FORM */}
         {selectedOffering && step === 1 && (
           <div

@@ -482,33 +482,171 @@
 
 // export default Careers;
 
+// import React, { useEffect, useState } from "react";
+// import { useNavigate } from "react-router-dom";
+// import axios from "axios";
+// import "../styles/Careers.css";
+
+// const API_BASE = "https://adminastrotalk-1.onrender.com/api/careers";
+
+// const navLinks = [
+//   { name: "Home", link: "/" },
+//   { name: "About Us", link: "/about-us" },
+//   { name: "Energy", link: "/energy" },
+//   { name: "Astrology", link: "/Astrology" },
+//   { name: "Vastu", link: "/vastu" },
+//   { name: "Manifestation", link: "/manifestation" },
+//   { name: "Material", link: "/material" },
+//   { name: "Blogs", link: "/blogs" },
+//   { name: "Careers", link: "/careers" },
+//   { name: "Contact", link: "/contact" },
+//   { name: "Login / Signup", link: "/auth" },
+// ];
+
+// const Careers = () => {
+//   const navigate = useNavigate();
+//   const [sidebarOpen, setSidebarOpen] = useState(false);
+//   const [careers, setCareers] = useState([]);
+
+//   // 🌌 Fetch Careers from API
+//   const fetchCareers = async () => {
+//     try {
+//       const res = await axios.get(API_BASE);
+//       setCareers(res.data || []);
+//     } catch (err) {
+//       console.error("❌ Error fetching careers:", err.message);
+//     }
+//   };
+
+//   useEffect(() => {
+//     fetchCareers();
+//   }, []);
+
+//   // ✨ Starfield Effect
+//   useEffect(() => {
+//     const starfield = document.getElementById("starfield");
+//     if (starfield && !starfield.hasChildNodes()) {
+//       for (let i = 0; i < 120; i++) {
+//         const star = document.createElement("div");
+//         star.className = "star";
+//         star.style.top = `${Math.random() * 100}%`;
+//         star.style.left = `${Math.random() * 100}%`;
+//         star.style.width = `${Math.random() * 2 + 1}px`;
+//         star.style.height = star.style.width;
+//         star.style.animationDuration = `${Math.random() * 3 + 2}s`;
+//         starfield.appendChild(star);
+//       }
+//     }
+//   }, []);
+
+//   const handleCardClick = () => navigate("/contact");
+
+//   return (
+//     <div className="careers-page cosmic-bg">
+//       {/* 🌌 Starfield */}
+//       <div id="starfield" className="starfield"></div>
+
+//     {/* 🧭 Sidebar */}
+// <div
+//   className={`sidebar ${sidebarOpen ? "open" : ""}`}
+//   onClick={() => setSidebarOpen(false)}   // ⭐ sidebar ke andar click → close
+// >
+//   <h2 className="sidebar-logo">THE FIFTH CUSP</h2>
+
+//   <ul onClick={(e) => e.stopPropagation()} > 
+//     {/* ⭐ STOP bubbling: links par click par close hogaa, 
+//         lekin poori UL par click karne se close nahi hoga */}
+//     {navLinks.map((item, idx) => (
+//       <li key={idx}>
+//         <a
+//           href={item.link}
+//           onClick={() => setSidebarOpen(false)}
+//         >
+//           {item.name}
+//         </a>
+//       </li>
+//     ))}
+//   </ul>
+// </div>
+
+// {/* ⭐ Overlay (outside click → close) */}
+// {sidebarOpen && (
+//   <div
+//     className="sidebar-overlay"
+//     onClick={() => setSidebarOpen(false)}
+//   ></div>
+// )}
+
+// {/* ☰ Hamburger */}
+// {!sidebarOpen && (
+//   <button
+//     className="sidebar-toggle"
+//     onClick={() => setSidebarOpen(true)}
+//   >
+//     ☰
+//   </button>
+// )}
+
+
+//       {/* 💼 Main Careers Content */}
+//       <div className={`careers-container ${sidebarOpen ? "sidebar-open" : ""}`}>
+//         <section className="careers-hero">
+//           <div className="hero-overlay">
+//             <h1>Join Our Team ✨</h1>
+//             <p>
+//               Explore opportunities in Astrology, Tarot, Energy Healing, and
+//               Mystical Research.
+//             </p>
+//           </div>
+//         </section>
+
+//         {/* Careers Section */}
+//         <section className="careers-content">
+//           <h2>Available Positions</h2>
+//           <p>
+//             We're looking for passionate individuals to join our growing team at
+//             <span className="highlight"> THE FIFTH CUSP</span>.
+//           </p>
+
+//           <div className="careers-list">
+//             {careers.length > 0 ? (
+//               careers.map((career, idx) => (
+//                 <div
+//                   key={idx}
+//                   className="career-card"
+//                   onClick={handleCardClick}
+//                 >
+//                   <h3>{career.title}</h3>
+//                   <p>{career.description}</p>
+//                 </div>
+//               ))
+//             ) : (
+//               <p className="no-positions">✨ No open positions currently. Check back soon!</p>
+//             )}
+//           </div>
+//         </section>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Careers;
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../styles/Careers.css";
 
-const API_BASE = "https://adminastrotalk-1.onrender.com/api/careers";
+// ⭐ IMPORT SIDEBAR
+import Sidebar from "../components/Sidebar";
 
-const navLinks = [
-  { name: "Home", link: "/" },
-  { name: "About Us", link: "/about-us" },
-  { name: "Energy", link: "/energy" },
-  { name: "Astrology", link: "/Astrology" },
-  { name: "Vastu", link: "/vastu" },
-  { name: "Manifestation", link: "/manifestation" },
-  { name: "Material", link: "/material" },
-  { name: "Blogs", link: "/blogs" },
-  { name: "Careers", link: "/careers" },
-  { name: "Contact", link: "/contact" },
-  { name: "Login / Signup", link: "/auth" },
-];
+const API_BASE = "https://adminastrotalk-1.onrender.com/api/careers";
 
 const Careers = () => {
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [careers, setCareers] = useState([]);
 
-  // 🌌 Fetch Careers from API
+  // 🌌 Fetch Careers
   const fetchCareers = async () => {
     try {
       const res = await axios.get(API_BASE);
@@ -522,7 +660,7 @@ const Careers = () => {
     fetchCareers();
   }, []);
 
-  // ✨ Starfield Effect
+  // ✨ Starfield
   useEffect(() => {
     const starfield = document.getElementById("starfield");
     if (starfield && !starfield.hasChildNodes()) {
@@ -543,64 +681,28 @@ const Careers = () => {
 
   return (
     <div className="careers-page cosmic-bg">
+      
       {/* 🌌 Starfield */}
       <div id="starfield" className="starfield"></div>
 
-    {/* 🧭 Sidebar */}
-<div
-  className={`sidebar ${sidebarOpen ? "open" : ""}`}
-  onClick={() => setSidebarOpen(false)}   // ⭐ sidebar ke andar click → close
->
-  <h2 className="sidebar-logo">THE FIFTH CUSP</h2>
+      {/* ⭐ GLOBAL SIDEBAR */}
+      <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
-  <ul onClick={(e) => e.stopPropagation()} > 
-    {/* ⭐ STOP bubbling: links par click par close hogaa, 
-        lekin poori UL par click karne se close nahi hoga */}
-    {navLinks.map((item, idx) => (
-      <li key={idx}>
-        <a
-          href={item.link}
-          onClick={() => setSidebarOpen(false)}
-        >
-          {item.name}
-        </a>
-      </li>
-    ))}
-  </ul>
-</div>
+      {/* ⭐ MAIN CONTENT (DO NOT SHIFT ON MOBILE OR DESKTOP) */}
+      <div className="careers-container">
 
-{/* ⭐ Overlay (outside click → close) */}
-{sidebarOpen && (
-  <div
-    className="sidebar-overlay"
-    onClick={() => setSidebarOpen(false)}
-  ></div>
-)}
-
-{/* ☰ Hamburger */}
-{!sidebarOpen && (
-  <button
-    className="sidebar-toggle"
-    onClick={() => setSidebarOpen(true)}
-  >
-    ☰
-  </button>
-)}
-
-
-      {/* 💼 Main Careers Content */}
-      <div className={`careers-container ${sidebarOpen ? "sidebar-open" : ""}`}>
+        {/* HERO SECTION */}
         <section className="careers-hero">
           <div className="hero-overlay">
             <h1>Join Our Team ✨</h1>
             <p>
-              Explore opportunities in Astrology, Tarot, Energy Healing, and
-              Mystical Research.
+              Explore opportunities in Astrology, Tarot, Energy Healing,
+              and Mystical Research.
             </p>
           </div>
         </section>
 
-        {/* Careers Section */}
+        {/* CAREERS LIST SECTION */}
         <section className="careers-content">
           <h2>Available Positions</h2>
           <p>
@@ -621,10 +723,13 @@ const Careers = () => {
                 </div>
               ))
             ) : (
-              <p className="no-positions">✨ No open positions currently. Check back soon!</p>
+              <p className="no-positions">
+                ✨ No open positions currently. Check back soon!
+              </p>
             )}
           </div>
         </section>
+
       </div>
     </div>
   );

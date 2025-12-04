@@ -3290,9 +3290,675 @@
 // };
 
 
+// import React, { useState, useEffect, useRef } from "react";
+// import axios from "axios";
+// import "../../styles/Energy.css";
+// import {
+//   Sparkles,
+//   Star,
+//   ArrowRight,
+//   CheckCircle,
+//   Loader2,
+//   Zap,
+//   FileText,
+// } from "lucide-react";
+
+// const SERVICES_API = "https://adminastrotalk-1.onrender.com/api/energy-services";
+// const BOOKING_API = "https://adminastrotalk-1.onrender.com/api/bookings";
+// const PAYMENTS_API = "https://adminastrotalk-1.onrender.com/api/payments";
+
+// const navLinks = [
+//   { name: "Home", link: "/#home" },
+//   { name: "About Us", link: "/about-us" },
+//   { name: "Energy", link: "/energy" },
+//   { name: "Astrology", link: "/astrology" },
+//   { name: "Vastu", link: "/vastu" },
+//   { name: "Manifestation", link: "/manifestation" },
+//   { name: "Material", link: "/material" },
+//   { name: "Blogs", link: "/blogs" },
+//   { name: "Careers", link: "/careers" },
+//   { name: "Contact", link: "/contact" },
+//   { name: "Login / Signup", link: "/auth" },
+// ];
+
+// export default function Energy() {
+//   const [sidebarOpen, setSidebarOpen] = useState(false);
+//   const [isMobile, setIsMobile] = useState(false);
+
+//   const sidebarRef = useRef(null);
+
+//   const [services, setServices] = useState([]);
+//   const [loadingServices, setLoadingServices] = useState(false);
+
+//   const [step, setStep] = useState(0);
+//   const [selectedService, setSelectedService] = useState(null);
+
+//   const [question, setQuestion] = useState("");
+//   const [details, setDetails] = useState("");
+//   const [name, setName] = useState("");
+//   const [email, setEmail] = useState("");
+//   const [dob, setDob] = useState("");
+//   const [photoFile, setPhotoFile] = useState(null);
+
+//   const [processing, setProcessing] = useState(false);
+//   const [confirmationMsg, setConfirmationMsg] = useState("");
+//   const [pdfReady, setPdfReady] = useState(false);
+
+//   useEffect(() => {
+//     const handleResize = () => {
+//       setIsMobile(window.innerWidth < 1024);
+//       if (window.innerWidth < 1024) setSidebarOpen(false);
+//     };
+//     handleResize();
+//     window.addEventListener("resize", handleResize);
+//     return () => window.removeEventListener("resize", handleResize);
+//   }, []);
+
+//   // ⭐ Sidebar close outside + escape
+//   useEffect(() => {
+//     const handleClickOutside = (e) => {
+//       if (sidebarOpen && sidebarRef.current && !sidebarRef.current.contains(e.target)) {
+//         setSidebarOpen(false);
+//       }
+//     };
+//     const handleEsc = (e) => {
+//       if (e.key === "Escape") setSidebarOpen(false);
+//     };
+//     document.addEventListener("mousedown", handleClickOutside);
+//     document.addEventListener("keydown", handleEsc);
+
+//     return () => {
+//       document.removeEventListener("mousedown", handleClickOutside);
+//       document.removeEventListener("keydown", handleEsc);
+//     };
+//   }, [sidebarOpen]);
+
+//   // ⭐ Fetch services
+//   useEffect(() => {
+//     fetchServices();
+//   }, []);
+
+//   const fetchServices = async () => {
+//     try {
+//       setLoadingServices(true);
+//       const res = await axios.get(`${SERVICES_API}/all`);
+//       if (Array.isArray(res.data?.services)) {
+//         setServices(res.data.services);
+//       } else if (Array.isArray(res.data)) {
+//         setServices(res.data);
+//       }
+//     } catch (err) {
+//       console.log("Service fetch error:", err);
+//     } finally {
+//       setLoadingServices(false);
+//     }
+//   };
+
+//   // ⭐ Select service
+//   const selectService = (serviceKey) => {
+//     const svc =
+//       services.find((s) => s.key === serviceKey || s._id === serviceKey) ||
+//       services.find((s) => s._id === serviceKey);
+
+//     if (!svc) return alert("Service not found. Check backend.");
+
+//     setSelectedService(svc);
+//     setStep(1);
+//     window.scrollTo({ top: 600, behavior: "smooth" });
+//   };
+
+//   const handleFormSubmit = (e) => {
+//     e.preventDefault();
+//     if (!name || !email || !dob) return alert("Please fill required fields");
+
+//     setStep(2);
+//     window.scrollTo({ top: 0, behavior: "smooth" });
+//   };
+
+//   // ---------- BACKEND BOOKING CREATION (robust) ----------
+//   const createBookingOnBackend = async (paymentStatus = "pending", paymentInfo = {}) => {
+//     try {
+//       const form = new FormData();
+//       form.append("serviceKey", selectedService.key || selectedService._id || "");
+//       form.append("serviceTitle", selectedService.title || selectedService.name || "");
+//       form.append("name", name);
+//       form.append("email", email);
+//       form.append("dob", dob);
+//       form.append("question", question || "");
+//       form.append("details", details || "");
+//       form.append("paymentStatus", paymentStatus);
+//       if (paymentInfo && typeof paymentInfo === "object") {
+//         form.append("paymentInfo", JSON.stringify(paymentInfo));
+//       }
+//       if (photoFile) form.append("photo", photoFile);
+
+//       // try primary booking api
+//       let bookingRes = null;
+//       try {
+//         bookingRes = await axios.post(`${BOOKING_API}/create`, form, {
+//           headers: { "Content-Type": "multipart/form-data" },
+//         });
+//       } catch (err) {
+//         // fallback endpoints if first fails
+//         try {
+//           bookingRes = await axios.post(`${SERVICES_API}/book`, form, {
+//             headers: { "Content-Type": "multipart/form-data" },
+//           });
+//         } catch (err2) {
+//           // last fallback: send JSON payload
+//           const payload = {
+//             serviceKey: selectedService.key || selectedService._id || "",
+//             serviceTitle: selectedService.title || selectedService.name || "",
+//             name,
+//             email,
+//             dob,
+//             question,
+//             details,
+//             paymentStatus,
+//             paymentInfo,
+//           };
+//           bookingRes = await axios.post(`${SERVICES_API}/create-booking`, payload).catch(() => null);
+//         }
+//       }
+
+//       return bookingRes?.data ?? null;
+//     } catch (err) {
+//       console.error("createBookingOnBackend error:", err);
+//       return null;
+//     }
+//   };
+
+//   // ---------- PAYMENT FLOW (Razorpay preferred, fallback simulated) ----------
+//   const handlePayment = async () => {
+//     setProcessing(true);
+
+//     const amount =
+//       Number(selectedService.price || selectedService.amount || selectedService.price_inr || 0) || 499;
+
+//     try {
+//       const createOrderRes = await axios.post(`${PAYMENTS_API}/create-order`, { amount });
+//       if (createOrderRes?.data?.success && createOrderRes.data.order && createOrderRes.data.key) {
+//         const { order, key } = createOrderRes.data;
+//         const options = {
+//           key,
+//           amount: order.amount,
+//           currency: order.currency || "INR",
+//           name: "THE FIFTH CUSP",
+//           description: selectedService.title || selectedService.name || "Energy Reading",
+//           order_id: order.id || order.order_id || order._id,
+//           handler: async (razorResponse) => {
+//             try {
+//               const verifyRes = await axios.post(`${PAYMENTS_API}/verify`, {
+//                 ...razorResponse,
+//                 orderAmount: amount,
+//               });
+
+//               if (verifyRes?.data?.success) {
+//                 await createBookingOnBackend("paid", verifyRes.data);
+//                 setConfirmationMsg(
+//                   `✨ Thank you ${name}! Payment successful. We'll email the reading to ${email} within 24-48 hours.`
+//                 );
+//                 setPdfReady(!!verifyRes.data.pdfUrl);
+//                 setStep(3);
+//               } else {
+//                 await createBookingOnBackend("failed", { razor: razorResponse, verify: verifyRes?.data });
+//                 alert("Payment verification failed. Contact support if amount was captured.");
+//                 setConfirmationMsg("Payment processed but verification failed — contact support.");
+//                 setStep(3);
+//               }
+//             } catch (err) {
+//               console.error("verify error", err);
+//               await createBookingOnBackend("failed", { error: err?.message });
+//               alert("Payment verification failed due to network error.");
+//               setStep(3);
+//             } finally {
+//               setProcessing(false);
+//             }
+//           },
+//           prefill: { name, email },
+//           theme: { color: "#7b2cbf" },
+//         };
+
+//         if (typeof window !== "undefined" && window.Razorpay) {
+//           const rzp = new window.Razorpay(options);
+//           rzp.on && rzp.on("payment.failed", function () {
+//             alert("Payment failed. Try again.");
+//             setProcessing(false);
+//           });
+//           rzp.open();
+//           return;
+//         } else {
+//           // Razorpay script missing — fallback to simulated success after small delay
+//           console.warn("Razorpay script missing. Falling back to simulated flow.");
+//         }
+//       }
+//     } catch (err) {
+//       console.warn("Payments backend unavailable:", err?.message || err);
+//     }
+
+//     // fallback simulated success (useful for local/dev)
+//     setTimeout(async () => {
+//       try {
+//         await createBookingOnBackend("paid", { simulated: true });
+//         setConfirmationMsg(
+//           `✨ Thank you ${name}! Your booking for "${selectedService.title || selectedService.name || ""}" is confirmed. We'll email the reading to ${email} within 24-48 hours.`
+//         );
+//         setPdfReady(false);
+//         setStep(3);
+//       } catch (err) {
+//         alert("Failed to save booking. Contact admin.");
+//       } finally {
+//         setProcessing(false);
+//       }
+//     }, 900);
+//   };
+
+//   // ---------- RESET ----------
+//   const resetAll = () => {
+//     setStep(0);
+//     setSelectedService(null);
+//     setQuestion("");
+//     setDetails("");
+//     setName("");
+//     setEmail("");
+//     setDob("");
+//     setPhotoFile(null);
+//     setConfirmationMsg("");
+//     setPdfReady(false);
+//     window.scrollTo({ top: 0, behavior: "smooth" });
+//   };
+
+//   const progressWidth = ((step - 1) / 2) * 100;
+
+//   // ---------- RENDER ----------
+//   return (
+//     <div className="energy-page cosmic-bg" style={{ minHeight: "100vh", position: "relative", color: "#fff" }}>
+//       {/* cosmic background (orbits + stars) */}
+//       <div className="vc-cosmic-stars" />
+//       <div className="vc-stars-container">
+//         {/* stars generated visually by CSS + inline elements */}
+//         {Array.from({ length: 36 }).map((_, i) => (
+//           <div
+//             key={i}
+//             className="vc-star"
+//             style={{
+//               top: `${Math.random() * 100}%`,
+//               left: `${Math.random() * 100}%`,
+//               width: `${1 + Math.random() * 2}px`,
+//               height: `${1 + Math.random() * 2}px`,
+//             }}
+//           />
+//         ))}
+//       </div>
+//       <div className="vc-floating-orbs">
+//         <div className="vc-orb vc-orb-1" />
+//         <div className="vc-orb vc-orb-2" />
+//         <div className="vc-orb vc-orb-3" />
+//       </div>
+
+//       {/* Sidebar */}
+//       <aside
+//         ref={sidebarRef}
+//         className={`sidebar-custom ${sidebarOpen ? "open" : ""}`}
+//         style={{
+//           position: "fixed",
+//           top: 0,
+//           left: sidebarOpen ? 0 : "-300px",
+//           width: 300,
+//           height: "100vh",
+//           background: "linear-gradient(180deg, rgba(8,3,20,0.98), rgba(5,0,20,0.95))",
+//           padding: "2rem 1.5rem",
+//           zIndex: 1200,
+//           transition: "left 0.35s",
+//           boxShadow: "4px 0 40px rgba(123,44,191,0.25)",
+//         }}
+//       >
+//         <button
+//           onClick={() => setSidebarOpen(false)}
+//           style={{
+//             position: "absolute",
+//             right: 12,
+//             top: 12,
+//             width: 36,
+//             height: 36,
+//             borderRadius: 8,
+//             border: "none",
+//             background: "rgba(255,255,255,0.06)",
+//             color: "#fff",
+//             cursor: "pointer",
+//           }}
+//           aria-label="Close menu"
+//         >
+          
+//         </button>
+
+//         <div style={{ textAlign: "center", marginTop: 8, marginBottom: 20 }}>
+//           <h3 style={{ margin: 0, fontSize: 20, fontWeight: 800, background: "linear-gradient(135deg,#fff,#c4b5fd)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+//             ✨THE FIFTH CUSP
+//           </h3>
+//           <div style={{ color: "#aaa", marginTop: 8 }}>Explore</div>
+//         </div>
+
+//         <nav>
+//           {navLinks.map((n, idx) => (
+//             <a key={idx} href={n.link} style={{ display: "block", padding: "10px 8px", color: "#ddd", textDecoration: "none", borderRadius: 8 }}>
+//               {n.name}
+//             </a>
+//           ))}
+//         </nav>
+//       </aside>
+
+//       {/* Hamburger */}
+//     {!sidebarOpen && (
+//   <button
+//     className="hamburger-btn"
+//     onClick={() => setSidebarOpen(true)}
+//     aria-label="Toggle menu"
+//     style={{
+//       position: "fixed",
+//       left: 18,
+//       top: 18,
+//       zIndex: 1400,
+//       width: 56,
+//       height: 56,
+//       borderRadius: 12,
+//       border: "1px solid rgba(255,255,255,0.06)",
+//       background: "rgba(10,6,18,0.8)",
+//       color: "#fff",
+//       fontSize: 18,
+//       cursor: "pointer",
+//     }}
+//   >
+//     ☰
+//   </button>
+// )}
+
+
+//       {/* Main content */}
+//       <main style={{ marginLeft: !isMobile && sidebarOpen ? 300 : 0, transition: "margin-left .3s" }}>
+//         {/* HERO */}
+//         <section className="hero-section" style={{ padding: "5rem 2rem 2rem" }}>
+//           <div className="hero-container" style={{ maxWidth: 1200, margin: "0 auto", display: "grid", gridTemplateColumns: "1.2fr 1fr", gap: 24, alignItems: "center" }}>
+//             <div>
+//               <div style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "6px 12px", borderRadius: 999, background: "rgba(123,44,191,0.08)", color: "#ffb7ff", fontWeight: 700, marginBottom: 12 }}>
+//                 <Sparkles size={16} /> Modern Energy Readings
+//               </div>
+
+//               <h1 style={{ fontSize: "2.6rem", margin: "0 0 12px", lineHeight: 1.05 }}>
+//                 Decode Your Aura. <br /> Heal Your Energy.
+//               </h1>
+
+//               <p style={{ color: "#c4b5fd", marginBottom: 18 }}>
+//                 Transform your life through deep energetic analysis. We scan your aura, chakras and emotional blocks to provide remedies and clear guidance.
+//               </p>
+
+//               <div style={{ display: "flex", gap: 12 }}>
+//                 <button onClick={() => window.scrollTo({ top: 900, behavior: "smooth" })} style={{ padding: "10px 16px", borderRadius: 12, border: "none", background: "linear-gradient(135deg,#ff00ff,#7b2cbf)", color: "#fff", cursor: "pointer", fontWeight: 700 }}>
+//                   Start Your Reading <ArrowRight size={14} />
+//                 </button>
+
+//                 <div style={{ display: "flex", alignItems: "center", gap: 8, color: "#aaa" }}>
+//                   <div style={{ display: "flex" }}>{[1,2,3,4,5].map((i)=> <Star key={i} size={14} color="#fbbf24" />)}</div>
+//                   <div style={{ fontSize: 14 }}>500+ readings delivered</div>
+//                 </div>
+//               </div>
+//             </div>
+
+//             <div style={{ textAlign: "center" }}>
+//               <div style={{ borderRadius: 16, padding: 20, background: "linear-gradient(180deg, rgba(123,44,191,0.06), rgba(255,0,255,0.03))", display: "inline-block" }}>
+//                 <img src="https://res.cloudinary.com/doerrm32l/image/upload/v1761893673/astrologo_fjndbn.png" alt="logo" style={{ width: 260, maxWidth: "100%", borderRadius: 12 }} />
+//               </div>
+//             </div>
+//           </div>
+//         </section>
+
+//         {/* SERVICES */}
+//         <section className="services-section" style={{ padding: "2rem" }}>
+//           <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+//             <div style={{ marginBottom: 20 }}>
+//               <h2 style={{ margin: 0 }}>Our Energy Reading Services</h2>
+//               <p style={{ color: "#c4b5fd" }}>Choose the reading that resonates with you</p>
+//             </div>
+
+//             {loadingServices ? (
+//               <div style={{ color: "#ddd" }}>Loading services...</div>
+//             ) : (
+//               <div className="services-grid">
+//   {services.map((s) => (
+//     <article key={s._id || s.key} className="service-card">
+      
+//       <div>
+//         <div
+//           style={{
+//             display: "inline-block",
+//             padding: "4px 10px",
+//             borderRadius: 999,
+//             background: "rgba(255,0,255,0.15)",
+//             color: "#ff00ff",
+//             fontWeight: 700,
+//             fontSize: 12,
+//             marginBottom: 10,
+//           }}
+//         >
+//           {s.tag || s.label || "Service"}
+//         </div>
+
+//         <h3>{s.title || s.name}</h3>
+//         <p>{s.short || s.description}</p>
+//       </div>
+
+//       <div style={{ textAlign: "right" }}>
+//         <div className="service-price">
+//           ₹{s.price ?? s.amount ?? "—"}
+//         </div>
+
+//         <button
+//           className="book-btn"
+//           onClick={() => selectService(s.key || s._id)}
+//         >
+//           Book Now
+//         </button>
+//       </div>
+
+//     </article>
+//   ))}
+// </div>
+
+//             )}
+//           </div>
+//         </section>
+
+//         {/* BOOKING / FORM STEPS */}
+//         {step > 0 && selectedService && (
+//           <section className="form-section" style={{ padding: "2rem" }}>
+//             <div style={{ maxWidth: 960, margin: "0 auto", background: "rgba(255,255,255,0.02)", borderRadius: 14, padding: 20 }}>
+//               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+//                 <h3 style={{ margin: 0 }}>Book: {selectedService.title || selectedService.name}</h3>
+//                 <div style={{ color: "#aaa" }}>Step {step} of 3</div>
+//               </div>
+
+//               {/* progress */}
+//               <div style={{ marginTop: 12 }}>
+//                 <div style={{ height: 6, background: "rgba(255,255,255,0.06)", borderRadius: 6, overflow: "hidden" }}>
+//                   <div style={{ width: `${Math.max(0, Math.min(100, progressWidth))}%`, height: "100%", background: "linear-gradient(90deg,#ff00ff,#00ffff)", transition: "width .4s" }} />
+//                 </div>
+//               </div>
+
+//               {/* Step 1: form */}
+//               {step === 1 && (
+//                 <form onSubmit={handleFormSubmit} style={{ marginTop: 16, display: "grid", gap: 12 }}>
+//                   {selectedService.key === "yesNo" && (
+//                     <div>
+//                       <label style={{ color: "#ddd", fontWeight: 600 }}>Your Question *</label>
+//                       <input type="text" value={question} onChange={(e) => setQuestion(e.target.value)} placeholder="E.g. Should I accept this job?" style={inputStyle} />
+//                     </div>
+//                   )}
+
+//                   <div>
+//                     <label style={{ color: "#ddd", fontWeight: 600 }}>Full Name *</label>
+//                     <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="Your full name" style={inputStyle} required />
+//                   </div>
+
+//                   <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+//                     <div>
+//                       <label style={{ color: "#ddd", fontWeight: 600 }}>Email *</label>
+//                       <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@email.com" style={inputStyle} required />
+//                     </div>
+//                     <div>
+//                       <label style={{ color: "#ddd", fontWeight: 600 }}>Date of Birth *</label>
+//                       <input type="date" value={dob} onChange={(e) => setDob(e.target.value)} style={inputStyle} required />
+//                     </div>
+//                   </div>
+
+//                   <div>
+//                     <label style={{ color: "#ddd", fontWeight: 600 }}>Upload Photo (optional)</label>
+//                     <input type="file" accept="image/*" onChange={(e) => setPhotoFile(e.target.files[0])} />
+//                     {photoFile && <div style={{ color: "#9fefbc", marginTop: 8 }}>✓ {photoFile.name}</div>}
+//                   </div>
+
+//                   <div>
+//                     <label style={{ color: "#ddd", fontWeight: 600 }}>Additional Details</label>
+//                     <textarea value={details} onChange={(e) => setDetails(e.target.value)} rows={4} style={{ ...inputStyle, minHeight: 80 }} placeholder="Anything else we should know..." />
+//                   </div>
+
+//                   <div style={{ display: "flex", gap: 12 }}>
+//                     <button type="submit" style={{ padding: "10px 14px", background: "linear-gradient(135deg,#ff00ff,#7b2cbf)", color: "#fff", borderRadius: 10, border: "none", cursor: "pointer" }}>
+//                       Continue to Payment <ArrowRight size={14} />
+//                     </button>
+//                     <button type="button" onClick={resetAll} style={{ padding: "10px 14px", background: "rgba(255,255,255,0.03)", color: "#fff", borderRadius: 10, border: "1px solid rgba(255,255,255,0.06)" }}>
+//                       Cancel
+//                     </button>
+//                   </div>
+//                 </form>
+//               )}
+
+//               {/* Step 2: payment */}
+//               {step === 2 && (
+//                 <div style={{ marginTop: 16 }}>
+//                   <div style={{ display: "grid", gap: 12 }}>
+//                     <div style={{ background: "rgba(255,255,255,0.01)", padding: 12, borderRadius: 10 }}>
+//                       <div style={{ display: "flex", justifyContent: "space-between" }}>
+//                         <div style={{ color: "#aaa" }}>Service</div>
+//                         <div style={{ fontWeight: 700 }}>{selectedService.title || selectedService.name}</div>
+//                       </div>
+
+//                       <div style={{ display: "flex", justifyContent: "space-between", marginTop: 8 }}>
+//                         <div style={{ color: "#aaa" }}>Name</div>
+//                         <div>{name}</div>
+//                       </div>
+
+//                       <div style={{ display: "flex", justifyContent: "space-between", marginTop: 8 }}>
+//                         <div style={{ color: "#aaa" }}>Email</div>
+//                         <div>{email}</div>
+//                       </div>
+
+//                       <div style={{ display: "flex", justifyContent: "space-between", marginTop: 8 }}>
+//                         <div style={{ color: "#aaa" }}>Total</div>
+//                         <div style={{ fontWeight: 800, background: "linear-gradient(135deg,#ff00ff,#00ffff)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+//                           ₹{selectedService.price ?? selectedService.amount ?? "—"}
+//                         </div>
+//                       </div>
+//                     </div>
+
+//                     <div style={{ display: "flex", gap: 12 }}>
+//                       <button onClick={handlePayment} disabled={processing} style={{ padding: "10px 14px", background: "linear-gradient(135deg,#ff00ff,#00ffff)", color: "#fff", borderRadius: 10, border: "none", cursor: "pointer", display: "flex", alignItems: "center", gap: 8 }}>
+//                         {processing ? (
+//                           <>
+//                             <Loader2 size={16} className="spin" /> Processing...
+//                           </>
+//                         ) : (
+//                           <>
+//                             Pay Securely Now <Zap size={14} />
+//                           </>
+//                         )}
+//                       </button>
+
+//                       <button onClick={() => setStep(1)} style={{ padding: "10px 14px", background: "rgba(255,255,255,0.03)", color: "#fff", borderRadius: 10, border: "1px solid rgba(255,255,255,0.06)" }}>
+//                         ← Edit Details
+//                       </button>
+//                     </div>
+
+//                     <div style={{ color: "#aaa", fontSize: 13 }}>
+//                       If your site has Razorpay & payments backend, secure checkout will open. Otherwise a simulated confirmation will be saved.
+//                     </div>
+//                   </div>
+//                 </div>
+//               )}
+
+//               {/* Step 3: confirmation */}
+//               {step === 3 && (
+//                 <div style={{ marginTop: 18, textAlign: "center" }}>
+//                   <div style={{ display: "inline-block", padding: 18, borderRadius: 999, background: "rgba(74,222,128,0.12)" }}>
+//                     <CheckCircle size={44} color="#4ade80" />
+//                   </div>
+//                   <h3 style={{ marginTop: 10 }}>Payment Successful!</h3>
+//                   <p style={{ color: "#c4b5fd" }}>{confirmationMsg || `Thanks ${name}. We'll email your reading to ${email} within 24-48 hours.`}</p>
+
+//                   {pdfReady && (
+//                     <div style={{ display: "inline-flex", alignItems: "center", gap: 8, marginTop: 8, padding: "10px 14px", borderRadius: 8, background: "rgba(74,222,128,0.08)" }}>
+//                       <FileText size={18} color="#4ade80" /> Your PDF report is ready
+//                     </div>
+//                   )}
+
+//                   <div style={{ marginTop: 18 }}>
+//                     <button onClick={resetAll} style={{ padding: "10px 14px", background: "rgba(255,255,255,0.03)", color: "#fff", borderRadius: 10, border: "1px solid rgba(255,255,255,0.06)" }}>
+//                       Book Another Reading
+//                     </button>
+//                   </div>
+//                 </div>
+//               )}
+//             </div>
+//           </section>
+//         )}
+//       </main>
+
+//       {/* small inline styles for spin */}
+//       <style>{`
+//         .spin { animation: spin 1s linear infinite; }
+//         @keyframes spin { from { transform: rotate(0); } to { transform: rotate(360deg);} }
+
+//         /* cosmic helpers (if you also add the Vastu CSS) */
+//         .vc-cosmic-stars {
+//           position: fixed;
+//           inset: 0;
+//           background-image: radial-gradient(2px 2px at 20% 30%, #fff4 50%, transparent),
+//                             radial-gradient(2px 2px at 80% 10%, #fff5 50%, transparent),
+//                             radial-gradient(2px 2px at 60% 80%, #fff3 50%, transparent),
+//                             radial-gradient(2px 2px at 10% 60%, #fff4 50%, transparent);
+//           z-index: 0;
+//           opacity: 0.45;
+//           pointer-events: none;
+//         }
+//         .vc-stars-container { position: fixed; inset: 0; z-index: 1; pointer-events: none; }
+//         .vc-star { position: absolute; background: white; border-radius: 50%; opacity: 0.8; }
+//         .vc-floating-orbs .vc-orb { position: fixed; border-radius: 50%; filter: blur(60px); opacity: 0.55; z-index: 0; }
+//         .vc-orb-1 { width: 260px; height: 260px; background: #9333ea; top: 6%; left: 4%; }
+//         .vc-orb-2 { width: 320px; height: 320px; background: #3b82f6; bottom: 16%; right: 6%; }
+//         .vc-orb-3 { width: 200px; height: 200px; background: #ec4899; top: 46%; right: 18%; }
+
+//         /* small responsive */
+//         @media (max-width: 1024px) {
+//           .hero-container { grid-template-columns: 1fr; gap: 20px; padding: 2rem 1rem; }
+//         }
+//       `}</style>
+//     </div>
+//   );
+// }
+
+// // shared simple input style used in component
+// const inputStyle = {
+//   width: "100%",
+//   padding: "10px 12px",
+//   borderRadius: 10,
+//   border: "1px solid rgba(255,255,255,0.08)",
+//   background: "rgba(255,255,255,0.02)",
+//   color: "#fff",
+//   fontSize: 14,
+// };
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import "../../styles/Energy.css";
+import Sidebar from "../../components/Sidebar"; // ✅ GLOBAL SIDEBAR IMPORT
 import {
   Sparkles,
   Star,
@@ -3306,20 +3972,6 @@ import {
 const SERVICES_API = "https://adminastrotalk-1.onrender.com/api/energy-services";
 const BOOKING_API = "https://adminastrotalk-1.onrender.com/api/bookings";
 const PAYMENTS_API = "https://adminastrotalk-1.onrender.com/api/payments";
-
-const navLinks = [
-  { name: "Home", link: "/#home" },
-  { name: "About Us", link: "/about-us" },
-  { name: "Energy", link: "/energy" },
-  { name: "Astrology", link: "/astrology" },
-  { name: "Vastu", link: "/vastu" },
-  { name: "Manifestation", link: "/manifestation" },
-  { name: "Material", link: "/material" },
-  { name: "Blogs", link: "/blogs" },
-  { name: "Careers", link: "/careers" },
-  { name: "Contact", link: "/contact" },
-  { name: "Login / Signup", link: "/auth" },
-];
 
 export default function Energy() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -3344,36 +3996,17 @@ export default function Energy() {
   const [confirmationMsg, setConfirmationMsg] = useState("");
   const [pdfReady, setPdfReady] = useState(false);
 
+  // RESPONSIVE
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 1024);
-      if (window.innerWidth < 1024) setSidebarOpen(false);
     };
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // ⭐ Sidebar close outside + escape
-  useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (sidebarOpen && sidebarRef.current && !sidebarRef.current.contains(e.target)) {
-        setSidebarOpen(false);
-      }
-    };
-    const handleEsc = (e) => {
-      if (e.key === "Escape") setSidebarOpen(false);
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    document.addEventListener("keydown", handleEsc);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-      document.removeEventListener("keydown", handleEsc);
-    };
-  }, [sidebarOpen]);
-
-  // ⭐ Fetch services
+  // FETCH SERVICES
   useEffect(() => {
     fetchServices();
   }, []);
@@ -3394,7 +4027,7 @@ export default function Energy() {
     }
   };
 
-  // ⭐ Select service
+  // SELECT SERVICE
   const selectService = (serviceKey) => {
     const svc =
       services.find((s) => s.key === serviceKey || s._id === serviceKey) ||
@@ -3407,6 +4040,7 @@ export default function Energy() {
     window.scrollTo({ top: 600, behavior: "smooth" });
   };
 
+  // FORM SUBMIT
   const handleFormSubmit = (e) => {
     e.preventDefault();
     if (!name || !email || !dob) return alert("Please fill required fields");
@@ -3415,7 +4049,7 @@ export default function Energy() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  // ---------- BACKEND BOOKING CREATION (robust) ----------
+  // BOOKING BACKEND
   const createBookingOnBackend = async (paymentStatus = "pending", paymentInfo = {}) => {
     try {
       const form = new FormData();
@@ -3432,20 +4066,17 @@ export default function Energy() {
       }
       if (photoFile) form.append("photo", photoFile);
 
-      // try primary booking api
       let bookingRes = null;
       try {
         bookingRes = await axios.post(`${BOOKING_API}/create`, form, {
           headers: { "Content-Type": "multipart/form-data" },
         });
       } catch (err) {
-        // fallback endpoints if first fails
         try {
           bookingRes = await axios.post(`${SERVICES_API}/book`, form, {
             headers: { "Content-Type": "multipart/form-data" },
           });
         } catch (err2) {
-          // last fallback: send JSON payload
           const payload = {
             serviceKey: selectedService.key || selectedService._id || "",
             serviceTitle: selectedService.title || selectedService.name || "",
@@ -3468,7 +4099,7 @@ export default function Energy() {
     }
   };
 
-  // ---------- PAYMENT FLOW (Razorpay preferred, fallback simulated) ----------
+  // PAYMENT HANDLER
   const handlePayment = async () => {
     setProcessing(true);
 
@@ -3479,6 +4110,7 @@ export default function Energy() {
       const createOrderRes = await axios.post(`${PAYMENTS_API}/create-order`, { amount });
       if (createOrderRes?.data?.success && createOrderRes.data.order && createOrderRes.data.key) {
         const { order, key } = createOrderRes.data;
+
         const options = {
           key,
           amount: order.amount,
@@ -3527,16 +4159,13 @@ export default function Energy() {
           });
           rzp.open();
           return;
-        } else {
-          // Razorpay script missing — fallback to simulated success after small delay
-          console.warn("Razorpay script missing. Falling back to simulated flow.");
         }
       }
     } catch (err) {
       console.warn("Payments backend unavailable:", err?.message || err);
     }
 
-    // fallback simulated success (useful for local/dev)
+    // fallback success (dev mode)
     setTimeout(async () => {
       try {
         await createBookingOnBackend("paid", { simulated: true });
@@ -3553,7 +4182,7 @@ export default function Energy() {
     }, 900);
   };
 
-  // ---------- RESET ----------
+  // RESET
   const resetAll = () => {
     setStep(0);
     setSelectedService(null);
@@ -3570,13 +4199,17 @@ export default function Energy() {
 
   const progressWidth = ((step - 1) / 2) * 100;
 
-  // ---------- RENDER ----------
   return (
     <div className="energy-page cosmic-bg" style={{ minHeight: "100vh", position: "relative", color: "#fff" }}>
-      {/* cosmic background (orbits + stars) */}
+      
+      {/* GLOBAL SIDEBAR */}
+      <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+
+      {/* NOTE: No local <aside> sidebar & no hamburger button — removed */}
+
+      {/* COSMIC BG */}
       <div className="vc-cosmic-stars" />
       <div className="vc-stars-container">
-        {/* stars generated visually by CSS + inline elements */}
         {Array.from({ length: 36 }).map((_, i) => (
           <div
             key={i}
@@ -3590,97 +4223,43 @@ export default function Energy() {
           />
         ))}
       </div>
+
       <div className="vc-floating-orbs">
         <div className="vc-orb vc-orb-1" />
         <div className="vc-orb vc-orb-2" />
         <div className="vc-orb vc-orb-3" />
       </div>
 
-      {/* Sidebar */}
-      <aside
-        ref={sidebarRef}
-        className={`sidebar-custom ${sidebarOpen ? "open" : ""}`}
-        style={{
-          position: "fixed",
-          top: 0,
-          left: sidebarOpen ? 0 : "-300px",
-          width: 300,
-          height: "100vh",
-          background: "linear-gradient(180deg, rgba(8,3,20,0.98), rgba(5,0,20,0.95))",
-          padding: "2rem 1.5rem",
-          zIndex: 1200,
-          transition: "left 0.35s",
-          boxShadow: "4px 0 40px rgba(123,44,191,0.25)",
-        }}
-      >
-        <button
-          onClick={() => setSidebarOpen(false)}
-          style={{
-            position: "absolute",
-            right: 12,
-            top: 12,
-            width: 36,
-            height: 36,
-            borderRadius: 8,
-            border: "none",
-            background: "rgba(255,255,255,0.06)",
-            color: "#fff",
-            cursor: "pointer",
-          }}
-          aria-label="Close menu"
-        >
-          
-        </button>
-
-        <div style={{ textAlign: "center", marginTop: 8, marginBottom: 20 }}>
-          <h3 style={{ margin: 0, fontSize: 20, fontWeight: 800, background: "linear-gradient(135deg,#fff,#c4b5fd)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-            ✨THE FIFTH CUSP
-          </h3>
-          <div style={{ color: "#aaa", marginTop: 8 }}>Explore</div>
-        </div>
-
-        <nav>
-          {navLinks.map((n, idx) => (
-            <a key={idx} href={n.link} style={{ display: "block", padding: "10px 8px", color: "#ddd", textDecoration: "none", borderRadius: 8 }}>
-              {n.name}
-            </a>
-          ))}
-        </nav>
-      </aside>
-
-      {/* Hamburger */}
-    {!sidebarOpen && (
-  <button
-    className="hamburger-btn"
-    onClick={() => setSidebarOpen(true)}
-    aria-label="Toggle menu"
-    style={{
-      position: "fixed",
-      left: 18,
-      top: 18,
-      zIndex: 1400,
-      width: 56,
-      height: 56,
-      borderRadius: 12,
-      border: "1px solid rgba(255,255,255,0.06)",
-      background: "rgba(10,6,18,0.8)",
-      color: "#fff",
-      fontSize: 18,
-      cursor: "pointer",
-    }}
-  >
-    ☰
-  </button>
-)}
-
-
-      {/* Main content */}
+      {/* MAIN CONTENT */}
       <main style={{ marginLeft: !isMobile && sidebarOpen ? 300 : 0, transition: "margin-left .3s" }}>
+        
         {/* HERO */}
         <section className="hero-section" style={{ padding: "5rem 2rem 2rem" }}>
-          <div className="hero-container" style={{ maxWidth: 1200, margin: "0 auto", display: "grid", gridTemplateColumns: "1.2fr 1fr", gap: 24, alignItems: "center" }}>
+          <div
+            className="hero-container"
+            style={{
+              maxWidth: 1200,
+              margin: "0 auto",
+              display: "grid",
+              gridTemplateColumns: "1.2fr 1fr",
+              gap: 24,
+              alignItems: "center",
+            }}
+          >
             <div>
-              <div style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "6px 12px", borderRadius: 999, background: "rgba(123,44,191,0.08)", color: "#ffb7ff", fontWeight: 700, marginBottom: 12 }}>
+              <div
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 8,
+                  padding: "6px 12px",
+                  borderRadius: 999,
+                  background: "rgba(123,44,191,0.08)",
+                  color: "#ffb7ff",
+                  fontWeight: 700,
+                  marginBottom: 12,
+                }}
+              >
                 <Sparkles size={16} /> Modern Energy Readings
               </div>
 
@@ -3693,20 +4272,46 @@ export default function Energy() {
               </p>
 
               <div style={{ display: "flex", gap: 12 }}>
-                <button onClick={() => window.scrollTo({ top: 900, behavior: "smooth" })} style={{ padding: "10px 16px", borderRadius: 12, border: "none", background: "linear-gradient(135deg,#ff00ff,#7b2cbf)", color: "#fff", cursor: "pointer", fontWeight: 700 }}>
+                <button
+                  onClick={() => window.scrollTo({ top: 900, behavior: "smooth" })}
+                  style={{
+                    padding: "10px 16px",
+                    borderRadius: 12,
+                    border: "none",
+                    background: "linear-gradient(135deg,#ff00ff,#7b2cbf)",
+                    color: "#fff",
+                    cursor: "pointer",
+                    fontWeight: 700,
+                  }}
+                >
                   Start Your Reading <ArrowRight size={14} />
                 </button>
 
                 <div style={{ display: "flex", alignItems: "center", gap: 8, color: "#aaa" }}>
-                  <div style={{ display: "flex" }}>{[1,2,3,4,5].map((i)=> <Star key={i} size={14} color="#fbbf24" />)}</div>
+                  <div style={{ display: "flex" }}>
+                    {[1, 2, 3, 4, 5].map((i) => (
+                      <Star key={i} size={14} color="#fbbf24" />
+                    ))}
+                  </div>
                   <div style={{ fontSize: 14 }}>500+ readings delivered</div>
                 </div>
               </div>
             </div>
 
             <div style={{ textAlign: "center" }}>
-              <div style={{ borderRadius: 16, padding: 20, background: "linear-gradient(180deg, rgba(123,44,191,0.06), rgba(255,0,255,0.03))", display: "inline-block" }}>
-                <img src="https://res.cloudinary.com/doerrm32l/image/upload/v1761893673/astrologo_fjndbn.png" alt="logo" style={{ width: 260, maxWidth: "100%", borderRadius: 12 }} />
+              <div
+                style={{
+                  borderRadius: 16,
+                  padding: 20,
+                  background: "linear-gradient(180deg, rgba(123,44,191,0.06), rgba(255,0,255,0.03))",
+                  display: "inline-block",
+                }}
+              >
+                <img
+                  src="https://res.cloudinary.com/doerrm32l/image/upload/v1761893673/astrologo_fjndbn.png"
+                  alt="logo"
+                  style={{ width: 260, maxWidth: "100%", borderRadius: 12 }}
+                />
               </div>
             </div>
           </div>
@@ -3724,85 +4329,119 @@ export default function Energy() {
               <div style={{ color: "#ddd" }}>Loading services...</div>
             ) : (
               <div className="services-grid">
-  {services.map((s) => (
-    <article key={s._id || s.key} className="service-card">
-      
-      <div>
-        <div
-          style={{
-            display: "inline-block",
-            padding: "4px 10px",
-            borderRadius: 999,
-            background: "rgba(255,0,255,0.15)",
-            color: "#ff00ff",
-            fontWeight: 700,
-            fontSize: 12,
-            marginBottom: 10,
-          }}
-        >
-          {s.tag || s.label || "Service"}
-        </div>
+                {services.map((s) => (
+                  <article key={s._id || s.key} className="service-card">
+                    <div>
+                      <div
+                        style={{
+                          display: "inline-block",
+                          padding: "4px 10px",
+                          borderRadius: 999,
+                          background: "rgba(255,0,255,0.15)",
+                          color: "#ff00ff",
+                          fontWeight: 700,
+                          fontSize: 12,
+                          marginBottom: 10,
+                        }}
+                      >
+                        {s.tag || s.label || "Service"}
+                      </div>
 
-        <h3>{s.title || s.name}</h3>
-        <p>{s.short || s.description}</p>
-      </div>
+                      <h3>{s.title || s.name}</h3>
+                      <p>{s.short || s.description}</p>
+                    </div>
 
-      <div style={{ textAlign: "right" }}>
-        <div className="service-price">
-          ₹{s.price ?? s.amount ?? "—"}
-        </div>
+                    <div style={{ textAlign: "right" }}>
+                      <div className="service-price">₹{s.price ?? s.amount ?? "—"}</div>
 
-        <button
-          className="book-btn"
-          onClick={() => selectService(s.key || s._id)}
-        >
-          Book Now
-        </button>
-      </div>
-
-    </article>
-  ))}
-</div>
-
+                      <button className="book-btn" onClick={() => selectService(s.key || s._id)}>
+                        Book Now
+                      </button>
+                    </div>
+                  </article>
+                ))}
+              </div>
             )}
           </div>
         </section>
 
-        {/* BOOKING / FORM STEPS */}
+        {/* BOOKING STEPS */}
         {step > 0 && selectedService && (
           <section className="form-section" style={{ padding: "2rem" }}>
-            <div style={{ maxWidth: 960, margin: "0 auto", background: "rgba(255,255,255,0.02)", borderRadius: 14, padding: 20 }}>
+            <div
+              style={{
+                maxWidth: 960,
+                margin: "0 auto",
+                background: "rgba(255,255,255,0.02)",
+                borderRadius: 14,
+                padding: 20,
+              }}
+            >
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 <h3 style={{ margin: 0 }}>Book: {selectedService.title || selectedService.name}</h3>
                 <div style={{ color: "#aaa" }}>Step {step} of 3</div>
               </div>
 
-              {/* progress */}
+              {/* Progress Bar */}
               <div style={{ marginTop: 12 }}>
-                <div style={{ height: 6, background: "rgba(255,255,255,0.06)", borderRadius: 6, overflow: "hidden" }}>
-                  <div style={{ width: `${Math.max(0, Math.min(100, progressWidth))}%`, height: "100%", background: "linear-gradient(90deg,#ff00ff,#00ffff)", transition: "width .4s" }} />
+                <div
+                  style={{
+                    height: 6,
+                    background: "rgba(255,255,255,0.06)",
+                    borderRadius: 6,
+                    overflow: "hidden",
+                  }}
+                >
+                  <div
+                    style={{
+                      width: `${Math.max(0, Math.min(100, progressWidth))}%`,
+                      height: "100%",
+                      background: "linear-gradient(90deg,#ff00ff,#00ffff)",
+                      transition: "width .4s",
+                    }}
+                  />
                 </div>
               </div>
 
-              {/* Step 1: form */}
+              {/* STEP 1 */}
               {step === 1 && (
                 <form onSubmit={handleFormSubmit} style={{ marginTop: 16, display: "grid", gap: 12 }}>
                   {selectedService.key === "yesNo" && (
                     <div>
                       <label style={{ color: "#ddd", fontWeight: 600 }}>Your Question *</label>
-                      <input type="text" value={question} onChange={(e) => setQuestion(e.target.value)} placeholder="E.g. Should I accept this job?" style={inputStyle} />
+                      <input
+                        type="text"
+                        value={question}
+                        onChange={(e) => setQuestion(e.target.value)}
+                        placeholder="E.g. Should I accept this job?"
+                        style={inputStyle}
+                      />
                     </div>
                   )}
 
                   <div>
                     <label style={{ color: "#ddd", fontWeight: 600 }}>Full Name *</label>
-                    <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="Your full name" style={inputStyle} required />
+                    <input
+                      type="text"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      placeholder="Your full name"
+                      style={inputStyle}
+                      required
+                    />
                   </div>
 
                   <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
                     <div>
                       <label style={{ color: "#ddd", fontWeight: 600 }}>Email *</label>
-                      <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@email.com" style={inputStyle} required />
+                      <input
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="you@email.com"
+                        style={inputStyle}
+                        required
+                      />
                     </div>
                     <div>
                       <label style={{ color: "#ddd", fontWeight: 600 }}>Date of Birth *</label>
@@ -3818,21 +4457,48 @@ export default function Energy() {
 
                   <div>
                     <label style={{ color: "#ddd", fontWeight: 600 }}>Additional Details</label>
-                    <textarea value={details} onChange={(e) => setDetails(e.target.value)} rows={4} style={{ ...inputStyle, minHeight: 80 }} placeholder="Anything else we should know..." />
+                    <textarea
+                      value={details}
+                      onChange={(e) => setDetails(e.target.value)}
+                      rows={4}
+                      style={{ ...inputStyle, minHeight: 80 }}
+                      placeholder="Anything else we should know..."
+                    />
                   </div>
 
                   <div style={{ display: "flex", gap: 12 }}>
-                    <button type="submit" style={{ padding: "10px 14px", background: "linear-gradient(135deg,#ff00ff,#7b2cbf)", color: "#fff", borderRadius: 10, border: "none", cursor: "pointer" }}>
+                    <button
+                      type="submit"
+                      style={{
+                        padding: "10px 14px",
+                        background: "linear-gradient(135deg,#ff00ff,#7b2cbf)",
+                        color: "#fff",
+                        borderRadius: 10,
+                        border: "none",
+                        cursor: "pointer",
+                      }}
+                    >
                       Continue to Payment <ArrowRight size={14} />
                     </button>
-                    <button type="button" onClick={resetAll} style={{ padding: "10px 14px", background: "rgba(255,255,255,0.03)", color: "#fff", borderRadius: 10, border: "1px solid rgba(255,255,255,0.06)" }}>
+
+                    <button
+                      type="button"
+                      onClick={resetAll}
+                      style={{
+                        padding: "10px 14px",
+                        background: "rgba(255,255,255,0.03)",
+                        color: "#fff",
+                        borderRadius: 10,
+                        border: "1px solid rgba(255,255,255,0.06)",
+                      }}
+                    >
                       Cancel
                     </button>
                   </div>
                 </form>
               )}
 
-              {/* Step 2: payment */}
+              {/* STEP 2 */}
               {step === 2 && (
                 <div style={{ marginTop: 16 }}>
                   <div style={{ display: "grid", gap: 12 }}>
@@ -3854,14 +4520,35 @@ export default function Energy() {
 
                       <div style={{ display: "flex", justifyContent: "space-between", marginTop: 8 }}>
                         <div style={{ color: "#aaa" }}>Total</div>
-                        <div style={{ fontWeight: 800, background: "linear-gradient(135deg,#ff00ff,#00ffff)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+                        <div
+                          style={{
+                            fontWeight: 800,
+                            background: "linear-gradient(135deg,#ff00ff,#00ffff)",
+                            WebkitBackgroundClip: "text",
+                            WebkitTextFillColor: "transparent",
+                          }}
+                        >
                           ₹{selectedService.price ?? selectedService.amount ?? "—"}
                         </div>
                       </div>
                     </div>
 
                     <div style={{ display: "flex", gap: 12 }}>
-                      <button onClick={handlePayment} disabled={processing} style={{ padding: "10px 14px", background: "linear-gradient(135deg,#ff00ff,#00ffff)", color: "#fff", borderRadius: 10, border: "none", cursor: "pointer", display: "flex", alignItems: "center", gap: 8 }}>
+                      <button
+                        onClick={handlePayment}
+                        disabled={processing}
+                        style={{
+                          padding: "10px 14px",
+                          background: "linear-gradient(135deg,#ff00ff,#00ffff)",
+                          color: "#fff",
+                          borderRadius: 10,
+                          border: "none",
+                          cursor: "pointer",
+                          display: "flex",
+                          alignItems: "center",
+                          gap: 8,
+                        }}
+                      >
                         {processing ? (
                           <>
                             <Loader2 size={16} className="spin" /> Processing...
@@ -3873,35 +4560,68 @@ export default function Energy() {
                         )}
                       </button>
 
-                      <button onClick={() => setStep(1)} style={{ padding: "10px 14px", background: "rgba(255,255,255,0.03)", color: "#fff", borderRadius: 10, border: "1px solid rgba(255,255,255,0.06)" }}>
+                      <button
+                        onClick={() => setStep(1)}
+                        style={{
+                          padding: "10px 14px",
+                          background: "rgba(255,255,255,0.03)",
+                          color: "#fff",
+                          borderRadius: 10,
+                          border: "1px solid rgba(255,255,255,0.06)",
+                        }}
+                      >
                         ← Edit Details
                       </button>
-                    </div>
-
-                    <div style={{ color: "#aaa", fontSize: 13 }}>
-                      If your site has Razorpay & payments backend, secure checkout will open. Otherwise a simulated confirmation will be saved.
                     </div>
                   </div>
                 </div>
               )}
 
-              {/* Step 3: confirmation */}
+              {/* STEP 3 */}
               {step === 3 && (
                 <div style={{ marginTop: 18, textAlign: "center" }}>
-                  <div style={{ display: "inline-block", padding: 18, borderRadius: 999, background: "rgba(74,222,128,0.12)" }}>
+                  <div
+                    style={{
+                      display: "inline-block",
+                      padding: 18,
+                      borderRadius: 999,
+                      background: "rgba(74,222,128,0.12)",
+                    }}
+                  >
                     <CheckCircle size={44} color="#4ade80" />
                   </div>
                   <h3 style={{ marginTop: 10 }}>Payment Successful!</h3>
-                  <p style={{ color: "#c4b5fd" }}>{confirmationMsg || `Thanks ${name}. We'll email your reading to ${email} within 24-48 hours.`}</p>
+                  <p style={{ color: "#c4b5fd" }}>
+                    {confirmationMsg || `Thanks ${name}. We'll email your reading to ${email} within 24-48 hours.`}
+                  </p>
 
                   {pdfReady && (
-                    <div style={{ display: "inline-flex", alignItems: "center", gap: 8, marginTop: 8, padding: "10px 14px", borderRadius: 8, background: "rgba(74,222,128,0.08)" }}>
+                    <div
+                      style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: 8,
+                        marginTop: 8,
+                        padding: "10px 14px",
+                        borderRadius: 8,
+                        background: "rgba(74,222,128,0.08)",
+                      }}
+                    >
                       <FileText size={18} color="#4ade80" /> Your PDF report is ready
                     </div>
                   )}
 
                   <div style={{ marginTop: 18 }}>
-                    <button onClick={resetAll} style={{ padding: "10px 14px", background: "rgba(255,255,255,0.03)", color: "#fff", borderRadius: 10, border: "1px solid rgba(255,255,255,0.06)" }}>
+                    <button
+                      onClick={resetAll}
+                      style={{
+                        padding: "10px 14px",
+                        background: "rgba(255,255,255,0.03)",
+                        color: "#fff",
+                        borderRadius: 10,
+                        border: "1px solid rgba(255,255,255,0.06)",
+                      }}
+                    >
                       Book Another Reading
                     </button>
                   </div>
@@ -3912,31 +4632,11 @@ export default function Energy() {
         )}
       </main>
 
-      {/* small inline styles for spin */}
+      {/* INLINE STYLES */}
       <style>{`
         .spin { animation: spin 1s linear infinite; }
         @keyframes spin { from { transform: rotate(0); } to { transform: rotate(360deg);} }
 
-        /* cosmic helpers (if you also add the Vastu CSS) */
-        .vc-cosmic-stars {
-          position: fixed;
-          inset: 0;
-          background-image: radial-gradient(2px 2px at 20% 30%, #fff4 50%, transparent),
-                            radial-gradient(2px 2px at 80% 10%, #fff5 50%, transparent),
-                            radial-gradient(2px 2px at 60% 80%, #fff3 50%, transparent),
-                            radial-gradient(2px 2px at 10% 60%, #fff4 50%, transparent);
-          z-index: 0;
-          opacity: 0.45;
-          pointer-events: none;
-        }
-        .vc-stars-container { position: fixed; inset: 0; z-index: 1; pointer-events: none; }
-        .vc-star { position: absolute; background: white; border-radius: 50%; opacity: 0.8; }
-        .vc-floating-orbs .vc-orb { position: fixed; border-radius: 50%; filter: blur(60px); opacity: 0.55; z-index: 0; }
-        .vc-orb-1 { width: 260px; height: 260px; background: #9333ea; top: 6%; left: 4%; }
-        .vc-orb-2 { width: 320px; height: 320px; background: #3b82f6; bottom: 16%; right: 6%; }
-        .vc-orb-3 { width: 200px; height: 200px; background: #ec4899; top: 46%; right: 18%; }
-
-        /* small responsive */
         @media (max-width: 1024px) {
           .hero-container { grid-template-columns: 1fr; gap: 20px; padding: 2rem 1rem; }
         }
@@ -3945,7 +4645,6 @@ export default function Energy() {
   );
 }
 
-// shared simple input style used in component
 const inputStyle = {
   width: "100%",
   padding: "10px 12px",

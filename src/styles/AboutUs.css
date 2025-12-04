@@ -107,7 +107,6 @@
   background: white;
   transition: 0.4s;
 }
-/* ✅ FINAL FIX — Hamburger open hone par bhi same rahe */
 .hamburger-menu.active span:nth-child(1),
 .hamburger-menu.active span:nth-child(2),
 .hamburger-menu.active span:nth-child(3) {
@@ -170,7 +169,7 @@
   width: 320px;
   height: 320px;
   border-radius: 50%;
-  overflow: hidden;     /* Force crop shape */
+  overflow: hidden;   
   
   display: flex;
   justify-content: center;
@@ -190,7 +189,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 50%;   /* ensures perfect crop */
+  border-radius: 50%;   
 }
 
 .stats-section {
@@ -241,11 +240,11 @@
   font-weight: 300;
   letter-spacing: 0.3px;
 
-  /* Alignment */
+ 
   text-align: justify;
   text-justify: inter-word;
 
-  /* Layout Styling */
+ 
   background: rgba(255, 255, 255, 0.05);
   padding: 28px 32px;
   border-radius: 20px;
@@ -254,7 +253,7 @@
   border: 1px solid rgba(255, 255, 255, 0.12);
   box-shadow: 0 0 25px rgba(147, 51, 234, 0.15);
 
-  /* Smooth animation */
+  
   transition: 0.35s ease;
 }
 
@@ -276,7 +275,7 @@
 .card-glow {
   position: absolute;
   inset: -20px;
-  /* background: linear-gradient(135deg, #9333ea, #3b82f6, #ec4899); */
+ 
   filter: blur(40px);
   opacity: 0.65;
   animation: glowPulse 3s infinite ease-in-out;
