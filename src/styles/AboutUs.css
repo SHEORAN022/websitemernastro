@@ -233,7 +233,10 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 4rem;
-}.about-description {
+  margin-left: -15px; 
+}
+
+.about-description {
   color: rgba(255, 255, 255, 0.92);
   font-size: 1.15rem;
   line-height: 1.9;

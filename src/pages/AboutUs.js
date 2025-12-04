@@ -1150,6 +1150,7 @@
 // };
 
 // export default AboutUs;
+
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
@@ -1208,13 +1209,41 @@ const AboutUs = () => {
       ? `${API_BASE.replace("/api", "")}${aboutData.image}`
       : "https://res.cloudinary.com/doerrm32l/image/upload/v1761893673/astrologo_fjndbn.png";
 
+  // const features = [
+  //   { title: "Astrology", desc: "Personalized birth chart analysis and planetary insights" },
+  //   { title: "Numerology", desc: "Decode your life path through the power of numbers" },
+  //   { title: "Vastu Shastra", desc: "Harmonize your space with cosmic energy flow" },
+  //   { title: "Tarot Reading", desc: "Gain clarity and guidance for life's questions" },
+  //   { title: "Manifestation", desc: "Attract abundance through universal laws" },
+  // ];
   const features = [
-    { title: "Astrology", desc: "Personalized birth chart analysis and planetary insights" },
-    { title: "Numerology", desc: "Decode your life path through the power of numbers" },
-    { title: "Vastu Shastra", desc: "Harmonize your space with cosmic energy flow" },
-    { title: "Tarot Reading", desc: "Gain clarity and guidance for life's questions" },
-    { title: "Manifestation", desc: "Attract abundance through universal laws" },
-  ];
+  { 
+    title: "Astrology", 
+    desc: "Personalized birth chart analysis and planetary insights",
+    link: "/astrology",
+  },
+  { 
+    title: "Numerology", 
+    desc: "Decode your life path through the power of numbers",
+    link: "/numerology"
+  },
+  { 
+    title: "Vastu Shastra", 
+    desc: "Harmonize your space with cosmic energy flow",
+    link: "/vastu"
+  },
+  { 
+    title: "Tarot Reading", 
+    desc: "Gain clarity and guidance for life's questions",
+    link: "/tarot"
+  },
+  { 
+    title: "Manifestation", 
+    desc: "Attract abundance through universal laws",
+    link: "/manifestation"
+  },
+];
+
 
   const stats = [
     { number: "10K+", label: "Happy Clients" },
@@ -1251,7 +1280,7 @@ const AboutUs = () => {
             transition={{ duration: 1 }}
           >
             <h1 className="hero-title">
-              Welcome to <span className="gradient-text">{aboutData.title}</span>
+              Welcome to {aboutData.title}
             </h1>
             <p className="hero-subtitle">
               Your Gateway to Cosmic Wisdom & Spiritual Growth

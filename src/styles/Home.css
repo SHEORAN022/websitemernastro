@@ -694,3 +694,67 @@
     margin-left: 0 !important;
   }
 }
+/* -------------------------------
+   MOBILE FIXES (MAX 480px)
+-------------------------------- */
+@media (max-width: 480px) {
+
+  /* Hero height auto so text never cuts */
+  .hero {
+    height: auto !important;
+    padding: 40px 15px !important;
+  }
+
+  /* Hero glow box becomes smaller */
+  .hero-glow {
+    padding: 1.8rem 1.2rem !important;
+    border-radius: 20px !important;
+  }
+
+  /* Title font-size smaller */
+  .hero-overlay h1 {
+    font-size: 1.9rem !important;
+    line-height: 2.3rem !important;
+  }
+
+  /* Subtitle smaller */
+  .hero-overlay p {
+    font-size: 0.95rem !important;
+    margin: 12px auto 20px !important;
+  }
+
+  /* Button responsive */
+  .hero-btn {
+    padding: 12px 20px !important;
+    font-size: 0.95rem !important;
+    border-radius: 10px !important;
+  }
+
+  /* stars full */
+  .stars-container {
+    height: 100% !important;
+  }
+
+  /* Sidebar button smaller */
+  .hamburger-btn {
+    width: 45px !important;
+    height: 45px !important;
+    font-size: 20px !important;
+  }
+
+  /* Sidebar shift disable */
+  .home-main {
+    margin-left: 0 !important;
+  }
+}
+/* REMOVE HERO GLOW COMPLETELY */
+.hero-glow {
+  background: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+
+.hero-glow::before {
+  content: none !important;
+  display: none !important;
+}
