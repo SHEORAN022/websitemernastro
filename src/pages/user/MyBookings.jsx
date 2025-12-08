@@ -180,7 +180,6 @@
 //   );
 // }
 
-
 import React, { useEffect, useState } from "react";
 import { BookingAPI } from "../../api/apiService";
 import "../../styles/MyBookings.css";
