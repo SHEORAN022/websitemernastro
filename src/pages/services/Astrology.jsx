@@ -4462,6 +4462,99 @@ const Astrology = () => {
         <p style={{ fontSize: "1.1rem", color: "#ccc" }}>Unlock astrological insights anytime, anywhere</p>
       </div>
 
+      {/* ========== ASTROLOGY INTRO SECTION (CLEAN & PREMIUM) ========== */}
+<div style={{ padding: "2rem 1.5rem", maxWidth: "960px", margin: "0 auto" }}>
+
+  <h2
+    style={{
+      fontSize: "2.8rem",
+      fontWeight: "700",
+      background: "linear-gradient(90deg,#ff00ff,#00eaff)",
+      WebkitBackgroundClip: "text",
+      WebkitTextFillColor: "transparent",
+      marginBottom: "1.5rem",
+      letterSpacing: "0.6px",
+      textAlign: "left",
+    }}
+  >
+    Modern Astrology: Decode Your Cosmic Intelligence
+  </h2>
+
+  <p style={{ marginBottom: "1.5rem", color: "#dcdcdc", lineHeight: "1.85", fontSize: "1.12rem" }}>
+    Astrology is no longer just a predictive ritual—it is a refined science of
+    <strong> self-discovery, conscious awareness, and life navigation</strong>.
+    Modern astrology merges timeless Vedic wisdom with advanced analytical techniques,
+    helping you understand how cosmic forces influence your emotions, relationships,
+    decisions, and long-term destiny.
+  </p>
+
+  {/* WHY ASTROLOGY MATTERS */}
+  <h3 style={{ color: "#00eaff", marginTop: "2rem", fontSize: "1.45rem" }}>
+    Why Astrology Is Essential in Today’s Evolving World
+  </h3>
+
+  <p style={{ marginBottom: "1rem", lineHeight: "1.85", color: "#dcdcdc" }}>
+    In this fast-changing world filled with emotional pressure and constant decision-making,
+    astrology acts as a stabilizing compass—bringing clarity, direction, and deeper insight.
+  </p>
+
+  <ul style={{ marginLeft: "1.5rem", marginBottom: "1.8rem", color: "#e8e8e8" }}>
+    <li>✨ Provides clarity for major decisions in love, career, business & finances</li>
+    <li>✨ Decodes emotional patterns, behavioral tendencies & inner triggers</li>
+    <li>✨ Reveals powerful timing windows through Gochar & Dasha cycles</li>
+    <li>✨ Reduces stress by explaining the deeper “why” behind life events</li>
+    <li>✨ Aligns you with your karmic lessons, spiritual path & life purpose</li>
+  </ul>
+
+  {/* AREAS YOU CAN EXPLORE */}
+  <h3 style={{ color: "#00eaff", marginTop: "2rem", fontSize: "1.45rem" }}>
+    Explore Every Dimension of Your Life Through Astrology
+  </h3>
+
+  <p style={{ marginBottom: "1rem", lineHeight: "1.85", color: "#dcdcdc" }}>
+    Astrology provides a 360° perspective of your life—helping you overcome challenges and
+    unlock new opportunities with deeper awareness and confidence.
+  </p>
+
+  <ul style={{ marginLeft: "1.5rem", marginBottom: "1.8rem", color: "#e8e8e8" }}>
+    <li>❤️ Relationship compatibility, soulmate insights & marriage timing</li>
+    <li>💼 Career direction, promotions, job changes & business success</li>
+    <li>💰 Wealth creation, financial stability & investment guidance</li>
+    <li>🧠 Mental wellness, emotional balance & personal transformation</li>
+    <li>🎓 Education pathways, foreign travel & higher studies opportunities</li>
+    <li>👨‍👩‍👧 Family harmony, childbirth potential & home stability</li>
+    <li>🔮 Karmic lessons, spirituality, soul evolution & life purpose</li>
+  </ul>
+
+  {/* OUR APPROACH */}
+  <h3 style={{ color: "#00eaff", marginTop: "2rem", fontSize: "1.45rem" }}>
+    A Scientific, Holistic & Multi-Layered Astrological Methodology
+  </h3>
+
+  <p style={{ marginBottom: "1rem", lineHeight: "1.85", color: "#dcdcdc" }}>
+    To deliver precise and deeply meaningful insights, we use a combination of advanced
+    astrological systems—each adding a unique dimension to your interpretation.
+  </p>
+
+  <ul style={{ marginLeft: "1.5rem", marginBottom: "2rem", color: "#e8e8e8" }}>
+    <li>🔱 <strong>Vedic Astrology</strong> – Foundation of planetary energies & yogas</li>
+    <li>🌟 <strong>KP Astrology</strong> – High-accuracy event timing & predictive depth</li>
+    <li>🔍 <strong>Horary (Prashna)</strong> – Instant answers for urgent or unclear situations</li>
+    <li>🌙 <strong>Jaimini System</strong> – Soul psychology through Karakas & Chara Dashas</li>
+    <li>♄ <strong>Transit & Gochar</strong> – Real-time planetary influence on your life</li>
+    <li>🕒 <strong>Muhurta (Electional)</strong> – Selecting the most auspicious time for events</li>
+    <li>🔢 <strong>Astro-Numerology</strong> – Planet + number vibrations for deeper insight</li>
+  </ul>
+
+  <p style={{ marginBottom: "0", lineHeight: "1.85", color: "#dcdcdc" }}>
+    This integrated approach ensures your readings are not only mathematically precise,
+    but also emotionally supportive, spiritually aligned, and
+    <strong> authentically personalized</strong> to your cosmic design.
+  </p>
+</div>
+
+
+
       {/* STEP 1: CALCULATOR SELECTION */}
       {step === 1 && (
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "2rem", padding: "1rem 2rem 4rem", maxWidth: "1200px", margin: "0 auto" }}>

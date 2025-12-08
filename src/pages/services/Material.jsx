@@ -2557,270 +2557,165 @@
 
 // export default Material;
 
-// import React, { useState, useEffect } from "react";
-// import "../../styles/Material.css";
-// import Sidebar from "../../components/Sidebar";
-
-// const services = [
-//   {
-//     label: "Individual Wealth Programme",
-//     description:
-//       "Identify inborn wealth signatures, reprogram wealth beliefs, optimize behavior, environment, and energy, karmic clearing, ongoing optimization.",
-//     deliverable: "Paid PDF",
-//   },
-//   {
-//     label: "Business Consulting",
-//     description:
-//       "Tailored business strategy call with chart-based insights, decode blocks, pricing, branding, investor compatibility, execution plan.",
-//     deliverable: "Consultation + PDF",
-//   },
-//   {
-//     label: "Abundance Programme",
-//     description:
-//       "Specific plans based on chart to maximize wealth. Guidance on finances, investments, and wealth creation strategies.",
-//     deliverable: "Paid PDF",
-//   },
-// ];
-
-// const Material = () => {
-//   const [sidebarOpen, setSidebarOpen] = useState(false);
-//   const [step, setStep] = useState(1);
-//   const [selectedService, setSelectedService] = useState(null);
-//   const [clientLogos, setClientLogos] = useState([]);
-
-//   const [formData, setFormData] = useState({
-//     fullName: "",
-//     dob: "",
-//     tob: "",
-//     pob: "",
-//     occupation: "",
-//     keyConcerns: "",
-//   });
-
-//   useEffect(() => {
-//     fetch("https://adminastrotalk-1.onrender.com/api/our-clients")
-//       .then((res) => res.json())
-//       .then((data) => {
-//         if (data?.clients) setClientLogos(data.clients);
-//       })
-//       .catch(() => {});
-//   }, []);
-
-//   useEffect(() => {
-//     window.scrollTo({ top: 0, behavior: "smooth" });
-//   }, [step]);
-
-//   const handleChange = (e) =>
-//     setFormData({ ...formData, [e.target.name]: e.target.value });
-
-//   const handleServiceSelect = (service) => {
-//     setSelectedService(service);
-//     setStep(2);
-//   };
-
-//   return (
-//     <div className="material-page">
-
-//       {/* SINGLE HAMBURGER BUTTON */}
-//       {!sidebarOpen && (
-//         <button className="hamburger-btn" onClick={() => setSidebarOpen(true)}>
-//           ☰
-//         </button>
-//       )}
-
-//       {/* SIDEBAR COMPONENT */}
-//       <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-
-//       {/* DARK OVERLAY */}
-//       {sidebarOpen && (
-//         <div className="sidebar-overlay visible" onClick={() => setSidebarOpen(false)} />
-//       )}
-
-//       {/* MAIN CONTENT — NO SHIFT EVER */}
-//       <div className="material-content">
-
-//         <section className="hero-section">
-//           <h1>Material: Wealth Architecture Programme</h1>
-//           {/* <p>Material helps you achieve material success.</p> */}
-//         </section>
-
-//         {step === 1 && (
-//           <section className="offerings-section">
-//             <h2>Our Offerings</h2>
-//             <div className="offerings-grid">
-//               {services.map((s, i) => (
-//                 <div key={i} className="service-card">
-//                   <h3>{s.label}</h3>
-//                   <p>{s.description}</p>
-//                   <span>{s.deliverable}</span>
-
-//                   <button className="cta-btn" onClick={() => handleServiceSelect(s)}>
-//                     Book Now
-//                   </button>
-//                 </div>
-//               ))}
-//             </div>
-//           </section>
-//         )}
-
-//         {step === 2 && selectedService && (
-//           <section className="form-section">
-//             <div className="form-center-wrapper">
-//               <h2>💎 {selectedService.label}</h2>
-
-//               <form
-//                 className="material-form"
-//                 onSubmit={(e) => {
-//                   e.preventDefault();
-//                   setStep(3);
-//                 }}
-//               >
-//                 <input name="fullName" placeholder="Full Name" required value={formData.fullName} onChange={handleChange} />
-//                 <input type="date" name="dob" required value={formData.dob} onChange={handleChange} />
-//                 <input name="tob" placeholder="Time of Birth" value={formData.tob} onChange={handleChange} />
-//                 <input name="pob" placeholder="Place of Birth" value={formData.pob} onChange={handleChange} />
-//                 <input name="occupation" placeholder="Occupation" value={formData.occupation} onChange={handleChange} />
-//                 <textarea name="keyConcerns" placeholder="Key Concerns" value={formData.keyConcerns} onChange={handleChange} />
-
-//                 <button className="glow-btn" type="submit">Proceed to Payment</button>
-//               </form>
-//             </div>
-//           </section>
-//         )}
-
-//         {step === 3 && (
-//           <section className="payment-section">
-//             <h2>Payment</h2>
-//             <button className="pay-btn" onClick={() => setStep(4)}>
-//               Pay Now
-//             </button>
-//           </section>
-//         )}
-
-//         {step === 4 && (
-//           <section className="confirmation-section">
-//             <h2>Payment Successful!</h2>
-//             <button className="cta-btn" onClick={() => setStep(1)}>
-//               Back to Services
-//             </button>
-//           </section>
-//         )}
-
-//         <section className="clients-section">
-//           <h2>Our Esteemed Clients</h2>
-//           <div className="clients-logos">
-//             {clientLogos.map((c) => (
-//               <div className="client-card" key={c._id}>
-//                 <img src={c.image} className="client-img" alt={c.name} />
-//                 <h4>{c.name}</h4>
-//                 <p>{c.description}</p>
-//               </div>
-//             ))}
-//           </div>
-//         </section>
-
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Material;
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import "../../styles/Careers.css";
-
-// ⭐ Sidebar
+import React, { useState, useEffect } from "react";
+import "../../styles/Material.css";
 import Sidebar from "../../components/Sidebar";
 
-const API_BASE = "https://adminastrotalk-1.onrender.com/api/careers";
+const services = [
+  {
+    label: "Individual Wealth Programme",
+    description:
+      "Identify inborn wealth signatures, reprogram wealth beliefs, optimize behavior, environment, and energy, karmic clearing, ongoing optimization.",
+    deliverable: "Paid PDF",
+  },
+  {
+    label: "Business Consulting",
+    description:
+      "Tailored business strategy call with chart-based insights, decode blocks, pricing, branding, investor compatibility, execution plan.",
+    deliverable: "Consultation + PDF",
+  },
+  {
+    label: "Abundance Programme",
+    description:
+      "Specific plans based on chart to maximize wealth. Guidance on finances, investments, and wealth creation strategies.",
+    deliverable: "Paid PDF",
+  },
+];
 
-const Careers = () => {
-  const navigate = useNavigate();
+const Material = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [careers, setCareers] = useState([]);
+  const [step, setStep] = useState(1);
+  const [selectedService, setSelectedService] = useState(null);
+  const [clientLogos, setClientLogos] = useState([]);
 
-  // 🌌 Fetch Careers
-  const fetchCareers = async () => {
-    try {
-      const res = await axios.get(API_BASE);
-      setCareers(res.data || []);
-    } catch (err) {
-      console.error("❌ Error fetching careers:", err.message);
-    }
+  const [formData, setFormData] = useState({
+    fullName: "",
+    dob: "",
+    tob: "",
+    pob: "",
+    occupation: "",
+    keyConcerns: "",
+  });
+
+  useEffect(() => {
+    fetch("https://adminastrotalk-1.onrender.com/api/our-clients")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.clients) setClientLogos(data.clients);
+      })
+      .catch(() => {});
+  }, []);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [step]);
+
+  const handleChange = (e) =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+
+  const handleServiceSelect = (service) => {
+    setSelectedService(service);
+    setStep(2);
   };
 
-  useEffect(() => {
-    fetchCareers();
-  }, []);
-
-  // ✨ Starfield
-  useEffect(() => {
-    const starfield = document.getElementById("starfield");
-    if (starfield && !starfield.hasChildNodes()) {
-      for (let i = 0; i < 120; i++) {
-        const star = document.createElement("div");
-        star.className = "star";
-        star.style.top = `${Math.random() * 100}%`;
-        star.style.left = `${Math.random() * 100}%`;
-        star.style.width = `${Math.random() * 2 + 1}px`;
-        star.style.height = star.style.width;
-        star.style.animationDuration = `${Math.random() * 3 + 2}s`;
-        starfield.appendChild(star);
-      }
-    }
-  }, []);
-
-  const handleCardClick = () => navigate("/contact");
-
   return (
-    <div className="careers-page cosmic-bg">
-      
-      {/* 🌌 Starfield */}
-      <div id="starfield" className="starfield"></div>
+    <div className="material-page">
 
-      {/* ⭐ Sidebar */}
+      {/* SINGLE HAMBURGER BUTTON */}
+      {!sidebarOpen && (
+        <button className="hamburger-btn" onClick={() => setSidebarOpen(true)}>
+          ☰
+        </button>
+      )}
+
+      {/* SIDEBAR COMPONENT */}
       <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
-      {/* ⭐ MAIN CONTENT (Responsive + Sidebar Compatible) */}
-      <div className={`careers-container ${sidebarOpen ? "sidebar-open" : ""}`}>
+      {/* DARK OVERLAY */}
+      {sidebarOpen && (
+        <div className="sidebar-overlay visible" onClick={() => setSidebarOpen(false)} />
+      )}
 
-        {/* HERO SECTION */}
-        <section className="careers-hero">
-          <div className="hero-overlay">
-            <h1>Join Our Team ✨</h1>
-            <p>
-              Explore opportunities in Astrology, Tarot, Energy Healing,
-              and Mystical Research.
-            </p>
-          </div>
+      {/* MAIN CONTENT — NO SHIFT EVER */}
+      <div className="material-content">
+
+        <section className="hero-section">
+          <h1>Material: Wealth Architecture Programme</h1>
+          {/* <p>Material helps you achieve material success.</p> */}
         </section>
 
-        {/* CAREERS CONTENT */}
-        <section className="careers-content">
-          <h2>Available Positions</h2>
-          <p>
-            We're looking for passionate individuals to join our growing team at
-            <span className="highlight"> THE FIFTH CUSP</span>.
-          </p>
+        {step === 1 && (
+          <section className="offerings-section">
+            <h2>Our Offerings</h2>
+            <div className="offerings-grid">
+              {services.map((s, i) => (
+                <div key={i} className="service-card">
+                  <h3>{s.label}</h3>
+                  <p>{s.description}</p>
+                  <span>{s.deliverable}</span>
 
-          <div className="careers-list">
-            {careers.length > 0 ? (
-              careers.map((career, idx) => (
-                <div
-                  key={idx}
-                  className="career-card"
-                  onClick={handleCardClick}
-                >
-                  <h3>{career.title}</h3>
-                  <p>{career.description}</p>
+                  <button className="cta-btn" onClick={() => handleServiceSelect(s)}>
+                    Book Now
+                  </button>
                 </div>
-              ))
-            ) : (
-              <p className="no-positions">
-                ✨ No open positions currently. Check back soon!
-              </p>
-            )}
+              ))}
+            </div>
+          </section>
+        )}
+
+        {step === 2 && selectedService && (
+          <section className="form-section">
+            <div className="form-center-wrapper">
+              <h2>💎 {selectedService.label}</h2>
+
+              <form
+                className="material-form"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  setStep(3);
+                }}
+              >
+                <input name="fullName" placeholder="Full Name" required value={formData.fullName} onChange={handleChange} />
+                <input type="date" name="dob" required value={formData.dob} onChange={handleChange} />
+                <input name="tob" placeholder="Time of Birth" value={formData.tob} onChange={handleChange} />
+                <input name="pob" placeholder="Place of Birth" value={formData.pob} onChange={handleChange} />
+                <input name="occupation" placeholder="Occupation" value={formData.occupation} onChange={handleChange} />
+                <textarea name="keyConcerns" placeholder="Key Concerns" value={formData.keyConcerns} onChange={handleChange} />
+
+                <button className="glow-btn" type="submit">Proceed to Payment</button>
+              </form>
+            </div>
+          </section>
+        )}
+
+        {step === 3 && (
+          <section className="payment-section">
+            <h2>Payment</h2>
+            <button className="pay-btn" onClick={() => setStep(4)}>
+              Pay Now
+            </button>
+          </section>
+        )}
+
+        {step === 4 && (
+          <section className="confirmation-section">
+            <h2>Payment Successful!</h2>
+            <button className="cta-btn" onClick={() => setStep(1)}>
+              Back to Services
+            </button>
+          </section>
+        )}
+
+        <section className="clients-section">
+          <h2>Our Esteemed Clients</h2>
+          <div className="clients-logos">
+            {clientLogos.map((c) => (
+              <div className="client-card" key={c._id}>
+                <img src={c.image} className="client-img" alt={c.name} />
+                <h4>{c.name}</h4>
+                <p>{c.description}</p>
+              </div>
+            ))}
           </div>
         </section>
 
@@ -2829,4 +2724,5 @@ const Careers = () => {
   );
 };
 
-export default Careers;
+export default Material;
+

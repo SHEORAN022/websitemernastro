@@ -73,6 +73,8 @@ import AboutUs from "./pages/AboutUs";
 import Contact from "./pages/Contact";
 import Careers from "./pages/Careers";
 import Auth from "./pages/Auth";
+import KnowMore from "./pages/KnowMore";
+import FreeCalculatorPage from "./pages/FreeCalculatorPage";
 
 // Services
 import Energy from "./pages/services/Energy";
@@ -88,6 +90,8 @@ import MyWallet from "./pages/user/MyWallet";
 import MyBookings from "./pages/user/MyBookings";  
 import SavedReports from "./pages/user/SavedReports";
 import Settings from "./pages/user/Settings";
+import PaymentPage from "./pages/PaymentPage";
+
 
 // Layout components
 // import Navbar from "./components/layout/Navbar";
@@ -114,6 +118,13 @@ export default function App() {
           <Route path="/user/bookings" element={<MyBookings  />} />
           <Route path="/saved-reports" element={<SavedReports />} />
           <Route path="/user/settings" element={<Settings />} />
+          <Route path="/pay" element={<PaymentPage />} />
+          
+  <Route path="/know-more" element={<KnowMore />} />
+ <Route path="/free-calculator" element={<FreeCalculatorPage />} />
+
+
+  
 
 
 

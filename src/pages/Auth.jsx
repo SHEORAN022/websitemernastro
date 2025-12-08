@@ -339,89 +339,232 @@
 //     </div>
 //   );
 // }
+
+// import React, { useState, useEffect } from "react";
+// import axios from "axios";
+// import { useNavigate } from "react-router-dom";
+// import "./Auth.css"; 
+
+// const api = axios.create({ baseURL: "https://adminastrotalk-1.onrender.com/api" });
+
+// export default function Auth() {
+//   const navigate = useNavigate();
+
+//   const [mode, setMode] = useState("login");
+//   const [step, setStep] = useState("email");
+//   const [email, setEmail] = useState("");
+//   const [otp, setOtp] = useState("");
+//   const [message, setMessage] = useState("");
+//   const [loading, setLoading] = useState(false);
+
+//   // ⭐ Create Stars like Home Page
+//   useEffect(() => {
+//     let container = document.querySelector(".auth-stars");
+
+//     if (container && container.childElementCount === 0) {
+//       for (let i = 0; i < 120; i++) {
+//         let star = document.createElement("div");
+//         star.className = "star";
+
+//         star.style.top = Math.random() * 100 + "%";
+//         star.style.left = Math.random() * 100 + "%";
+//         star.style.animationDuration = 2 + Math.random() * 3 + "s";
+
+//         container.appendChild(star);
+//       }
+//     }
+//   }, []);
+
+//   const sendOtp = async () => {
+//     if (!email) return setMessage("Please enter your email");
+
+//     try {
+//       setLoading(true);
+//       setMessage("");
+
+//       const userCheck = await api.post("/userweb/auth/check-user", { email });
+
+//       if (mode === "signup" && userCheck.data.exists)
+//         return setMessage("Account already exists! Please login.");
+
+//       if (mode === "login" && !userCheck.data.exists)
+//         return setMessage("Account does not exist! Please signup.");
+
+//       const res = await api.post("/userweb/auth/send-otp", { email });
+
+//       if (res.data.success) {
+//         setMessage("OTP sent successfully!");
+//         setStep("otp");
+//       } else {
+//         setMessage(res.data.message || "Failed to send OTP");
+//       }
+//     } catch (err) {
+//       setMessage(err?.response?.data?.message || "Server error");
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   const verifyOtp = async () => {
+//     if (!otp) return setMessage("Enter OTP");
+
+//     try {
+//       setLoading(true);
+//       setMessage("");
+
+//       const res = await api.post("/userweb/auth/verify-otp", { email, otp });
+
+//       if (res.data.success) {
+//         localStorage.setItem("token", res.data.token);
+//         localStorage.setItem("login", "true");
+//         navigate("/");
+//       } else {
+//         setMessage(res.data.message || "Invalid OTP");
+//       }
+//     } catch (err) {
+//       setMessage(err?.response?.data?.message || "Invalid OTP");
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   return (
+//     <div className="auth-page">
+
+//       {/* ⭐ BACKGROUND STARS */}
+//       <div className="auth-stars"></div>
+
+//       {/* MAIN BOX */}
+//       <div className="auth-wrapper">
+//         <div className="auth-box">
+
+//           <h2 className="auth-title">
+//             {mode === "signup" ? "Create Account" : "Login"}
+//           </h2>
+
+//           {message && <p className="auth-message">{message}</p>}
+
+//           {step === "email" && (
+//             <>
+//               <input className="auth-input" placeholder="Enter Email"
+//                 value={email} onChange={(e) => setEmail(e.target.value)} />
+
+//               <button className="auth-btn" onClick={sendOtp} disabled={loading}>
+//                 {loading ? "Sending..." : mode === "signup" ? "Send OTP for Signup" : "Send OTP for Login"}
+//               </button>
+
+//               <p className="auth-switch"
+//                 onClick={() => { setMode(mode === "signup" ? "login" : "signup"); setMessage(""); }}>
+//                 {mode === "signup" ? "Already have an account? Login" : "Don't have an account? Signup"}
+//               </p>
+//             </>
+//           )}
+
+//           {step === "otp" && (
+//             <>
+//               <input className="auth-input" placeholder="Enter OTP"
+//                 value={otp} onChange={(e) => setOtp(e.target.value)} />
+
+//               <button className="auth-btn auth-btn-green"
+//                 onClick={verifyOtp} disabled={loading}>
+//                 {loading ? "Verifying..." : "Verify OTP"}
+//               </button>
+
+//               <p className="auth-resend" onClick={sendOtp}>Resend OTP</p>
+//             </>
+//           )}
+
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
+
+
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import "./Auth.css"; 
+import "./Auth.css";
 
 const api = axios.create({ baseURL: "https://adminastrotalk-1.onrender.com/api" });
 
 export default function Auth() {
   const navigate = useNavigate();
 
-  const [mode, setMode] = useState("login");
-  const [step, setStep] = useState("email");
+  const [mode, setMode] = useState("login"); // login | signup
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [otp, setOtp] = useState("");
+  const [password, setPassword] = useState("");
+
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // ⭐ Create Stars like Home Page
+  // ⭐ Home page stars effect
   useEffect(() => {
     let container = document.querySelector(".auth-stars");
-
     if (container && container.childElementCount === 0) {
       for (let i = 0; i < 120; i++) {
         let star = document.createElement("div");
         star.className = "star";
-
         star.style.top = Math.random() * 100 + "%";
         star.style.left = Math.random() * 100 + "%";
         star.style.animationDuration = 2 + Math.random() * 3 + "s";
-
         container.appendChild(star);
       }
     }
   }, []);
 
-  const sendOtp = async () => {
-    if (!email) return setMessage("Please enter your email");
+  // =========================================
+  // ⭐ SIGNUP using Email + Password
+  // =========================================
+  const handleSignup = async () => {
+    if (!name || !email || !password)
+      return setMessage("All fields are required!");
 
     try {
       setLoading(true);
       setMessage("");
 
-      const userCheck = await api.post("/userweb/auth/check-user", { email });
-
-      if (mode === "signup" && userCheck.data.exists)
-        return setMessage("Account already exists! Please login.");
-
-      if (mode === "login" && !userCheck.data.exists)
-        return setMessage("Account does not exist! Please signup.");
-
-      const res = await api.post("/userweb/auth/send-otp", { email });
+      const res = await api.post("/userweb/auth/register", {
+        name,
+        email,
+        password,
+      });
 
       if (res.data.success) {
-        setMessage("OTP sent successfully!");
-        setStep("otp");
-      } else {
-        setMessage(res.data.message || "Failed to send OTP");
+        setMessage("Signup successful! Please login.");
+        setMode("login");
       }
     } catch (err) {
-      setMessage(err?.response?.data?.message || "Server error");
+      setMessage(err?.response?.data?.message || "Signup failed");
     } finally {
       setLoading(false);
     }
   };
 
-  const verifyOtp = async () => {
-    if (!otp) return setMessage("Enter OTP");
+  // =========================================
+  // ⭐ LOGIN using Email + Password
+  // =========================================
+  const handleLogin = async () => {
+    if (!email || !password)
+      return setMessage("Email & Password required!");
 
     try {
       setLoading(true);
       setMessage("");
 
-      const res = await api.post("/userweb/auth/verify-otp", { email, otp });
+      const res = await api.post("/userweb/auth/login", {
+        email,
+        password,
+      });
 
       if (res.data.success) {
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("login", "true");
         navigate("/");
-      } else {
-        setMessage(res.data.message || "Invalid OTP");
       }
     } catch (err) {
-      setMessage(err?.response?.data?.message || "Invalid OTP");
+      setMessage(err?.response?.data?.message || "Login failed");
     } finally {
       setLoading(false);
     }
@@ -429,11 +572,9 @@ export default function Auth() {
 
   return (
     <div className="auth-page">
-
       {/* ⭐ BACKGROUND STARS */}
       <div className="auth-stars"></div>
 
-      {/* MAIN BOX */}
       <div className="auth-wrapper">
         <div className="auth-box">
 
@@ -443,33 +584,78 @@ export default function Auth() {
 
           {message && <p className="auth-message">{message}</p>}
 
-          {step === "email" && (
+          {/* SIGNUP MODE */}
+          {mode === "signup" && (
             <>
-              <input className="auth-input" placeholder="Enter Email"
-                value={email} onChange={(e) => setEmail(e.target.value)} />
+              <input
+                className="auth-input"
+                placeholder="Enter Name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
 
-              <button className="auth-btn" onClick={sendOtp} disabled={loading}>
-                {loading ? "Sending..." : mode === "signup" ? "Send OTP for Signup" : "Send OTP for Login"}
+              <input
+                className="auth-input"
+                placeholder="Enter Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+
+              <input
+                className="auth-input"
+                type="password"
+                placeholder="Enter Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+
+              <button className="auth-btn" onClick={handleSignup} disabled={loading}>
+                {loading ? "Creating..." : "Signup"}
               </button>
 
-              <p className="auth-switch"
-                onClick={() => { setMode(mode === "signup" ? "login" : "signup"); setMessage(""); }}>
-                {mode === "signup" ? "Already have an account? Login" : "Don't have an account? Signup"}
+              <p
+                className="auth-switch"
+                onClick={() => {
+                  setMode("login");
+                  setMessage("");
+                }}
+              >
+                Already have an account? Login
               </p>
             </>
           )}
 
-          {step === "otp" && (
+          {/* LOGIN MODE */}
+          {mode === "login" && (
             <>
-              <input className="auth-input" placeholder="Enter OTP"
-                value={otp} onChange={(e) => setOtp(e.target.value)} />
+              <input
+                className="auth-input"
+                placeholder="Enter Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
 
-              <button className="auth-btn auth-btn-green"
-                onClick={verifyOtp} disabled={loading}>
-                {loading ? "Verifying..." : "Verify OTP"}
+              <input
+                className="auth-input"
+                type="password"
+                placeholder="Enter Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+
+              <button className="auth-btn" onClick={handleLogin} disabled={loading}>
+                {loading ? "Logging in..." : "Login"}
               </button>
 
-              <p className="auth-resend" onClick={sendOtp}>Resend OTP</p>
+              <p
+                className="auth-switch"
+                onClick={() => {
+                  setMode("signup");
+                  setMessage("");
+                }}
+              >
+                Don't have an account? Signup
+              </p>
             </>
           )}
 

@@ -307,6 +307,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, isLoggedIn, handleLogout }) => {
     { name: "Astrology", link: "/astrology" },
     { name: "Vastu", link: "/vastu" },
     { name: "Manifestation", link: "/manifestation" },
+    { name: "Free Calculator", link: "/free-calculator" },
     { name: "Material", link: "/material" },
     { name: "Blogs", link: "/blogs" },
     isLoggedIn

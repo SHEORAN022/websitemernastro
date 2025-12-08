@@ -2515,6 +2515,7 @@
 
 import React, { useState, useEffect } from "react";
 import "../../styles/Manifestation.css";
+import { useNavigate } from "react-router-dom"; 
 
 
 import axios from "axios";
@@ -2551,6 +2552,7 @@ const navLinks = [
 ];
 
 const Manifestation = () => {
+    const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [manifestationList, setManifestationList] = useState([]);
   const [wellbeingList, setWellbeingList] = useState([]);
@@ -3427,7 +3429,7 @@ const Manifestation = () => {
             gap: "12px",
           }}
         >
-          <button
+          {/* <button
             onClick={() => alert(item.fullDesc)}
             style={{
               flex: 1,
@@ -3442,7 +3444,24 @@ const Manifestation = () => {
             }}
           >
             Know More
-          </button>
+          </button> */}
+
+          <button
+  onClick={() => navigate("/know-more")}
+  style={{
+    flex: 1,
+    padding: "0.8rem 1rem",
+    borderRadius: "14px",
+    background: "linear-gradient(90deg,#8a2be2,#ff00ff)",
+    border: "none",
+    color: "white",
+    fontWeight: 600,
+    cursor: "pointer",
+  }}
+>
+  Know More
+</button>
+
 
           <button
             onClick={() => handleBookNow(item)}
@@ -3635,20 +3654,21 @@ const Manifestation = () => {
           }}
         >
           <button
-            onClick={() => alert(item.fullDesc)}
-            style={{
-              flex: 1,
-              padding: "0.8rem 1rem",
-              borderRadius: "14px",
-              background: "linear-gradient(90deg,#8a2be2,#ff00ff)",
-              border: "none",
-              color: "white",
-              fontWeight: 600,
-              cursor: "pointer",
-            }}
-          >
-            Know More
-          </button>
+  onClick={() => navigate("/know-more")}
+  style={{
+    flex: 1,
+    padding: "0.8rem 1rem",
+    borderRadius: "14px",
+    background: "linear-gradient(90deg,#8a2be2,#ff00ff)",
+    border: "none",
+    color: "white",
+    fontWeight: 600,
+    cursor: "pointer",
+  }}
+>
+  Know More
+</button>
+
 
           <button
             onClick={() => handleBookNow(item)}

@@ -1,6 +1,4 @@
-/* ---------------------------------------------------
-   GLOBAL PAGE
----------------------------------------------------- */
+
 .material-page {
   font-family: "Poppins", sans-serif;
   color: #fff;
@@ -13,13 +11,11 @@
 }
 
 .material-page * {
-  /* position: relative;*/
+ 
   z-index: 5; 
 }
 
-/* ---------------------------------------------------
-   SIDEBAR
----------------------------------------------------- */
+
 
 .sidebar-home {
   position: fixed;
@@ -92,9 +88,7 @@
   box-shadow: 0 0 25px rgba(255, 0, 255, 0.55);
 }
 
-/* ---------------------------------------------------
-   HAMBURGER BUTTON
----------------------------------------------------- */
+
 
 .hamburger-btn {
   position: fixed;
@@ -119,23 +113,19 @@
   transform: scale(1.08);
 }
 
-/* hide hamburger when sidebar open */
+
 .sidebar-open .hamburger-btn {
   display: none !important;
 }
 
-/* ---------------------------------------------------
-   MAIN CONTENT (NO SHIFT EVER)
----------------------------------------------------- */
+
 
 .material-content {
   margin-left: 0 !important;
   transition: none !important;
 }
 
-/* ---------------------------------------------------
-   HERO
----------------------------------------------------- */
+
 .hero-section {
   max-width: 900px;
   margin: 2rem auto;
@@ -161,9 +151,7 @@
   margin: auto;
 }
 
-/* ---------------------------------------------------
-   OFFERINGS
----------------------------------------------------- */
+
 .offerings-section {
   padding: 2rem 0;
 }
@@ -214,9 +202,7 @@
   cursor: pointer;
 }
 
-/* ---------------------------------------------------
-   FORM
----------------------------------------------------- */
+
 .form-section {
   padding: 2rem 1rem;
   display: flex;
@@ -266,9 +252,7 @@ textarea {
   cursor: pointer;
 }
 
-/* ---------------------------------------------------
-   PAYMENT
----------------------------------------------------- */
+
 .pay-btn {
   background: linear-gradient(90deg, #ff00ff, #00ffff);
   padding: 1rem 2rem;
@@ -277,9 +261,7 @@ textarea {
   border: none;
 }
 
-/* ---------------------------------------------------
-   CLIENTS
----------------------------------------------------- */
+
 .clients-section {
   margin-top: 4rem;
   text-align: center;
@@ -313,13 +295,13 @@ textarea {
 
 .material-content {
   position: relative;
-  z-index: 1;   /* <-- ये सबसे ज़रूरी है */
+  z-index: 1;   
 }
 
 .sidebar-home {
-  z-index: 9999;   /* sidebar सबसे ऊपर रहेगा */
+  z-index: 9999;   
 }
 
 .sidebar-overlay {
-  z-index: 9000;   /* overlay भी ऊपर रहेगा */
+  z-index: 9000; 
 }
