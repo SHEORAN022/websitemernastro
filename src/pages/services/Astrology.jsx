@@ -4206,6 +4206,7 @@ const navLinks = [
   { name: "Vastu", link: "/vastu" },
   { name: "Manifestation", link: "/manifestation" },
   { name: "Material", link: "/material" },
+  { name: "Free Calculator", link: "/free-calculator" },
   { name: "Blogs", link: "/blogs" },
   { name: "Contact", link: "/contact" },
   { name: "Login / Signup", link: "/auth" },
